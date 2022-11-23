@@ -1,0 +1,22 @@
+{
+  "name": "cs546-hobokenapartmentfinder",
+  "version": "1.0.0",
+  "description": "A web aplication that gives users a place to list and search for apartments",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanPartika/CS546-Final-Project.git"
+  },
+  "author": "Daniel Partika 10465872, Sri Hari Shankar, Elton Vaz, Cody Fernandez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanPartika/CS546-Final-Project/issues"
+  },
+  "homepage": "https://github.com/DanPartika/CS546-Final-Project#readme",
+  "dependencies": {
+    "mongodb": "^4.12.0"
+  }
+}
