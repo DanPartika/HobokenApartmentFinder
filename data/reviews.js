@@ -1,203 +1,145 @@
 const mongoCollections = require("../config/mongoCollections");
-const Apartments = mongoCollections.Apartments;
+const apartments = mongoCollections.apartments;
 const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
-const { getApartmentById } = require("./Apartments");
+const { getApartmentById } = require("./apartments");
 
 const createReview = async (
-  ApartmentId,
-  reviewTitle,
-  reviewerName,
-  review,
-  rating
+  apartmentId, 
+  userId,
+  userName,
+  comments,
+  rating //!include a comment title??
 ) => {
-  //todo get current date
-  // if (arguments.length >5) {
-  //   throw "too many paramters being passed"
-  // }
-  helpers.checkID(ApartmentId);
-  helpers.checkString(reviewTitle);
-  helpers.checkString(reviewerName);
-  helpers.checkString(review);
-  helpers.checkNumber(rating);
+  
+  let params = helpers.checkReviewsParameters(apartmentId,  userId, userName, comments, rating)
 
-  ApartmentId = ApartmentId.trim();
-  reviewTitle = reviewTitle.trim();
-  reviewerName = reviewerName.trim();
-  review = review.trim();
-
-  helpers.checkApartmentId(ApartmentId);
-  helpers.checkReviewTitle(reviewTitle);
-  helpers.checkReviewerName(reviewerName);
-  helpers.checkReview(review);
-  helpers.checkRating1(rating);
-  if (rating % 1 === 0) {
-    rating = parseInt(rating);
+  if (params.rating % 1 === 0) {
+    params.rating = parseInt(params.rating);
   } else {
-    rating = rating.toPercision(2);
+    params.rating = params.rating.toPercision(2);
   }
+  const apartmentCollection = await apartments();
+  let apartment = await getApartmentById(apartmentId);
 
-  const ApartmentCollection = await Apartments();
-  let Apartment = await getApartmentById(ApartmentId);
-
-  //console.log(ApartmentId + "Apartment" + Apartment )
-  if (Apartment === null) throw "no Apartment exists with that id9";
+  if (apartment === null) throw "no Apartment exists with that id";
   let today = new Date();
   let mm = String(today.getMonth() + 1).padStart(2, "0");
   let dd = String(today.getDate()).padStart(2, "0");
   let yyyy = today.getFullYear();
   today = mm + "/" + dd + "/" + yyyy;
 
-  //console.log(today)
-  helpers.checkDateReleased(today);
-
+  /*apartmentId, 
+  userId,
+  userName,
+  comments,
+  rating*/
   const newReview = {
-    _id: ObjectId(),
-    reviewTitle: reviewTitle,
-    reviewDate: today,
-    reviewerName: reviewerName,
-    review: review,
-    rating: rating,
+    _id: ObjectId(), //include userID??
+    userId: params.userId,
+    //reviewTitle: params.reviewTitle,
+    reviewDate: today, //added this.
+    userName: params.userName,
+    comments: params.comments,
+    rating: rating
   };
   // const newInsertInformation = await ApartmentCollection.insertOne(newReview);
   // const newId = newInsertInformation.insertedId;
   // return await getApartmentById(newId.toString());
-  await ApartmentCollection.updateOne(
-    { _id: ObjectId(ApartmentId) },
+  await apartmentCollection.updateOne(
+    { _id: ObjectId(apartmentId) },
     { $addToSet: { reviews: newReview } }
   );
-  const mov = await getApartmentById(ApartmentId);
+  const apt = await getApartmentById(apartmentId);
   let overall_rating = 0;
   let c = 0;
-  mov.reviews.forEach((movi) => {
-    overall_rating += Number(movi.rating);
+  apt.reviews.forEach((apart) => {
+    overall_rating += Number(apart.rating);
     c += 1;
   });
   overall_rating = overall_rating / c;
   overall_rating = overall_rating.toPrecision(2);
-  await ApartmentCollection.updateOne(
-    { _id: ObjectId(ApartmentId) },
+  await apartmentCollection.updateOne(
+    { _id: ObjectId(apartmentId) },
     { $set: { overallRating: overall_rating } }
   );
-  const Apartmente = await getApartmentById(ApartmentId);
-  Apartmente._id = Apartmente._id.toString();
-  Apartmente.reviews.forEach((m) => {
-    m._id = m._id.toString();
+  //const apartmente = await getApartmentById(apartmentId);
+  apt._id = apt._id.toString();
+  apt.reviews.forEach((a) => {
+    a._id = a._id.toString();
   });
-  return Apartmente;
+  return apt;
 };
 
-const getAllReviews = async (ApartmentId) => {
-  //console.log(ApartmentId)
-  //console.log("Here1111")
-  helpers.checkApartmentId(ApartmentId);
-  //console.log("here000")
-  const ApartmentCollection = await Apartments();
-  //console.log("here000")
-  const Apartment = await getApartmentById(ApartmentId);
-  //console.log("here000")
-  if (Apartment === null) throw "no Apartment exists with that id";
-  Apartment.reviews.forEach((m) => {
-    m._id = m._id.toString();
+const getAllReviews = async (apartmentId) => {
+  apartmentId = helpers.checkApartmentId(apartmentId);
+  const apartmentCollection = await apartments();
+  const apartment = await getApartmentById(apartmentId);
+  if (apartment === null) throw "no Apartment exists with that id";
+  apartment.reviews.forEach((a) => {
+    a._id = a._id.toString();
   });
-  return Apartment.reviews;
-  //return await ApartmentCollection.find(ApartmentId).toArray();
+  return apartment.reviews;
 };
 
 const getReview = async (reviewId) => {
-  // if (arguements.length > 1) {
-  //   throw "too many parameters being passed"
-  // }
-  helpers.checkID(reviewId);
-  const ApartmentCollection = await Apartments();
-  const mov = await ApartmentCollection.findOne({
-    reviews: { $elemMatch: { _id: ObjectId(reviewId) } },
+  reviewId = helpers.checkID(reviewId);
+  const apartmentCollection = await apartments();
+  const apt = await apartmentCollection.findOne({
+    reviews: { $elemMatch: { _id: ObjectId(reviewId) } }
   });
-  if (mov === null) throw "no review exists with that id";
+  if (apt === null) throw "no review exists with that id";
   let rev = [];
-  mov.reviews.forEach((r) => {
+  apt.reviews.forEach((r) => {
     if (r._id == r._id) {
       rev.push(r);
     }
   });
   rev[0]._id = rev[0]._id.toString();
   return rev[0];
-  // const review = await reviewCollection.findOne({_id: ObjectId(reviewId)});
-
-  // if (!review) throw 'Post not found';
-  // review._id = review._id.toString();
-  // return review;
 };
 
 const removeReview = async (reviewId) => {
-  // if (arguments.length > 1) {
-  //   throw "too many parameters passed"
-  // }
-  //console.log(reviewId)
-  helpers.checkID(reviewId);
-  reviewId = reviewId.trim();
+  reviewId = helpers.checkID(reviewId);
+  const apartmentCollection = await apartments();
+  const apartment = await apartmentCollection.find({}).toArray();
   //console.log("bo")
-  const ApartmentCollection = await Apartments();
-  //console.log("hi")
-  const Apartment = await ApartmentCollection.find({}).toArray();
-  //console.log("bo")
-  // if (Apartment.length == 0) {
-  //   throw "no review exists with that id"
-  // }
+  // if (apartment.length == 0) throw "no review exists with that id"
   let cou = 0;
-  let movi = {};
-  //let rev = {};
-  for (j in Apartment) {
-    //console.log(m)
-    let tmpMov = Apartment[j];
-    for (i in tmpMov.reviews) {
-      //console.log("i" + i)
-      //console.log("tmpMov" + tmpMov.reviews[i])
-      if (tmpMov.reviews[i]._id.toString() == reviewId.toString()) {
+  let apart = {};
+  for (j in apartment) {
+    let tmpApt = Apartment[j];
+    for (i in tmpApt.reviews) {
+      if (tmpAov.reviews[i]._id.toString() == reviewId.toString()) {
         cou = 1;
-        movi = tmpMov;
-        //console.log("boy")
-        //rev=tmpMov.reviews[i]
+        apart = tmpApt;
       }
     }
   }
-  //console.log("bio")
-  if (cou == 0) {
-    throw "no reviews with that id";
-  }
-
-  //console.log("bo")
-  const ApartmentId = movi._id.toString();
-  const ApartmentCollection1 = await Apartments();
-  const delete1 = await ApartmentCollection1.updateOne(
-    { _id: ApartmentId },
+  if (cou == 0) throw "no reviews with that id";
+  
+  const apartmentId = apart._id.toString();
+  const apartmentCollection1 = await apartments();
+  const delete1 = await apartmentCollection1.updateOne(
+    { _id: apartmentId },
     { $pull: { reviews: { _id: ObjectId(reviewId) } } }
   );
-  //console.log(ApartmentId)
-  const mov = await getApartmentById(ApartmentId.toString());
-  //console.log("bo")
+  const apt = await getApartmentById(apartmentId.toString());
   let overall_rating = 0;
   let c = 0;
-  mov.reviews.forEach((m) => {
-    overall_rating += Number(m.rating);
+  apt.reviews.forEach((a) => {
+    overall_rating += Number(a.rating);
     c += 1;
   });
-
   overall_rating = overall_rating / c;
   overall_rating = overall_rating.toPrecision(2);
-  //console.log("bo")
-  await ApartmentCollection.updateOne(
-    { _id: ObjectId(ApartmentId) },
+
+  await apartmentCollection.updateOne(
+    { _id: ObjectId(apartmentId) },
     { $set: { overallRating: overall_rating } }
   );
-  //console.log("bo")
-  const update = await getApartmentById(ApartmentId.toString());
-
+  const update = await getApartmentById(apartmentId.toString());
   update._id = update._id.toString();
-  // update.reviews.forEach(r => {
-  //     r._id = r._id.toString();
-  // })
-
   return update;
 };
 
