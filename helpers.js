@@ -178,6 +178,16 @@ function checkRating(a) {
   if (a < 1 || a > 5) throw "Rating not in range 1-5";
 }
 
+function checkReviewsParameters(apartmentId,  userId, userName, comments, rating) {
+  return {
+    apartmentId: checkID(apartmentId), 
+    userId: checkID(userId),
+    userName: checkReviewerName(userName), 
+    comments: checkReview(comments), 
+    rating: checkRating(rating)
+  }
+}
+
 
 module.exports = {
   checkStr,
@@ -185,8 +195,5 @@ module.exports = {
   checkArr,
   checkNum,
   checkID,
-  checkReviewTitle,
-  checkReviewerName,
-  checkReview,
-  checkRating
+  checkReviewsParameters
 };
