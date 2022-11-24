@@ -3,10 +3,15 @@
 // when the route is /Apartments use the routes defined in Apartments.js routing file, when the route is /reviews use the routes defined in reviews.js routing file, all other enpoints should return a 404 as shown in the lecture code.
 const apartmentsRoutes = require("./apartments");
 const reviewsRoutes = require("./reviews");
+const usersRoutes = require("./users")
+const path = require('path');
+const API = require('./API')
 
 const constructorMethod = (app) => {
+  app.use('/', API)
   app.use("/apartments", apartmentsRoutes);
   app.use("/reviews", reviewsRoutes);
+  app.use("/users",usersRoutes)
 
   app.use("*", (req, res) => {
     res.sendStatus(404).json({ error: "Not Found" });
