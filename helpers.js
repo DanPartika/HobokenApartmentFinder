@@ -1,13 +1,13 @@
 //You can add and export any helper functions you want here. If you aren't using any, then you can just leave this file as is.
-const { ObjectId } = require("mongodb");
+const { ObjectId, ConnectionCheckOutStartedEvent } = require("mongodb");
 //const { Apartments } = require('./config/mongoCollections');
 
-const checkStr = str => {
+function checkStr(str) {
   if (!str) throw 'Please input a number.'
   if (typeof str !== 'string') throw ' Input a number.'
   const trimmed = str.trim()
-  if (trimmed.length < 1) throw 'Input cannot be just spaces. Please input a number.'
-  return trimmed
+  if (trimmed.length < 1) throw 'Input cannot be just spaces.'
+  return trimmed;
 }
 
 //accepts lists of strings
@@ -139,7 +139,7 @@ function checkUtilities(utilitiesIncluded) {
 }
 
 //function that returns a object of all the trimmed parameters for apartments.js file
-function checkParameters(apartmentName, streetAddress,rentPerMonth,rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded) {
+function checkApartmentParameters(apartmentName, streetAddress,rentPerMonth,rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded) {
   return { apartmentName: checkName(apartmentName),
   streetAddress: checkAddress(streetAddress),
   rentPerMonth: checkRent(rentPerMonth),
@@ -188,12 +188,94 @@ function checkReviewsParameters(apartmentId,  userId, userName, comments, rating
   }
 }
 
+//FUNCTIONS FOR DATA/USERS.JS
+function checkEmail(email) {
+  if (! (email.includes("@") && email.includes(".")) ) throw "enter a vaild email"
+  return checkStr(email);
+}
+
+function checkGender(gender){
+  //are we letting the user type in or having them select from a drop down menu?
+  if (!gender) throw "must supply a gender"
+  return gender;
+}
+
+function checkAge(age) {
+  age = checkNum(age)
+  if (age < 18) throw "You must be atleast 18 years old"
+  return age;
+}
+
+function checkCity(city) {
+  
+  return checkStr(city);
+}
+
+function checkState(state){
+
+  return checkStr(state);
+}
+
+function checkUsername(username) {
+  if (! username) throw 'Username does not exist.'
+  if (typeof username !== 'string') throw 'Username is not a string.'
+  const trimmed = username.trim();
+  if (trimmed.length < 1) throw 'Username must contain at least 4 characters.'
+  if (trimmed.length < 4) throw 'Username must be at least 4 characters long.'
+  const regex = /^[0-9a-zA-Z]+$/ //regex that checks for a-z, 0-9 insensitive and no spaces
+  if (! regex.test(trimmed)) throw 'Username can only contain only alphanumeric characters.'
+  return trimmed.toLowerCase();
+}
+
+function checkPassword(password) {
+  if (! password) throw 'Password does not exist.'
+  if (typeof password !== 'string') throw 'Password must be a string.'
+  const trimmed = password.trim();
+  if (trimmed.length < 1) throw 'Password cannot be empty spaces.'
+  if (trimmed.length < 6) throw 'Password must be at least 6 characters long.'
+  let regex = /^\S*$/ //regex that checks if string contains any spaces
+  if (! regex.test(trimmed)) throw 'password cannot contain spaces' 
+  if (trimmed == trimmed.toLowerCase()) throw 'Password must contain at least 1 uppercase character.'
+  regex = /[0-9]/ 
+  if (! regex.test(trimmed)) throw 'Password must contain at least 1 number.'
+  regex = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/
+  if (! regex.test(trimmed)) throw 'Password must contain at least 1 special character.'
+  return trimmed;
+}
+
+function checkUserParameters(firstName, lastName, email, gender, age, city, state, username, password) {
+  return {
+    firstName:checkName(firstName), 
+    lastName:checkName(lastName), 
+    email:checkEmail(email), 
+    gender: checkGender(gender), 
+    age:checkAge(age), 
+    city:checkCity(city), 
+    state: checkState(state), 
+    username: checkUsername(username),
+    password: checkPassword(password)
+  }
+}
+function checkUserParameters1(userID, firstName, lastName, email, gender, age, city, state){
+  return {
+    userID: checkID(userID),
+    firstName:checkName(firstName), 
+    lastName:checkName(lastName), 
+    email:checkEmail(email), 
+    gender: checkGender(gender), 
+    age:checkAge(age), 
+    city:checkCity(city), 
+    state: checkState(state)
+  }
+}
+
 
 module.exports = {
-  checkStr,
-  checkParameters,
-  checkArr,
-  checkNum,
+  checkApartmentParameters,
   checkID,
-  checkReviewsParameters
+  checkReviewsParameters,
+  checkUserParameters,
+  checkUserParameters1,
+  checkUsername,
+  checkPassword
 };
