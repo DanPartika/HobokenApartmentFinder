@@ -133,7 +133,45 @@ const removeUser = async (username) => {
   return `${usersName} has been successfully deleted!`; //what do i want to return?
 };
 
+const changeLogin = async (actualUsername, actualPassword, username, password) => { 
+  const user = helpers.checkUsername(username)
+  const pass = helpers.checkPassword(password)
+  const collection = await users();
+  const account = await collection.findOne({ username: actualUsername }); //find by username b/c that is a key in our data as is _id
+  if (account === null) throw `${actualUsername} does not exist`
+  try {
+    const auth = checkUser(actualUsername, actualPassword);
+  } catch (error) {
+    throw error;
+  }
+  if (auth === null) throw 'cannot authencate username/password, please try again'
+  if (! (await auth).authenticatedUser) throw "current username and password do not match current username and password"
+  const hash = await bcrypt.hash(pass, saltRounds);
+  let curDate = new Date();
+  let updatedUser = {
+    userModified: curDate, //Note difference here 
+    username: user,
+    password: hash, //this line and above are the updates values
+    firstName: params.firstName,
+    lastName: params.lastName,
+    email: params.email,
+    gender: params.gender,
+    age: params.age,
+    city: params.city,
+    state: params.state,
+    userCreated: user.userCreated,
+    userApartments: user.userApartments,
+    userReviews: user.userReviews  //redundant 
+  };
+  const updateInfo = await usersCollection.replaceOne( //replaceOne or updateOne
+    { _id: ObjectId(id) },
+    updatedUser
+  );
+  if(!updateInfo.acknowledged || updateInfo.matchedCount !== 1 || updateInfo.modifiedCount !== 1) throw "cannot update user"
+  const update = await getUser(user);
+  update._id = update._id.toString();
+  return update;
+};
 
 
-
-module.exports = {createUser, checkUser, updateUser, getUser, removeUser};
+module.exports = {createUser, checkUser, updateUser, getUser, removeUser, changeLogin};
