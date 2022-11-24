@@ -6,7 +6,7 @@ const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
 
 const createApartment = async (
-  apartmentName, //do we need id here?
+  apartmentName, //do we need users' id here?
   streetAddress,
   rentPerMonth,
   rentDuration,
@@ -20,7 +20,7 @@ const createApartment = async (
   maxPets,
   utilitiesIncluded
 ) => { //if added id to params, add check id here
-  let params = helpers.checkParameters(apartmentName, streetAddress,rentPerMonth,rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
+  let params = helpers.checkApartmentParameters(apartmentName, streetAddress,rentPerMonth,rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
 
   const apartmentCollection = await apartments();
   
@@ -138,6 +138,7 @@ const updateApartment = async (
     { _id: ObjectId(id) },
     updatedApartment
   );
+  if(!updateInfo.acknowledged || updateInfo.matchedCount !== 1 || updateInfo.modifiedCount !== 1) throw "cannot update apartment"
   const update = await getApartmentById(id);
 
   update._id = update._id.toString();
