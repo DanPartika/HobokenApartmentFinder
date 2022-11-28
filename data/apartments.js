@@ -142,6 +142,7 @@ const updateApartment = async (
   const update = await getApartmentById(id);
 
   update._id = update._id.toString();
+  update = update;
   return update;
 };
 
