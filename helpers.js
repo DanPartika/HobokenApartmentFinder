@@ -156,10 +156,6 @@ function checkApartmentParameters(apartmentName, streetAddress,rentPerMonth,rent
 }
 
 /** FUNCTIONS USED FOR REVIEWS */
-function checkReviewTitle(a) {
-  if (!a) throw "must include a title";
-  checkStr(a);
-}
 
 function checkReviewerName(a) {
   if (!a) throw "must include your name";

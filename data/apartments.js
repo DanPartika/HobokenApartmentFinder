@@ -23,7 +23,7 @@ const createApartment = async (
   let params = helpers.checkApartmentParameters(apartmentName, streetAddress,rentPerMonth,rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
 
   const apartmentCollection = await apartments();
-  
+  //get date variable
   let curDate = new Date();
   let newApartment = {
     apartmentName: params.apartmentName,
@@ -87,6 +87,11 @@ const removeApartment = async (apartmentId) => {
   return `${apartName} has been successfully deleted!`; //what do i want to return?
 };
 
+const sortApartmentByCost = async () => {
+
+  return ;
+}
+
 const updateApartment = async (
   apartmentId,
   apartmentName,
@@ -144,6 +149,10 @@ const updateApartment = async (
   update._id = update._id.toString();
   return update;
 };
+
+//sortby blank?
+
+
 
 module.exports = {
   createApartment,

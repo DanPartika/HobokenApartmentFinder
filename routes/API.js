@@ -11,7 +11,6 @@ router
       } else { //otherwise go to website home page 
         return res.sendFile(path.resolve('static/homepage.html'));
       }
-      
     } catch (e) {
       res.status(404).json({ error: e });
     }
