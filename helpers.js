@@ -33,7 +33,8 @@ function checkNum(num) {
   if (!num) throw "You must provide a valid number for your rating";
   if (isNaN(num)) throw `${num} must be a number`;
   if (num.toString().includes('.')) throw `${num} cannot include '.'`;
-  if (num <= -1) throw "number must be positive";
+  num = num.parseInt();
+  if (num <= 0) throw "number must be greater than zero";
   return num;
 }
 
@@ -55,7 +56,8 @@ function checkName(apartmentName) {
 //The street address of the specified apartment
 function checkAddress(streetAddress) {
   //specify a format ## street name
-  //if possible get all the streets in hoboken and make sure it is a street in hoboken
+  //!make sure this works with google map.
+  //if possible get all the streets in hoboken and make sure it is a street in hoboken --> be solved with google maps
   return checkStr(streetAddress);
 }
 
@@ -63,13 +65,14 @@ function checkAddress(streetAddress) {
 function checkRent(rentPerMonth) {
   if (!rentPerMonth) throw "You must provide a valid number for your rating";
   if (isNaN(rentPerMonth)) throw `${rentPerMonth} must be a number`;
-  if (rentPerMonth.toString().includes('.')) throw `${rentPerMonth} cannot include '.'`; //!Shouldnt a price be a float value?
-  if (rentPerMonth <= -1) throw "number must be positive";
+  if (rentPerMonth.toString().includes('.')) throw `${rentPerMonth} should be a whole number`;
+  if (rentPerMonth <= -1) throw "Number must be positive";
   return ;
 }
 
 //
 function checkRentDuration(rentDuration) {
+  if(!rentDuration) throw "must include rent duration"
   if ( !(/\d/.test(rentDuration) && /[a-zA-Z]/.test(rentDuration)) ) throw `${rentDuration} must contain a specified number of length`
   let rntDur = rentDuration.trim();
   return rntDur;
