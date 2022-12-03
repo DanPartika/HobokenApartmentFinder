@@ -13,15 +13,13 @@ router
   .get(async (req, res) => {
     //code here for GET Done
     try {
-      //! What do we want on our home page? apartment list already?? or ask what search parameters??
-      /*  
-      apartmentsList.forEach((apt) => {
-        ans[ans.length] = { _id: apt._id, apartmentName: apt.apartmentName, streetAddress: apt.streetAddress, rentPerMonth: apt.rentPerMonth, numBedrooms: apt.numBedrooms, overallRating: apt.overallRating };
-      });
-*/
-      res.json(ans);
+      if (req.session.username) { //if logged in go to user home page
+        return res.render('', { });
+      } else { //otherwise go to website home page 
+        return res.sendFile(path.resolve('static/homepage.html'));
+      }
     } catch (e) {
-      res.status(500).send(e);
+      res.status(404).json({ error: e });
     }
   })
   .post(async (req, res) => {
@@ -29,6 +27,10 @@ router
     let apartmentsPData = req.body;
     
   });
+router.route("/apartments")
+  .get(async (req,res) => {
+    return res.render()
+  })
 
 router
   .route("/:ApartmentId")
