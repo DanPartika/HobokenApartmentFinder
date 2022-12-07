@@ -4,8 +4,8 @@ const { ObjectId, ConnectionCheckOutStartedEvent } = require("mongodb");
 
 function checkStr(str) {
   if (!str) throw 'Please input a number.'
-  if (typeof str !== 'string') throw ' Input a number.'
-  const trimmed = str.trim()
+  if (typeof str !== 'string') throw 'Input a number.'
+  const trimmed = str.trim();
   if (trimmed.length < 1) throw 'Input cannot be just spaces.'
   return trimmed;
 }
@@ -33,6 +33,7 @@ function checkNum(num) {
   if (!num) throw "You must provide a valid number for your rating";
   if (isNaN(num)) throw `${num} must be a number`;
   if (num.toString().includes('.')) throw `${num} cannot include '.'`;
+  num = num.parseInt();
   if (num <= -1) throw "number must be positive";
   return num;
 }
@@ -55,7 +56,8 @@ function checkName(apartmentName) {
 //The street address of the specified apartment
 function checkAddress(streetAddress) {
   //specify a format ## street name
-  //if possible get all the streets in hoboken and make sure it is a street in hoboken
+  //!make sure this works with google map.
+  //if possible get all the streets in hoboken and make sure it is a street in hoboken --> be solved with google maps
   return checkStr(streetAddress);
 }
 
@@ -63,13 +65,14 @@ function checkAddress(streetAddress) {
 function checkRent(rentPerMonth) {
   if (!rentPerMonth) throw "You must provide a valid number for your rating";
   if (isNaN(rentPerMonth)) throw `${rentPerMonth} must be a number`;
-  if (rentPerMonth.toString().includes('.')) throw `${rentPerMonth} cannot include '.'`; //!Shouldnt a price be a float value?
-  if (rentPerMonth <= -1) throw "number must be positive";
+  if (rentPerMonth.toString().includes('.')) throw `${rentPerMonth} should be a whole number`;
+  if (rentPerMonth <= -1) throw "Number must be positive";
   return ;
 }
 
 //
 function checkRentDuration(rentDuration) {
+  if(!rentDuration) throw "must include rent duration"
   if ( !(/\d/.test(rentDuration) && /[a-zA-Z]/.test(rentDuration)) ) throw `${rentDuration} must contain a specified number of length`
   let rntDur = rentDuration.trim();
   return rntDur;
@@ -103,7 +106,7 @@ function checkLaundry(laundry) {
 //
 function checkFloors(floorNum) {
   
-  return checkNum(floorNum); //??possible error, this will throw on negative values
+  return checkNum(floorNum); //??possible error, this will throw on negative values?
   /* possible fix
   try {
     return checkNum(floorNum)
@@ -117,7 +120,8 @@ function checkFloors(floorNum) {
 //
 function checkRoomNum(roomNum) {
   //!can roomNum be a letter?
-  return checkNum(roomNum);
+  if (roomNum.length >= 4) throw "Room number cannot be that long"
+  return checkStr(roomNum);
 }
 
 //
@@ -159,19 +163,21 @@ function checkApartmentParameters(apartmentName, streetAddress,rentPerMonth,rent
 
 function checkReviewerName(a) {
   if (!a) throw "must include your name";
-  checkStr(a);
+  return checkStr(a);
 }
 
 function checkReview(a) {
   if (!a) throw "must include a review";
-  checkStr(a);
+  return checkStr(a);
 }
 
 function checkRating(a) {
   if (!a) throw "must include a rating";
   //checkNumber(a)
+  a = parseInt(a);
   if (isNaN(a)) throw "Must be a number from 1-5";
   if (a < 1 || a > 5) throw "Rating not in range 1-5";
+  return a;
 }
 
 function checkReviewsParameters(apartmentId,  userId, userName, comments, rating) {
@@ -186,14 +192,13 @@ function checkReviewsParameters(apartmentId,  userId, userName, comments, rating
 
 //FUNCTIONS FOR DATA/USERS.JS
 function checkEmail(email) {
-  if (! (email.includes("@") && email.includes(".")) ) throw "enter a vaild email"
+  if (! (email.includes("@") && email.includes(".")) ) throw "enter a vaild email";
   return checkStr(email);
 }
 
 function checkGender(gender){
-  //are we letting the user type in or having them select from a drop down menu?
   if (!gender) throw "must supply a gender"
-  return gender;
+  return checkStr(gender);
 }
 
 function checkAge(age) {
@@ -239,29 +244,26 @@ function checkPassword(password) {
   return trimmed;
 }
 
-function checkUserParameters(firstName, lastName, email, gender, age, city, state, username, password) {
+function checkUserParameters(firstName, lastName, email, gender, age, username, password) {
   return {
     firstName:checkName(firstName), 
     lastName:checkName(lastName), 
     email:checkEmail(email), 
     gender: checkGender(gender), 
     age:checkAge(age), 
-    city:checkCity(city), 
-    state: checkState(state), 
     username: checkUsername(username),
     password: checkPassword(password)
   }
 }
-function checkUserParameters1(userID, firstName, lastName, email, gender, age, city, state){
+function checkUserParameters1(userID, firstName, lastName, email, gender, age, userName){
   return {
     userID: checkID(userID),
     firstName:checkName(firstName), 
     lastName:checkName(lastName), 
     email:checkEmail(email), 
     gender: checkGender(gender), 
-    age:checkAge(age), 
-    city:checkCity(city), 
-    state: checkState(state)
+    age:checkAge(age),
+    userName: checkUsername(userName)
   }
 }
 

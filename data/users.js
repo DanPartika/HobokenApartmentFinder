@@ -9,16 +9,14 @@ const createUser = async (
   email,
   gender,
   age,
-  city,
-  state, 
   username, 
   password
   ) => {
   //check if username exists
-  let params = helpers.checkUserParameters(firstName, lastName, email, gender, age, city, state, username, password);
+  let params = helpers.checkUserParameters(firstName, lastName, email, gender, age, username, password);
   const usersCollection = await users();
   const account = await usersCollection.findOne({ username: params.username });
-  if (account !== null) throw `Account with username ${user} exists already.`;
+  if (account !== null) throw `Account with username ${params.username} exists already.`;
   const hash = await bcrypt.hash(pass, saltRounds);
   //added a date created
   let curDate = new Date();
@@ -28,14 +26,11 @@ const createUser = async (
     email: params.email,
     gender: params.gender,
     age: params.age,
-    city: params.city,
-    state: params.state,
     userCreated: curDate,
-    userModified: [],
     username: params.username,
     password: hash,
     userApartments: [],
-    userReviews: []    //isnt this redundant? I think remove userApartments b/c if we have review id we can get the list of apartments reviewed
+    userReviews: []    
   }
   const insertInfo = await usersCollection.insertOne(newUser);
   if (! insertInfo.acknowledged || ! insertInfo.insertedId) throw 'Could not add user';
@@ -77,41 +72,24 @@ const updateUser = async (
   email,
   gender,
   age,
-  city,
-  state,
   username
 ) => {
-  // if (arguments.length > 10) {
-  //   throw "too many parameters are being passed"
-  // }
   //!do not modify reviews or overallRating here
   //parms returns all the prams in a object with the trimmed output
-  let params = helpers.checkUserParameters1(userID, firstName, lastName, email, gender, age, city, state,  username, password);
+  let params = helpers.checkUserParameters1(userID, firstName, lastName, email, gender, age, username);
   const usersCollection = await users();
   const user = await getUser(username);
   if (user === null) throw "no Apartment exists with that id";
-  let curDate = new Date();
-  let dates = [];
-  if (user.userModified.length >= 1){
-     dates = user.userModified;
-     dates[dates.length] = curDate;
-  } else {
-    dates = [curDate];
-  }
   let updatedUser = {
     firstName: params.firstName,
     lastName: params.lastName,
     email: params.email,
     gender: params.gender,
-    age: params.age,
-    city: params.city,
-    state: params.state,
-    userCreated: user.userCreated,
-    userModified: dates, //Note difference here 
-    username:user.username,
-    password:user.password,
+    age: params.age, 
+    username: user.username,
+    password: user.password,
     userApartments: user.userApartments,
-    userReviews: user.userReviews  //redundant 
+    userReviews: user.userReviews   
   };
   const updateInfo = await usersCollection.replaceOne(
     { _id: ObjectId(id) },
@@ -128,7 +106,7 @@ const removeUser = async (username) => {
   const usersCollection = await users();
   let user = await getUser(username.toString());
   let usersName = user.username;
-  const deletionInfo = await usersCollection.deleteOne({ username: username });
+  const deletionInfo = await usersCollection.deleteOne({ username: user.username });
   if (deletionInfo.deletedCount === 0) throw `Could not delete user with username of ${usersName}`;
   return `${usersName} has been successfully deleted!`; //what do i want to return?
 };
@@ -157,9 +135,6 @@ const changeLogin = async (actualUsername, actualPassword, username, password) =
     email: params.email,
     gender: params.gender,
     age: params.age,
-    city: params.city,
-    state: params.state,
-    userCreated: user.userCreated,
     userApartments: user.userApartments,
     userReviews: user.userReviews  //redundant 
   };
