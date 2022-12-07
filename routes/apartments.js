@@ -20,8 +20,8 @@ router
   });
 
 router.route("/apartments") //apt list
-  .get(async (req,res) => {
-    return res.render()
+  .get(async (req, res) => {
+    return res.render('apartments/aptList')
   })
   .post(async (req, res) => {
 
