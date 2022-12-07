@@ -21,55 +21,73 @@ router
 
 router.route("/apartments") //apt list
   .get(async (req, res) => {
-    return res.render('apartments/aptList')
+    if (req.session.user) return res.render('apartments/aptList');
+    else return res.render('userAccount/login');
   })
   .post(async (req, res) => {
-
+    if (req.session.user) {
+      return res.render('apartments/addApt')
+    }
+    else {
+      return res.render('userAccount/login')
+    }
   });
 
 router
   .route("/apartments/:ApartmentId") //singular apt
   .get(async (req, res) => {
     //code here for GET
-    req.params.ApartmentId = req.params.ApartmentId.trim();
-    if (!ObjectId.isValid(req.params.ApartmentId)) {
-      res.status(400).json({ error: "invalid ObjectId" });
-      return;
-    }
-    try {
-      const mov = await apartmentsData.getApartmentById(req.params.ApartmentId);
-      res.status(200).json(mov);
-    } catch (e) {
-      res.status(404).json({ error: "Apartment not found" });
+    if (req.session.user) {
+      req.params.ApartmentId = helpers.checkID(req.params.ApartmentId);
+
+      try {
+        const mov = await apartmentsData.getApartmentById(req.params.ApartmentId);
+        res.status(200).json(mov);
+      } catch (e) {
+        res.status(404).json({ error: "Apartment not found" });
+      }
+      return res.render('apartments/apartment')
+
+    }else {
+      return res.render('userAccount/login')
     }
   })
-  .delete(async (req, res) => {
-    //code here for DELETE
-    //!make sure user is logged in
-    if (!req.params.ApartmentId) { 
-      res.status(400).json({ error: "You must supply id to delete Apartment" });
-      return;
-    }
+  // .delete(async (req, res) => {
+  //   //code here for DELETE
+  //   //!make sure user is logged in
+  //   if (!req.params.ApartmentId) { 
+  //     res.status(400).json({ error: "You must supply id to delete Apartment" });
+  //     return;
+  //   }
 
-    req.params.ApartmentId = req.params.ApartmentId.trim();
+  //   req.params.ApartmentId = req.params.ApartmentId.trim();
 
-    if (!ObjectId.isValid(req.params.ApartmentId)) {
-      res.status(400).json({ error: "Invalid ObjectID" });
-      return;
-    }
-    try {
-      const deleted = await apartmentsData.removeApartment(
-        req.params.ApartmentId
-      );
-      let del = { ApartmentId: req.params.ApartmentId, deleted: true };
-      res.status(200).json(del);
-    } catch (e) {
-      res.status(404).json({ error: e });
-      return;
-    }
-  })
-  .put(async (req, res) => {
+  //   if (!ObjectId.isValid(req.params.ApartmentId)) {
+  //     res.status(400).json({ error: "Invalid ObjectID" });
+  //     return;
+  //   }
+  //   try {
+  //     const deleted = await apartmentsData.removeApartment(
+  //       req.params.ApartmentId
+  //     );
+  //     let del = { ApartmentId: req.params.ApartmentId, deleted: true };
+  //     res.status(200).json(del);
+  //   } catch (e) {
+  //     res.status(404).json({ error: e });
+  //     return;
+  //   }
+  // })
+
+  /*
+  .post(async (req, res) => { // adding new apartment
     //code here for PUT
+    if (req.session.user) {
+      return res.render('apartments/addApt')
+    }
+    else {
+      return res.render('userAccount/login')
+    }
+
     if (!req.params.ApartmentId) {
       res.status(400).json({ error: "must supply and ID to delete" });
       return;
@@ -96,6 +114,6 @@ router
     } catch (e) {
       res.status(404).json({ error: e });
     }
-  });
+  });*/
 
 module.exports = router;
