@@ -11,29 +11,24 @@ const helpers = require("../helpers");
 router
   .route("/")
   .get(async (req, res) => {
-    //code here for GET Done
+    //code here for GET
     try {
-      if (req.session.username) { //if logged in go to user home page
-        return res.render('', { });
-      } else { //otherwise go to website home page 
-        return res.sendFile(path.resolve('static/homepage.html'));
-      }
+      return res.sendFile(path.resolve('static/homepage.html'));
     } catch (e) {
       res.status(404).json({ error: e });
     }
-  })
-  .post(async (req, res) => {
-    //code here for POST
-    let apartmentsPData = req.body;
-    
   });
-router.route("/apartments")
+
+router.route("/apartments") //apt list
   .get(async (req,res) => {
     return res.render()
   })
+  .post(async (req, res) => {
+
+  });
 
 router
-  .route("/:ApartmentId")
+  .route("/apartments/:ApartmentId") //singular apt
   .get(async (req, res) => {
     //code here for GET
     req.params.ApartmentId = req.params.ApartmentId.trim();
@@ -50,7 +45,8 @@ router
   })
   .delete(async (req, res) => {
     //code here for DELETE
-    if (!req.params.ApartmentId) {
+    //!make sure user is logged in
+    if (!req.params.ApartmentId) { 
       res.status(400).json({ error: "You must supply id to delete Apartment" });
       return;
     }

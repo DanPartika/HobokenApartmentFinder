@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //Here you will require both route files and export the constructor method as shown in lecture code where there is more than one route file. Look at lecture 6 lecture code for example
 
 // when the route is /Apartments use the routes defined in Apartments.js routing file, when the route is /reviews use the routes defined in reviews.js routing file, all other enpoints should return a 404 as shown in the lecture code.
@@ -6,13 +5,11 @@ const apartmentsRoutes = require("./apartments");
 const reviewsRoutes = require("./reviews");
 const usersRoutes = require("./users")
 const path = require('path');
-const API = require('./API')
 
 const constructorMethod = (app) => {
-  app.use('/', API)
+  app.use('/', apartmentsRoutes);
   app.use("/apartments", apartmentsRoutes);
-  app.use("/reviews", reviewsRoutes);
-  app.use("/users",usersRoutes)
+  app.use("/users", usersRoutes);
 
   app.use("*", (req, res) => {
     res.sendStatus(404).json({ error: "Not Found" });
@@ -20,26 +17,3 @@ const constructorMethod = (app) => {
 };
 
 module.exports = constructorMethod;
-=======
-//Here you will require both route files and export the constructor method as shown in lecture code where there is more than one route file. Look at lecture 6 lecture code for example
-
-// when the route is /Apartments use the routes defined in Apartments.js routing file, when the route is /reviews use the routes defined in reviews.js routing file, all other enpoints should return a 404 as shown in the lecture code.
-const apartmentsRoutes = require("./apartments");
-const reviewsRoutes = require("./reviews");
-const usersRoutes = require("./users")
-const path = require('path');
-const API = require('./API')
-
-const constructorMethod = (app) => {
-  app.use('/', API)
-  app.use("/apartments", apartmentsRoutes);
-  app.use("/reviews", reviewsRoutes);
-  app.use("/users",usersRoutes)
-
-  app.use("*", (req, res) => {
-    res.sendStatus(404).json({ error: "Not Found" });
-  });
-};
-
-module.exports = constructorMethod;
->>>>>>> 453bad2914e0cff3b8a284126716ed0ebb82fd8f
