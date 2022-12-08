@@ -77,6 +77,7 @@ const getApartmentById = async (apartmentId) => {
   newApartments.reviews.forEach((apt) => {
     apt._id = apt._id.toString();
   });
+  
   return newApartments;
 };
 

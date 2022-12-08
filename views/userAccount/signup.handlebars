@@ -1,0 +1,13 @@
+<main>
+  {{#if error}}
+  <p class="error">{{error}}</p>
+  {{/if}}
+  <form id="registration-form" action="/register" method="POST">
+    <label for="usernameInput">Username</label>
+    <input id="usernameInput" name="usernameInput" type="text" required />
+    <label for="passwordInput">Password</label>
+    <input id="passwordInput" name="passwordInput" type="password" required />
+    <button type="submit">Register</button>
+  </form>
+  <a href="/login">Already have an account? Click here to log-in</a>
+</main>

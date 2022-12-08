@@ -13,10 +13,24 @@
 <header>
   <h1> Hoboken Apartment Finder </h1>
   <nav>
-    <button class="Homepage-button" type="homepage"> Homepage </button>
-    <button class="Apts-button" type="apartments"> Apartments </button>
-    <button class="Account-button" type="account"> Account </button>
-    <button class="Login/Signup-button" type = "login"> LogIn/SignUp </button>
+    <form id="homepage-view" action="/" method="GET"> 
+      <button class="Homepage-button" type="submit"> Homepage </button>
+    </form>
+
+    <form id="apartments" action="/apartments" method="POST"> 
+      <button class="Apts-button" type="submit"> Apartments </button>
+    </form>
+
+    <form id="login-form" action="/" method="POST"> 
+      <button class="Account-button" type="submit"> Account </button>
+    </form>
+
+    <form id="login-form" action="/" method="POST"> 
+      <button class="Login-Signup-button" type = "submit"> LogIn/SignUp </button>
+    </form>
+    
+      
+      
 </nav>
 <img src="../images/homepage_view.jpg" alt="Hoboken"> 
 </header>

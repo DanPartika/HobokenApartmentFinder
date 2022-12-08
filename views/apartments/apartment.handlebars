@@ -1,0 +1,31 @@
+{{!Page where user that is logged in can view a specific Apt}}
+
+
+<h1>{{title}}</h1>
+  <h2>{{apt.firstName}} {{apt.lastName}}</h2>
+  <main> 
+    {{#if apt.id}}
+    <dl> 
+      <dt>ID</dt>
+      <dd>{{apt.id}}</dd>
+      <dt>First Name</dt>
+      <dd>{{apt.firstName}}</dd>
+      <dt>Last Name</dt>
+      <dd>{{apt.lastName}}</dd>
+      <dt>Address</dt>
+      <dd>{{apt.address}}</dd>
+      <dt>Zip Code</dt>
+      <dd>{{apt.zip}}</dd>
+      <dt>Phone</dt>
+      <dd>{{apt.phone}}</dd>
+      <dt>Social Security Number</dt>
+      <dd>{{apt.ssn}}</dd>
+
+    </dl>
+
+  {{else}}
+    <p>Person with {{apt.id}} does not exist</p>
+  {{/if}}
+
+  </main>
+

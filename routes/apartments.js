@@ -7,17 +7,21 @@ const apartmentsData = data.Apartments;
 const usersData = data.users
 const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
+const { getApartmentById } = require("../data/apartments");
+const path = require('path');
 
-router
-  .route("/")
+router.route("/") //homepage
   .get(async (req, res) => {
     //code here for GET
-    try {
-      return res.sendFile(path.resolve('static/homepage.html'));
-    } catch (e) {
-      res.status(404).json({ error: e });
-    }
+    return res.sendFile(path.resolve('static/homepage.html'));
   });
+  /**
+   * .post(async (req,res) => {
+   *  return res.render(req.)
+   * })
+   *  
+   * */
+  
 
 router.route("/apartments") //apt list
   .get(async (req, res) => {
@@ -27,8 +31,7 @@ router.route("/apartments") //apt list
   .post(async (req, res) => {
     if (req.session.user) {
       return res.render('apartments/addApt')
-    }
-    else {
+    } else {
       return res.render('userAccount/login')
     }
   });
@@ -38,18 +41,23 @@ router
   .get(async (req, res) => {
     //code here for GET
     if (req.session.user) {
-      req.params.ApartmentId = helpers.checkID(req.params.ApartmentId);
-
       try {
-        const mov = await apartmentsData.getApartmentById(req.params.ApartmentId);
-        res.status(200).json(mov);
+        const title = "Apartment Found";
+        const ApartmentId = helpers.checkID(req.params.ApartmentId);
+        //let apt = {};
+        try{
+          const apt = await getApartmentById(ApartmentId); //!idk if this saves outside the try catch
+        } catch (e) {
+          return res.status(400).render("error", {title: "Apartment Not Found", message: "400 Error: Apartment not found."});  // can alert this instead
+        }
+        const tempData = {title: title, apt:apt};
+        return res.render("apartment",tempData);
       } catch (e) {
-        res.status(404).json({ error: "Apartment not found" });
+        
+        return res.status(404).render("error", {title: "Apartment Not Found", message: "404 Error: Page not found."});
       }
-      return res.render('apartments/apartment')
-
-    }else {
-      return res.render('userAccount/login')
+    } else {
+      return res.render('userAccount/login');
     }
   })
   // .delete(async (req, res) => {
@@ -79,7 +87,7 @@ router
   // })
 
   /*
-  .post(async (req, res) => { // adding new apartment
+  .post(async (req, res) => { // todo adding new apartment
     //code here for PUT
     if (req.session.user) {
       return res.render('apartments/addApt')
