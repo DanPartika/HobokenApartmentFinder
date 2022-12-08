@@ -1,14 +1,15 @@
 <main>
   {{#if error}}
+  <h2> {{title}} </h2>
   <p class="error">{{error}}</p>
   {{/if}}
-  <form id="login-form" action="/login" method="POST">
+  <form id="login-form" action="/users/login" method="POST">
     <label for="usernameInput">Username</label>
     <input id="usernameInput" name="usernameInput" type="text" required/>
     <label for="passwordInput">Password</label>
     <input id="passwordInput" name="passwordInput" type="password" required/>
     <button type="submit">Login</button>
   </form>
-  <nav> <a href="/register">Click here to register!</a> </nav>
+  <nav> <a href="/users/register">Click here to register!</a> </nav>
   
 </main>

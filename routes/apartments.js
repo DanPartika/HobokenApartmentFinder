@@ -7,7 +7,9 @@ const apartmentsData = data.Apartments;
 const usersData = data.users
 const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
-const { getApartmentById } = require("../data/apartments");
+
+router
+ const { getApartmentById } = require("../data/apartments");
 const path = require('path');
 
 router.route("/") //homepage
@@ -123,7 +125,6 @@ router
       res.status(404).json({ error: e });
     }
   });*/
-
 
 
 module.exports = router;

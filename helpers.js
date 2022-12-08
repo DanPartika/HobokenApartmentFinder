@@ -33,9 +33,9 @@ function checkNum(num) {
   if (!num) throw "You must provide a valid number for your rating";
   if (isNaN(num)) throw `${num} must be a number`;
   if (num.toString().includes('.')) throw `${num} cannot include '.'`;
-  num = num.parseInt();
-  if (num <= -1) throw "number must be positive";
-  return num;
+  let n = parseInt(num);
+  if (n <= -1) throw "number must be positive";
+  return n;
 }
 
 function checkID(id) {
