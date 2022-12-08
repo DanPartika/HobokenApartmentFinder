@@ -52,6 +52,10 @@ router
  
 router
   .route('/login')
+  .get(async (req, res) => {
+    if (req.session.user) return res.render('apartments/aptList');
+    else return res.render('userAccount/login');
+  })
   .post(async (req, res) => {
     //code here for POST
     //let { username, password } = req.body
@@ -69,7 +73,7 @@ router
         title: 'Login',
         error: e
       }
-      return res.status(400).render('userLogin', templateData)
+      return res.status(400).render('error', templateData)
     }
     if (authCookie.authenticatedUser) {
       req.session.user = {
@@ -81,7 +85,7 @@ router
         title: 'Login',
         error: 'You did not provide a valid username and/or password.'
       }
-      return res.status(400).render('userLogin', templateData)
+      return res.status(400).render('userAccount/login', templateData)
     }
   })
 
@@ -89,12 +93,17 @@ router
   .route('/protected')
   .get(async (req, res) => {
     //code here for GET
-    let curDate = new Date();
+    try {
+      let curDate = new Date();
     let templateData = {
       username: req.session.user.username,
       date: curDate
     }
-    return res.render('private', templateData)
+    return res.render('userhomepage', templateData)
+    } catch (error) {
+      return res.render('error',{title:"Error",error:"cannot get"})
+    }
+    
   })
 
 router

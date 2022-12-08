@@ -26,7 +26,7 @@ router.route("/") //homepage
 router.route("/apartments") //apt list
   .get(async (req, res) => {
     if (req.session.user) return res.render('apartments/aptList');
-    else return res.render('userAccount/login');
+    else return res.redirect('users/login');
   })
   .post(async (req, res) => {
     if (req.session.user) {
@@ -123,5 +123,7 @@ router
       res.status(404).json({ error: e });
     }
   });*/
+
+
 
 module.exports = router;
