@@ -104,6 +104,7 @@ router
       username: req.session.user.username, //this may be something different
       date: curDate
       //also might want to add other things to users account page, all apts listed, other account information
+      //add user's reviews and apartments posted
     }
     return res.render('userAccount/userhomepage', templateData)
     } catch (error) {
