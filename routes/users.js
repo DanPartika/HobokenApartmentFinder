@@ -40,7 +40,7 @@ router
 
     } catch (e) {
       let templateData = {
-        title: 'Register Errorw',
+        title: 'Register Error',
         error: e
       }
       return res.status(400).render('userAccount/signup', templateData); //error

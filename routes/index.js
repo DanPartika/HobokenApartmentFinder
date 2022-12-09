@@ -8,11 +8,10 @@ const usersRoutes = require("./users");
 const path = require('path');
 
 const constructorMethod = (app) => {
-  
+  app.use('/', apartmentsRoutes);
   app.use('/reviews', reviewsRoutes);
   app.use('/users', usersRoutes);
-  app.use('/apartments', apartmentsRoutes);
-  app.use('/', api);
+  //app.use('/', api);
 
   app.use("*", (req, res) => {
     res.status(404).json({ error: "Not Found" });

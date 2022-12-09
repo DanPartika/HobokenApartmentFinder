@@ -1,5 +1,6 @@
 {{!Page where user that is logged in can add an Apt
-todo2: get all the inputs: apartmentName, 
+todo2: get all the inputs: 
+apartmentName, 
   streetAddress,
   rentPerMonth,
   rentDuration,
@@ -15,3 +16,53 @@ todo2: get all the inputs: apartmentName,
   Follow format of views/userAccount/signup 
   Todo3: then do the routes
   }}
+<main>
+  {{#if error}}
+  <h2> {{title}} </h2>
+  <p class="error">{{error}}</p>
+  {{/if}}
+  <form id="newApartment-form" action="/apartments/add-new-apartment" method="POST">
+    <label for="apartmentNameInput">Apartment Name:</label>
+    <input for="apartmentNameInput" name="apartmentNameInput" type="text" required/>
+
+    <label for="streetAddressInput">Street Address:</label>
+    <input for="streetAddressInput" name="streetAddressInput" type="text" required/>
+
+    <label for="rentPerMonthInput">rentPerMonth:</label>
+    <input for="rentPerMonthInput" name="rentPerMonthInput" type="text" required/>
+
+    <label for="rentDurationInput">rentDuration:</label>
+    <input for="rentDurationInput" name="rentDurationInput" type="text" required/>
+
+    <label for="maxResidentsInput">maxResidents:</label>
+    <input for="maxResidentsInput" name="maxResidentsInput" type="text" required/>
+
+    <label for="numBedroomsInput">numBedrooms:</label>
+    <input id="numBedroomsInput" name="numBedroomsInput" type="text" required />
+{{! stopped here, need to add more... }}
+
+    <label for="numBathroomsInput">numBathrooms:</label>
+    <input for="numBathroomsInput" name="numBathroomsInput" type="text" required/>
+
+    <label for="laundryInput">laundry:</label>
+    <input for="laundryInput" name="laundryInput" type="text" required/>
+
+    <label for="floorNumInput">floorNum:</label>
+    <input for="floorNumInput" name="floorNumInput" type="text" required/>
+
+    <label for="roomNumInput">rentDuration:</label>
+    <input for="roomNumInput" name="roomNumInput" type="text" required/>
+
+    <label for="appliancesIncludedInput">appliancesIncluded:</label>
+    <input for="appliancesIncludedInput" name="appliancesIncludedInput" type="text" required/>
+
+    <label for="maxPetsInput">maxPets:</label>
+    <input id="maxPetsInput" name="maxPetsInput" type="text" required />
+
+    <label for="utilitiesIncludedInput">utilitiesIncluded:</label>
+    <input id="utilitiesIncludedInput" name="utilitiesIncludedInput" type="text" required />
+
+    <button type="submit">Register</button>
+  </form>
+  <a href="/users/login">Already have an account? Click here to log-in</a>
+</main>

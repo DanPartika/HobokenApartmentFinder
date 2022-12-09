@@ -2,7 +2,7 @@ const helpers = require("../helpers");
 const { users } = require('../config/mongoCollections');
 const bcrypt = require('bcrypt');
 const { getApartmentById } = require("./apartments");
-const saltRounds = 16;
+const saltRounds = 4;
 
 const createUser = async (
   firstName,
@@ -18,6 +18,10 @@ const createUser = async (
   const usersCollection = await users();
   const account = await usersCollection.findOne({ username: params.username });
   if (account !== null) throw `Account with username ${params.username} exists already.`;
+
+  const UserEmail = await usersCollection.findOne({ email: params.email });
+  if (UserEmail !== null) throw `Account with email ${params.email} exists already.`;
+
   const hash = await bcrypt.hash(params.password, saltRounds);
   //added a date created
   let today = new Date();
