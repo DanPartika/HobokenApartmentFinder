@@ -16,11 +16,22 @@ const path = require('path');
 //     return res.sendFile(path.resolve('static/homepage.html'));
 //   });
 
-
-router.route("/apartments") //apt list
+router.route("/") //homepage
   .get(async (req, res) => {
-    if (req.session.user) return res.render('apartments/aptList');
-    else return res.redirect('/users/login');
+    //code here for GET
+    return res.sendFile(path.resolve('static/homepage.html'));
+  });
+
+router
+  .route("/apartments") //apt list
+  .get(async (req, res) => {
+    try {
+      if (req.session.user) return res.render('apartments/aptList');
+      else return res.redirect('/users/login');
+    } catch (error) {
+      return res.render(error,{title:error})
+    }
+   
   })
   .post(async (req, res) => {
     if (req.session.user) {
