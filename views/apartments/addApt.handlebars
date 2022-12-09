@@ -23,45 +23,72 @@ apartmentName,
   {{/if}}
   <form id="newApartment-form" action="/apartments/add-new-apartment" method="POST">
     <label for="apartmentNameInput">Apartment Name:</label>
-    <input for="apartmentNameInput" name="apartmentNameInput" type="text" required/>
+    <input for="apartmentNameInput" name="apartmentNameInput"  type="text" placeholder="Name of Apt Complex" required/>
+    <br>
 
     <label for="streetAddressInput">Street Address:</label>
-    <input for="streetAddressInput" name="streetAddressInput" type="text" required/>
+    <input for="streetAddressInput" name="streetAddressInput" type="text" placeholder="Apt Adress" required/>
+    <br>
 
     <label for="rentPerMonthInput">rentPerMonth:</label>
-    <input for="rentPerMonthInput" name="rentPerMonthInput" type="text" required/>
+    <input for="rentPerMonthInput" name="rentPerMonthInput" type="text" placeholder="Integer Number" required/>
+    <br>
 
     <label for="rentDurationInput">rentDuration:</label>
-    <input for="rentDurationInput" name="rentDurationInput" type="text" required/>
+    <input for="rentDurationInput" name="rentDurationInput" type="text" placeholder="Number of Months" required/>
+    <br>
 
     <label for="maxResidentsInput">maxResidents:</label>
-    <input for="maxResidentsInput" name="maxResidentsInput" type="text" required/>
+    <input for="maxResidentsInput" name="maxResidentsInput" type="text" placeholder="Number of people" required/>
+    <br>
 
     <label for="numBedroomsInput">numBedrooms:</label>
-    <input id="numBedroomsInput" name="numBedroomsInput" type="text" required />
+    <select name = "numBedroomsInput" id = "numBedroomsInput"> 
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    <br>
+    {{!-- <input id="numBedroomsInput" name="numBedroomsInput" type="text" placeholder="Integer number" required /> --}}
+
 
     <label for="numBathroomsInput">numBathrooms:</label>
-    <input for="numBathroomsInput" name="numBathroomsInput" type="text" required/>
+      <select name = "numBathroomsInput" id = "numBathroomsInput"> 
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    {{!-- <input for="numBathroomsInput" name="numBathroomsInput" type="text" required/> --}}
 
-    <label for="laundryInput">laundry:</label>
-    <input for="laundryInput" name="laundryInput" type="text" required/>
+    <p>Laundry:</p>
+    <input name="laundryInput" type="radio" id="yes" value="true" />
+    <label for="yes">Yes</label> <br>
+    <input name="laundryInput" type="radio" id="no" value="false" />
+    <label for="no">No</label> <br>
 
     <label for="floorNumInput">floorNum:</label>
     <input for="floorNumInput" name="floorNumInput" type="text" required/>
+    <br>
 
-    <label for="roomNumInput">rentDuration:</label>
+    <label for="roomNumInput">unit:</label>
     <input for="roomNumInput" name="roomNumInput" type="text" required/>
+    <br>
 
     <label for="appliancesIncludedInput">appliancesIncluded:</label>
     <input for="appliancesIncludedInput" name="appliancesIncludedInput" type="text" required/>
+    <br>
 
     <label for="maxPetsInput">maxPets:</label>
     <input id="maxPetsInput" name="maxPetsInput" type="text" required />
+    <br>
 
     <label for="utilitiesIncludedInput">utilitiesIncluded:</label>
     <input id="utilitiesIncludedInput" name="utilitiesIncludedInput" type="text" required />
 
     <button type="submit">Register</button>
   </form>
-  <a href="/users/login">Already have an account? Click here to log-in</a>
 </main>

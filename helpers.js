@@ -73,7 +73,7 @@ function checkRent(rentPerMonth) {
 //
 function checkRentDuration(rentDuration) {
   if(!rentDuration) throw "must include rent duration"
-  if ( !(/\d/.test(rentDuration) && /[a-zA-Z]/.test(rentDuration)) ) throw `${rentDuration} must contain a specified number of length`
+  if ( !(/\d/.test(rentDuration)) ) throw `${rentDuration} must contain a specified number of length`
   let rntDur = rentDuration.trim();
   return rntDur;
 }
