@@ -7,6 +7,14 @@ const helpers = require("../helpers");
 
 
 router
+  // .route('/')
+  // .get(async (req, res) => {
+  //   //code here for GET
+  //   if (req.session.user) return res.redirect('/protected');
+  //   else return res.render('userLogin', {title: "Login"});
+  // });
+
+router
   .route('/register') //the url would be localhost../users/register
   .get(async (req, res) => {
     //code here for GET
@@ -32,7 +40,7 @@ router
 
     } catch (e) {
       let templateData = {
-        title: 'Register Errorw',
+        title: 'Register Error',
         error: e
       }
       return res.status(400).render('userAccount/signup', templateData); //error
