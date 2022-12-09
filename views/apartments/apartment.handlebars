@@ -19,14 +19,12 @@ apartmentName, //do we need users' id here?
 
 
 <h1>{{title}}</h1>
-  <h2>{{apt.firstName}} {{apt.lastName}}</h2>
+  <h2>{{apt.apartmentName}}</h2>
   <main> 
     {{#if apt.id}}
     <dl> 
-      <dt>ID</dt>
-      <dd>{{apt.id}}</dd>
       <dt>First Name</dt>
-      <dd>{{apt.firstName}}</dd>
+      <dd>{{apt.streetAddress}}</dd>
       <dt>Last Name</dt>
       <dd>{{apt.lastName}}</dd>
       <dt>Address</dt>
