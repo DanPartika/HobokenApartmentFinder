@@ -40,12 +40,12 @@ router
 
     } catch (e) {
       let templateData = {
-        title: 'Register Error',
+        title: 'Register Errorw',
         error: e
       }
       return res.status(400).render('userAccount/signup', templateData); //error
     }
-    if (register.insertedUser) return res.status(200).redirect('userAccount/login'); //if they register send them to login
+    if (register.insertedUser) return res.status(200).render('userAccount/login'); //if they register send them to login
     else {
       let templateData = {
         title: 'Register',
@@ -58,7 +58,7 @@ router
 router
   .route('/login')
   .get(async (req, res) => {
-    if (req.session.user) return res.render('apartments/aptList');
+    if (req.session.user) return res.redirect('/');
     else return res.render('userAccount/login');
   })
   .post(async (req, res) => {

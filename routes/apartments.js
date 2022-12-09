@@ -7,28 +7,20 @@ const apartmentsData = data.Apartments;
 const usersData = data.users
 const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
-
-router
- const { getApartmentById } = require("../data/apartments");
+const { getApartmentById } = require("../data/apartments");
 const path = require('path');
 
-router.route("/") //homepage
-  .get(async (req, res) => {
-    //code here for GET
-    return res.sendFile(path.resolve('static/homepage.html'));
-  });
-  /**
-   * .post(async (req,res) => {
-   *  return res.render(req.)
-   * })
-   *  
-   * */
-  
+// router.route("/") //homepage
+//   .get(async (req, res) => {
+//     //code here for GET
+//     return res.sendFile(path.resolve('static/homepage.html'));
+//   });
+
 
 router.route("/apartments") //apt list
   .get(async (req, res) => {
     if (req.session.user) return res.render('apartments/aptList');
-    else return res.redirect('users/login');
+    else return res.redirect('/users/login');
   })
   .post(async (req, res) => {
     if (req.session.user) {
@@ -37,6 +29,7 @@ router.route("/apartments") //apt list
       return res.render('userAccount/login')
     }
   });
+
 
 router
   .route("/apartments/:ApartmentId") //singular apt
@@ -60,6 +53,23 @@ router
       }
     } else {
       return res.render('userAccount/login');
+    }
+  })
+
+router
+  .route("/apartments/add-new-apartment")
+  .get(async (req,res) => {
+    if (req.session.user) {
+      return res.render('apartments/addApt');
+    } else {
+      return res.render('userAccount/login',{});
+    }
+  })
+  .post(async (req,res) => {
+    if (req.session.user) {
+      // return res.render('apartments/addApt');
+    } else {
+      return res.render('userAccount/login',{});
     }
   })
   // .delete(async (req, res) => {
