@@ -39,6 +39,7 @@ const createReview = async (
     userId: params.userId,
     //reviewTitle: params.reviewTitle,
     reviewDate: today, //added this.
+    reviewModified: "N/A",
     userName: params.userName,
     comments: params.comments,
     rating: rating

@@ -1,8 +1,6 @@
-//Daniel Partika
-//I pledge my honor that I have abided by the Stevens Honors System.
 const mongoCollections = require("../config/mongoCollections");
 const apartments = mongoCollections.apartments;
-const { ObjectId } = require("mongodb");
+const { ObjectId, ListCollectionsCursor } = require("mongodb");
 const helpers = require("../helpers");
 
 const createApartment = async (
@@ -24,7 +22,11 @@ const createApartment = async (
 
   const apartmentCollection = await apartments();
   //get date variable
-  let curDate = new Date();
+  let today = new Date();
+  let mm = String(today.getMonth() + 1).padStart(2, "0");
+  let dd = String(today.getDate()).padStart(2, "0");
+  let yyyy = today.getFullYear();
+  today = mm + "/" + dd + "/" + yyyy;
   let newApartment = {
     apartmentName: params.apartmentName,
     streetAddress: params.streetAddress,
@@ -39,17 +41,19 @@ const createApartment = async (
     appliancesIncluded: params.appliancesIncluded,
     maxPets: params.maxPets,
     utilitiesIncluded: params.utilitiesIncluded,
-    datePosted: curDate, //*Added a datePosted
+    datePosted: today, //*Added a datePosted
+    dateModified: "N/A",
     reviews: [],
     overallRating: 0
   };
-
+  
   const insertInfo = await apartmentCollection.insertOne(newApartment);
   if (!insertInfo.acknowledged || !insertInfo.insertedId) throw "Could not add Apartment";
   const newId = insertInfo.insertedId.toString();
   const apt = await getApartmentById(newId);
+  
   apt._id = apt._id.toString();
-  return apt;
+  return apt._id;
 };
 
 const getAllApartments = async () => {
@@ -59,6 +63,7 @@ const getAllApartments = async () => {
   apartmentList.forEach((Apartment) => {
     Apartment._id = Apartment._id.toString();
   });
+  apartmentList.sort((a,b) => (a.apartmentName.toLowerCase() > b.apartmentName.toLowerCase()) ? 1 : -1);
   return apartmentList;
 };
 
@@ -73,6 +78,7 @@ const getApartmentById = async (apartmentId) => {
   newApartments.reviews.forEach((apt) => {
     apt._id = apt._id.toString();
   });
+  
   return newApartments;
 };
 
@@ -88,7 +94,7 @@ const removeApartment = async (apartmentId) => {
 };
 
 const sortApartmentByCost = async () => {
-
+  
   return ;
 }
 
@@ -108,19 +114,22 @@ const updateApartment = async (
   maxPets,
   utilitiesIncluded
 ) => {
-  // if (arguments.length > 10) {
-  //   throw "too many parameters are being passed"
-  // }
+
   //!do not modify reviews or overallRating here
   //parms returns all the prams in a object with the trimmed output
   let id = helpers.checkID(apartmentId);
-  let params = helpers.checkParameters(apartmentName, streetAddress,rentPerMonth,rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
+  let params = helpers.checkApartmentParameters(apartmentName, streetAddress,rentPerMonth,rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
   
   const apartmentCollection = await apartments();
   const apartment = await getApartmentById(apartmentId);
   if (apartment === null) throw "no Apartment exists with that id";
   
-  let curDate = new Date();
+  let today = new Date();
+  let mm = String(today.getMonth() + 1).padStart(2, "0");
+  let dd = String(today.getDate()).padStart(2, "0");
+  let yyyy = today.getFullYear();
+  today = mm + "/" + dd + "/" + yyyy;
+
   let updatedApartment = {
     apartmentName: params.apartmentName,
     streetAddress: params.streetAddress,
@@ -135,7 +144,8 @@ const updateApartment = async (
     appliancesIncluded: params.appliancesIncluded,
     maxPets: params.maxPets,
     utilitiesIncluded: params.utilitiesIncluded,
-    datePosted: curDate, //*Added a datePosted
+    datePosted: apartment.datePosted, //*Added a datePosted
+    dateModified: today,
     reviews: apartment.reviews,
     overallRating: apartment.overallRating
   };

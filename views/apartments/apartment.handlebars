@@ -1,0 +1,58 @@
+{{!Page where user that is logged in can view a specific Apt
+Todo 3: change all these to fit apartment
+apartmentName, //do we need users' id here?
+  streetAddress,
+  rentPerMonth,
+  rentDuration,
+  maxResidents,
+  numBedrooms,
+  numBathrooms,
+  laundry,
+  floorNum,
+  roomNum,
+  appliancesIncluded,
+  maxPets,
+  utilitiesIncluded, also probably pictures
+  todo4: figureout how to get images stored in mongodb
+  google map will also be shown here
+}}
+
+
+<h1>{{title}}</h1>
+  <h2>{{apt.apartmentName}}</h2>
+  <main> 
+    {{#if apt._id}}
+    <dl> 
+      <dt>Street Address</dt>
+      <dd>{{apt.streetAddress}}</dd>
+      <dt>Rent per Month</dt>
+      <dd>{{apt.rentPerMonth}}</dd>
+      <dt>Rent Duration</dt>
+      <dd>{{apt.rentDuration}}</dd>
+      <dt>Max number of Residents</dt>
+      <dd>{{apt.maxResidents}}</dd>
+      <dt>Number of Bedrooms</dt>
+      <dd>{{apt.numBedrooms}}</dd>
+      <dt>Number of Bathrooms</dt>
+      <dd>{{apt.numBathrooms}}</dd>
+      <dt>Laundry?</dt>
+      <dd>{{apt.laundry}}</dd>
+      <dt>Floor of {{apt.apartmentName}}</dt>
+      <dd>{{apt.floorNum}}</dd>
+      <dt>Apartment Number</dt>
+      <dd>{{apt.roomNum}}</dd>
+      <dt>Appliances Included</dt>
+      <dd>{{apt.appliancesIncluded}}</dd>
+      <dt>Allowed number of Pets</dt>
+      <dd>{{apt.maxPets}}</dd>
+      <dt>Utilities Included</dt>
+      <dd>{{apt.utilitiesIncluded}}</dd>
+
+    </dl>
+
+  {{else}}
+    <p>Apartment with {{apt.id}} does not exist</p>
+  {{/if}}
+
+  </main>
+

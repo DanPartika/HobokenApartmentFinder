@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+{{!-- <header>
+  {{#if username}}
+  <h2> Logged in </h2>
+  {{else}}
+  <h2> Noto logged in </h2>
+  {{/if}}
+</header> --}}
+<header>
+  <h1> Hoboken Apartment Finder </h1>
+  <nav>
+    <form id="homepage-view" action="/" method="GET"> 
+      <button class="Homepage-button" type="submit"> Homepage </button>
+    </form>
+
+    <form id="apartments-form" action="/apartments" method="GET"> 
+      <button class="Apartments-button" type="submit"> Apartments </button>
+    </form>
+{{!-- only show this if user is logged in I think need to add to object in js routes files--}}
+    <form id="account-form" action="/users/protected" method="GET"> 
+      <button class="Account-button" type="submit"> Account </button>
+    </form>
+
+    <form id="login-form" action="/users/login" method="GET"> 
+      <button class="Login-Signup-button" type = "submit"> LogIn/SignUp </button>
+    </form>
+  </nav>
+</header>
+
+
+<body>
+  <main>
+    {{{body}}}
+  </main>
+  <nav> <a>  </a> </nav>
+</body>
+
+
+</html>

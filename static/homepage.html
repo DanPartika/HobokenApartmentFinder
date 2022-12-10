@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!doctype html>
  <html lang="en">
 
@@ -14,25 +13,31 @@
 <header>
   <h1> Hoboken Apartment Finder </h1>
   <nav>
-    <ul>
-        <li><a href="../views/error.handlebars">About Dan The Man</a></li>
-        <li><a href="./education.html">My Education</a></li>
-        <li><a href="./story.html">A Dan Story</a></li>
-    </ul>
-</nav>
+    <form id="homepage-view" action="/" method="GET"> 
+      <button class="Homepage-button" type="submit"> Homepage </button>
+    </form>
+
+    <form id="apartments" action="/apartments" method="GET"> 
+      <button class="Apts-button" type="submit"> Apartments </button>
+    </form>
+
+    <form id="login-form" action="/users/protected" method="GET"> 
+      <button class="Account-button" type="submit"> Account </button>
+    </form>
+
+    <form id="login-form" action="/users/login" method="GET"> 
+      <button class="Login-Signup-button" type = "submit"> LogIn/SignUp </button>
+    </form>
+  </nav>
+  <img src="https://housely.com/wp-content/uploads/2016/11/Hoboken.jpg" alt="Hoboken"> <!-- try and use image in the folder-->
 </header>
+
 <body> 
   <p>People of Hoboken today find it stressful when it comes to picking the right apartment to lease
     and live in. However, it is handy to be given a list of apartments that fit your criteria without
     having to go through many different websites to find the best fit. Therefore our project is focused
     on building a web application of user-submitted apartment evaluations so that other users can
     search and browse by apartment name, price, and ratings.</p>
-  <form class="" id="">   <!-- This here is made for a search form -->
-    <label class="" for="1">Search for Apartments:</label> 
-      <input type="text" id="1" name="input" placeholder="Insert search term" />
-    <button class="submit-button" type="submit"> Submit </button>
-  </form>
-  <ul class="outputs" id="results"></ul>
 </body>
 
 <footer>
@@ -40,53 +45,5 @@
     <li><span>Creators: Daniel Partika, Sri Hari Shankar, Elton Vaz, Cody Fernandez</span></li>
   </ul>
 </footer>
-<!-- Is this here necessary?
-  <script src = "../public/js/main.js"></script>
-  -->
-=======
-<!doctype html>
- <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Hoboken Apartment Finder</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="../public/main.css">
-</head>
-
-<header>
-  <h1> Hoboken Apartment Finder </h1>
-  <nav>
-    <ul>
-        <li><a href="../views/error.handlebars">Homepage</a></li>
-        <li><a href="./education.html">My Education</a></li>
-        <li><a href="./story.html">A Dan Story</a></li>
-    </ul>
-</nav>
-</header>
-<body> 
-  <p>People of Hoboken today find it stressful when it comes to picking the right apartment to lease
-    and live in. However, it is handy to be given a list of apartments that fit your criteria without
-    having to go through many different websites to find the best fit. Therefore our project is focused
-    on building a web application of user-submitted apartment evaluations so that other users can
-    search and browse by apartment name, price, and ratings.</p>
-  <form class="" id="">   <!-- This here is made for a search form  ??Do we even need this??-->
-    <label class="" for="1">Search for Apartments:</label> 
-      <input type="text" id="1" name="input" placeholder="Insert search term" />
-    <button class="submit-button" type="submit"> Submit </button>
-  </form>
-  <ul class="outputs" id="results"></ul>
-</body>
-
-<footer>
-  <ul class="footer-details">
-    <li><span>Creators: Daniel Partika, Sri Hari Shankar, Elton Vaz, Cody Fernandez</span></li>
-  </ul>
-</footer>
-<!-- Is this here necessary?
-  <script src = "../public/js/main.js"></script>
-  -->
->>>>>>> 453bad2914e0cff3b8a284126716ed0ebb82fd8f
 </html>
