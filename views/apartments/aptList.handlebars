@@ -4,19 +4,39 @@ todo1: add a + symbol in the top right to add apartments}}
 <body>
   <p>Hello apt list</p>
   {{!add a way to sort apartments}}
-  <form id="addNewApt-form" action="/apartments/add-new-apartment" method="GET">
-    <label for="usernameInput">Add Apartment</label>
-    <button type="submit">+</button>
-  </form>
   {{!list of all avaiable apartments}}
   <main>
+
+    
+    <form id="sortBy-form" action="/apartments" method="GET">
+    <label for="sortByInput">Sort By:</label>
+    <select name = "sortByInput" id = "sortByInput"> 
+      <option value="Alphabetical">Alphabetical</option>
+      <option value="Cost" selected ="Cost" >Cost</option>
+      <option value="NumBed">Number of Bedrooms</option>
+      <option value="NumBath">Number of Bathrooms</option>
+      <option value="NumRes">Number of Residents</option>
+      <option value="PetsAll">Pets Allowed</option>
+    </select>
+
+
+     <button type="submit">+</button>
+    </form>
+
+
     <ul>
       {{#each apt}}
       <li>
-        <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}} {{this.rentPerMonth}} {{this.numBedrooms}}<a>
+        <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}} [${{this.rentPerMonth}}/Month , {{this.numBedrooms}} Bedroom]<a>
       </li>
       {{/each}}
     </ul>
   </main>
   
+  <footer>
+    <form id="addNewApt-form" action="/apartments/add-new-apartment" method="GET">
+    <label for="usernameInput">Add Apartment</label>
+    <button type="submit">+</button>
+  </form>
+  </footer>
 </body>
