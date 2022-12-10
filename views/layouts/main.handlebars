@@ -29,9 +29,20 @@
       <button class="Account-button" type="submit"> Account </button>
     </form>
 
-    <form id="login-form" action="/users/login" method="GET"> 
-      <button class="Login-Signup-button" type = "submit"> LogIn/SignUp </button>
-    </form>
+    {{#if user.username}}
+      <form id="logout-form" action="/users/logout" method="GET"> 
+        <button class="logout" type = "submit"> Logout </button>
+      </form>
+
+    {{else}}
+      <form id="login-form" action="/users/login" method="GET"> 
+        <button class="Login-Signup-button" type = "submit"> LogIn/Sign </button>
+      </form>
+      
+    {{/if}}
+
+
+    
   </nav>
 </header>
 
