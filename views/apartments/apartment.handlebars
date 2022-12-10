@@ -51,13 +51,13 @@ apartmentName, //do we need users' id here?
     </dl>
 
 
-    <ul>
+    {{!-- <ul>
       {{#each rev}}
       <li>
         <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}} {{this.rentPerMonth}} {{this.numBedrooms}}<a>
       </li>
       {{/each}}
-    </ul>
+    </ul> --}}
 
   {{else}}
     <p>Apartment with {{apt.id}} does not exist</p>
@@ -66,9 +66,14 @@ apartmentName, //do we need users' id here?
   </main>
 
   <footer>
-    <form id="addReview-form" action="/reviews/add-review" method="GET">
+    <form id="addReview-form" action="/reviews/add-review/{{apt._id}}" method="GET">
       <label for="usernameInput">Add Review</label>
       <button type="submit">+</button>
     </form>
+    {{#each reviews}}
+  <li>
+    <p>{{reviews.comment}}</p>
+  </li>
+    {{/each}}
   </footer>
 

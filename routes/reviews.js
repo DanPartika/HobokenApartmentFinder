@@ -76,32 +76,35 @@ const { review } = require("../data");
 //   });
 
   router
-  .route("/add-review")
+  .route("/add-review/:apartmentId")
   .get(async (req,res) => {
+
     if (req.session.user) {
-      return res.render('apartments/addReview');
+      return res.render('apartments/addReview',{apt:req.params.apartmentId});
     } else {
       return res.render('userAccount/login',{});
     }
   })
   .post(async (req,res) => {
+    console.log(req.session.user);
     if (req.session.user) {
       // return res.render('apartments/addApt');
       try{
         let reviewData = req.body;
-
-        helpers.checkString(reviewData.commentInput);
         
         let comment = reviewData.commentInput; 
         let rating = reviewData.ratingInput;
+        let apartmentID = req.params.apartmentId
+        let username = req.session.user.username
 
-        console.log(reviewData)
-        //let rev = await createReview(comment, rating);
-        // // if(!apt.overallRating == 0) return res.render('error',{title:"Error in creating apartment"});
-        // console.log(apt)
-        // let pathRedirect = '/apartments/apartment/' + apt;
-        // console.log(apt);
-        // res.redirect(pathRedirect);
+        let apt = await createReview(apartmentID, username, comment, rating);
+        
+        // if(!apt.overallRating == 0) return res.render('error',{title:"Error in creating apartment"});
+        //console.log(apt)
+        let pathRedirect = '/apartments/apartment/' + apartmentID;
+        //console.log(apt);
+        res.redirect(pathRedirect);
+        //res.redirect('/apartments/apartment/:apartmentId')
       } catch (e) {
         return res.render('error',{title:"Error in creating apartment", message:e});
       }
@@ -113,36 +116,36 @@ const { review } = require("../data");
   })
 
 
-router
-  .route("/review/:reviewId")
-  .get(async (req, res) => {
-    //code here for GET
-    req.params.reviewId = req.params.reviewId.trim();
-    if (!ObjectId.isValid(req.params.reviewId)) {
-      res.status(400).json({ error: "Invalid ObjectID" });
-      return;
-    }
+// router
+//   .route("/review/:reviewId")
+//   .get(async (req, res) => {
+//     //code here for GET
+//     req.params.reviewId = req.params.reviewId.trim();
+//     if (!ObjectId.isValid(req.params.reviewId)) {
+//       res.status(400).json({ error: "Invalid ObjectID" });
+//       return;
+//     }
 
-    try {
-      const reviews = await getReview(req.params.reviewId);
-      res.status(200).json(reviews);
-    } catch (e) {
-      res.status(404).json({ error: e });
-    }
-  })
-  .delete(async (req, res) => {
-    //code here for DELETE
-    req.params.reviewId = req.params.reviewId.trim();
-    if (!ObjectId.isValid(req.params.reviewId)) {
-      res.status(400).json({ error: "Invalid ObjectID" });
-      return;
-    }
-    try {
-      const reviews = await removeReview(req.params.reviewId);
-      res.status(200).json(reviews);
-    } catch (e) {
-      res.status(404).json({ error: e });
-    }
-  });
+//     try {
+//       const reviews = await getReview(req.params.reviewId);
+//       res.status(200).json(reviews);
+//     } catch (e) {
+//       res.status(404).json({ error: e });
+//     }
+//   })
+//   .delete(async (req, res) => {
+//     //code here for DELETE
+//     req.params.reviewId = req.params.reviewId.trim();
+//     if (!ObjectId.isValid(req.params.reviewId)) {
+//       res.status(400).json({ error: "Invalid ObjectID" });
+//       return;
+//     }
+//     try {
+//       const reviews = await removeReview(req.params.reviewId);
+//       res.status(200).json(reviews);
+//     } catch (e) {
+//       res.status(404).json({ error: e });
+//     }
+//   });
 
 module.exports = router;

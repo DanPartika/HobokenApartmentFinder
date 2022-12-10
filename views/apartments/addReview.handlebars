@@ -24,7 +24,7 @@ apartmentName,
   <h2> {{title}} </h2>
   <p class="error">{{error}}</p>
   {{/if}}
-  <form id="newReview-form" action="/reviews/add-review" method="POST">
+  <form id="newReview-form" action="/reviews/add-review/{{apt}}" method="POST">
     <label for="commentInput">Comment:</label>
     <input for="commentInput" name="commentInput"  type="text" placeholder="Comment your thoughts on the apartment" required/>
     <br>

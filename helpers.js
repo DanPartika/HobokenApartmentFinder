@@ -181,10 +181,9 @@ function checkRating(a) {
   return a;
 }
 
-function checkReviewsParameters(apartmentId,  userId, userName, comments, rating) {
+function checkReviewsParameters(apartmentId, userName, comments, rating) {
   return {
     apartmentId: checkID(apartmentId), 
-    userId: checkID(userId),
     userName: checkReviewerName(userName), 
     comments: checkReview(comments), 
     rating: checkRating(rating)
