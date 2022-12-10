@@ -29,7 +29,7 @@ router
      
       if (req.session.user) {
         const apts = await getAllApartments();
-        if (apts.length == 0) return res.status(404).render("error",{title:"No Apartments Found", message: "Error code: 404, no apartments found"})
+        //if (apts.length == 0) return res.status(404).render("error",{title:"No Apartments Found", message: "Error code: 404, no apartments found"})
         const data = {apt:apts};
         return res.render('apartments/aptList', data);
       }
