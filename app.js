@@ -14,7 +14,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
-
+app.use(express.static('images'));
 // Authentication middleware
 app.use('/protected', async (req, res, next) => {
   if (req.session.user) next()
