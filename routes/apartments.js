@@ -32,10 +32,6 @@ router
         let apartmentData = req.body;
         let sortCondition = apartmentData.sortByInput;
         //if (apts.length == 0) return res.status(404).render("error",{title:"No Apartments Found", message: "Error code: 404, no apartments found"})
-        
-        var e = apartmentData.getElementById("sortByInput");
-        var value = e.value;
-        console.log(value);
 
         if (sortCondition == "Cost") {
           console.log("Cost")
