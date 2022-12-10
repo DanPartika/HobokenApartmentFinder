@@ -89,9 +89,12 @@ const { review } = require("../data");
       // return res.render('apartments/addApt');
       try{
         let reviewData = req.body;
+
+        helpers.checkString(reviewData.commentInput);
         
         let comment = reviewData.commentInput; 
         let rating = reviewData.ratingInput;
+
         console.log(reviewData)
         //let rev = await createReview(comment, rating);
         // // if(!apt.overallRating == 0) return res.render('error',{title:"Error in creating apartment"});
