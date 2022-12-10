@@ -7,7 +7,7 @@ const apartmentsData = data.Apartments;
 const usersData = data.users
 const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
-const { getApartmentById, createApartment, getAllApartments } = require("../data/apartments");
+const { getApartmentById, createApartment, getAllApartments, sortApartmentByCost } = require("../data/apartments");
 const path = require('path');
 
 // router.route("/") //homepage
@@ -29,13 +29,22 @@ router
      
       if (req.session.user) {
         const apts = await getAllApartments();
-        if (apts.length == 0) return res.status(404).render("error",{title:"No Apartments Found", message: "Error code: 404, no apartments found"})
+        let apartmentData = req.body;
+        let sortCondition = apartmentData.sortByInput;
+        //if (apts.length == 0) return res.status(404).render("error",{title:"No Apartments Found", message: "Error code: 404, no apartments found"})
+
+        if (sortCondition == "Cost") {
+          console.log("Cost")
+          apts = await sortApartmentByCost();
+        } else {
+          
+        }
         const data = {apt:apts};
         return res.render('apartments/aptList', data);
       }
       else return res.redirect('/users/login');
     } catch (error) {
-      return res.render(error,{title:error})
+      return res.render('error',{title:error})
     }
    
   })
@@ -97,7 +106,7 @@ router
         let numBathrooms = apartmentData.numBathroomsInput;
         let laundry = apartmentData.laundryInput;
         if(laundry == "true") laundry = true
-        else laundry = false
+        else if(laundry == "false") laundry = false
         let floorNum = apartmentData.floorNumInput;
         let roomNum = apartmentData.roomNumInput;
         let appliancesIncluded = apartmentData.appliancesIncludedInput;
