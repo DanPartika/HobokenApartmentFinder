@@ -66,14 +66,27 @@ apartmentName, //do we need users' id here?
   </main>
 
   <footer>
-    <form id="addReview-form" action="/reviews/add-review/{{apt._id}}" method="GET">
+   
+    <h2>Apartment Reviews</h2>
+    <br>
+     <form id="addReview-form" action="/reviews/add-review/{{apt._id}}" method="GET">
       <label for="usernameInput">Add Review</label>
       <button type="submit">+</button>
     </form>
-    {{#each reviews}}
+    {{#if apt.reviews}}
+    
+    {{#each apt.reviews}}
   <li>
-    <p>{{reviews.comment}}</p>
+
+    <h3>{{userName}}</h3> <h4>{{reviewDate}} </h4>
+    <h4>Rating: {{rating}}</h4>
+    <p>{{comments}}</p>
   </li>
     {{/each}}
+
+    {{else}}
+      <p>Sorry, No reviews found</p>
+    {{/if}}
+
   </footer>
 
