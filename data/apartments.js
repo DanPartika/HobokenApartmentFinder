@@ -46,14 +46,14 @@ const createApartment = async (
     reviews: [],
     overallRating: 0
   };
-
+  
   const insertInfo = await apartmentCollection.insertOne(newApartment);
   if (!insertInfo.acknowledged || !insertInfo.insertedId) throw "Could not add Apartment";
   const newId = insertInfo.insertedId.toString();
   const apt = await getApartmentById(newId);
   
   apt._id = apt._id.toString();
-  return apt;
+  return apt._id;
 };
 
 const getAllApartments = async () => {

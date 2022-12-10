@@ -9,5 +9,14 @@ todo1: add a + symbol in the top right to add apartments}}
     <button type="submit">+</button>
   </form>
   {{!list of all avaiable apartments}}
+  <main>
+    <ul>
+      {{#each apt}}
+      <li>
+        <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}} {{this.rentPerMonth}} {{this.numBedrooms}}<a>
+      </li>
+      {{/each}}
+    </ul>
+  </main>
   
 </body>

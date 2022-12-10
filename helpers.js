@@ -66,8 +66,9 @@ function checkRent(rentPerMonth) {
   if (!rentPerMonth) throw "You must provide a valid number for your rating";
   if (isNaN(rentPerMonth)) throw `${rentPerMonth} must be a number`;
   if (rentPerMonth.toString().includes('.')) throw `${rentPerMonth} should be a whole number`;
-  if (rentPerMonth <= -1) throw "Number must be positive";
-  return ;
+  let rntPM = parseInt(rentPerMonth)
+  if (rntPM <= -1) throw "Number must be positive";
+  return rntPM;
 }
 
 //

@@ -7,7 +7,7 @@ const apartmentsData = data.Apartments;
 const usersData = data.users
 const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
-const { getApartmentById, createApartment } = require("../data/apartments");
+const { getApartmentById, createApartment, getAllApartments } = require("../data/apartments");
 const path = require('path');
 
 // router.route("/") //homepage
@@ -26,7 +26,13 @@ router
   .route("/apartments") //apt list
   .get(async (req, res) => {
     try {
-      if (req.session.user) return res.render('apartments/aptList');
+     
+      if (req.session.user) {
+        const apts = await getAllApartments();
+        if (apts.length == 0) return res.status(404).render("error",{title:"No Apartments Found", message: "Error code: 404, no apartments found"})
+        const data = {apt:apts};
+        return res.render('apartments/aptList', data);
+      }
       else return res.redirect('/users/login');
     } catch (error) {
       return res.render(error,{title:error})
@@ -43,16 +49,16 @@ router
 
 
 router
-  .route("/apartments/apartment/:ApartmentId") //singular apt
+  .route("/apartments/apartment/:apartmentId") //singular apt
   .get(async (req, res) => {
     //code here for GET
     if (req.session.user) {
       try {
         const title = "Apartment Found";
-        const ApartmentId = helpers.checkID(req.params.ApartmentId);
+        req.params.apartmentId = helpers.checkID(req.params.apartmentId);
         //let apt = {};
         try{
-          const apt = await getApartmentById(ApartmentId); //!idk if this saves outside the try catch
+          const apt = await getApartmentById(req.params.apartmentId); //!idk if this saves outside the try catch
           const tempData = {title: title, apt:apt};
           return res.render("apartments/apartment",tempData);
         } catch (e) {
@@ -101,9 +107,11 @@ router
         utilitiesIncluded = utilitiesIncluded.split(",")
         //console.log(laundry)
       
-        let apt = createApartment(apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
-        if(!apt.overallRating == 0) return res.render('error',{title:"Error in creating apartment"});
-        let pathRedirect = "/apartments/apartment/:"+apt._id;
+        let apt = await createApartment(apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
+        // if(!apt.overallRating == 0) return res.render('error',{title:"Error in creating apartment"});
+        console.log(apt)
+        let pathRedirect = '/apartments/apartment/' + apt;
+        console.log(apt);
         res.redirect(pathRedirect);
       } catch (e) {
         return res.render('error',{title:"Error in creating apartment", message:e});
