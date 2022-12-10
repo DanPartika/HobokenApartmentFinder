@@ -48,7 +48,7 @@ router
       }
       else return res.redirect('/users/login');
     } catch (error) {
-      return res.render(error,{title:error})
+      return res.render('error',{title:error})
     }
    
   })
