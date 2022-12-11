@@ -1,3 +1,44 @@
 {{!Page where user that is logged in can add a review
 Follow format of previous (signup)
 }}
+{{!Page where user that is logged in can add an Apt
+todo2: get all the inputs: 
+apartmentName, 
+  streetAddress,
+  rentPerMonth,
+  rentDuration,
+  maxResidents,
+  numBedrooms,
+  numBathrooms,
+  laundry,
+  floorNum,
+  roomNum,
+  appliancesIncluded,
+  maxPets,
+  utilitiesIncluded !!!Also pictures.... idk how to do this 
+  Follow format of views/userAccount/signup 
+  Todo3: then do the routes
+  }}
+<main>
+  {{#if error}}
+  <h2> {{title}} </h2>
+  <p class="error">{{error}}</p>
+  {{/if}}
+  <form id="newReview-form" action="/reviews/add-review/{{apt}}" method="POST">
+    <label for="commentInput">Comment:</label>
+    <input for="commentInput" name="commentInput"  type="text" placeholder="Comment your thoughts on the apartment" required/>
+    <br>
+
+    <label for="ratingInput">Rating:</label>
+    <select name = "ratingInput" id = "ratingInput"> 
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    <br>
+    
+    <button type="submit">Submit Review</button>
+  </form>
+</main>

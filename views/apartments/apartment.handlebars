@@ -19,30 +19,75 @@ apartmentName, //do we need users' id here?
 
 
 <h1>{{title}}</h1>
-  <h2>{{apt.firstName}} {{apt.lastName}}</h2>
+  <h2>{{apt.apartmentName}}</h2>
   <main> 
-    {{#if apt.id}}
+    {{#if apt._id}}
     <dl> 
-      <dt>ID</dt>
-      <dd>{{apt.id}}</dd>
-      <dt>First Name</dt>
-      <dd>{{apt.firstName}}</dd>
-      <dt>Last Name</dt>
-      <dd>{{apt.lastName}}</dd>
-      <dt>Address</dt>
-      <dd>{{apt.address}}</dd>
-      <dt>Zip Code</dt>
-      <dd>{{apt.zip}}</dd>
-      <dt>Phone</dt>
-      <dd>{{apt.phone}}</dd>
-      <dt>Social Security Number</dt>
-      <dd>{{apt.ssn}}</dd>
+      <dt>Street Address</dt>
+      <dd>{{apt.streetAddress}}</dd>
+      <dt>Rent per Month</dt>
+      <dd>{{apt.rentPerMonth}}</dd>
+      <dt>Rent Duration</dt>
+      <dd>{{apt.rentDuration}}</dd>
+      <dt>Max number of Residents</dt>
+      <dd>{{apt.maxResidents}}</dd>
+      <dt>Number of Bedrooms</dt>
+      <dd>{{apt.numBedrooms}}</dd>
+      <dt>Number of Bathrooms</dt>
+      <dd>{{apt.numBathrooms}}</dd>
+      <dt>Laundry?</dt>
+      <dd>{{apt.laundry}}</dd>
+      <dt>Floor of {{apt.apartmentName}}</dt>
+      <dd>{{apt.floorNum}}</dd>
+      <dt>Apartment Number</dt>
+      <dd>{{apt.roomNum}}</dd>
+      <dt>Appliances Included</dt>
+      <dd>{{apt.appliancesIncluded}}</dd>
+      <dt>Allowed number of Pets</dt>
+      <dd>{{apt.maxPets}}</dd>
+      <dt>Utilities Included</dt>
+      <dd>{{apt.utilitiesIncluded}}</dd>
 
     </dl>
 
+
+    {{!-- <ul>
+      {{#each rev}}
+      <li>
+        <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}} {{this.rentPerMonth}} {{this.numBedrooms}}<a>
+      </li>
+      {{/each}}
+    </ul> --}}
+
   {{else}}
-    <p>Person with {{apt.id}} does not exist</p>
+    <p>Apartment with {{apt.id}} does not exist</p>
   {{/if}}
 
   </main>
+
+  <footer>
+   
+    <h2>Apartment Reviews</h2>
+    <br>
+     <form id="addReview-form" action="/reviews/add-review/{{apt._id}}" method="GET">
+      <label for="usernameInput">Add Review</label>
+      <button type="submit">+</button>
+    </form>
+    {{#if apt.reviews}}
+    
+    {{#each apt.reviews}}
+  <li>
+
+    <h3>{{userName}} </h3> 
+    <p>Created review on: {{reviewDate}} </p>
+    <h4>Rating: {{rating}}</h4>
+    <p>Review: {{comments}}</p>
+  </li>
+    {{/each}}
+
+    {{else}}
+      <p>Sorry, No reviews found</p>
+    {{/if}}
+
+  </footer>
 

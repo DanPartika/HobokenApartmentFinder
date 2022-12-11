@@ -2,7 +2,7 @@ const helpers = require("../helpers");
 const { users } = require('../config/mongoCollections');
 const bcrypt = require('bcrypt');
 const { getApartmentById } = require("./apartments");
-const saltRounds = 16;
+const saltRounds = 4;
 
 const createUser = async (
   firstName,
@@ -18,16 +18,24 @@ const createUser = async (
   const usersCollection = await users();
   const account = await usersCollection.findOne({ username: params.username });
   if (account !== null) throw `Account with username ${params.username} exists already.`;
+
+  const UserEmail = await usersCollection.findOne({ email: params.email });
+  if (UserEmail !== null) throw `Account with email ${params.email} exists already.`;
+
   const hash = await bcrypt.hash(params.password, saltRounds);
   //added a date created
-  let curDate = new Date();
+  let today = new Date();
+  let mm = String(today.getMonth() + 1).padStart(2, "0");
+  let dd = String(today.getDate()).padStart(2, "0");
+  let yyyy = today.getFullYear();
+  today = mm + "/" + dd + "/" + yyyy;
   const newUser = {
     firstName: params.firstName,
     lastName: params.lastName,
     email: params.email,
     gender: params.gender,
     age: params.age,
-    userCreated: curDate,
+    userCreated: today,
     username: params.username,
     password: hash,
     userApartments: [],
@@ -36,7 +44,7 @@ const createUser = async (
   const insertInfo = await usersCollection.insertOne(newUser);
   if (! insertInfo.acknowledged || ! insertInfo.insertedId) throw 'Could not add user';
   const newId = insertInfo.insertedId.toString();
-  const U = await getApartmentById(newId);
+  const U = await getUser(params.username);
   U._id = U._id.toString();
   return {insertedUser: true};
 };
@@ -126,9 +134,7 @@ const changeLogin = async (actualUsername, actualPassword, username, password) =
   if (auth === null) throw 'cannot authencate username/password, please try again'
   if (! (await auth).authenticatedUser) throw "current username and password do not match current username and password"
   const hash = await bcrypt.hash(pass, saltRounds);
-  let curDate = new Date();
-  let updatedUser = {
-    userModified: curDate, //Note difference here 
+  let updatedUser = { 
     username: user,
     password: hash, //this line and above are the updates values
     firstName: params.firstName,

@@ -7,59 +7,134 @@ const apartmentsData = data.Apartments;
 const usersData = data.users
 const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
-
-router
- const { getApartmentById } = require("../data/apartments");
+const { getApartmentById, createApartment, getAllApartments, sortApartmentByCost } = require("../data/apartments");
 const path = require('path');
+
+// router.route("/") //homepage
+//   .get(async (req, res) => {
+//     //code here for GET
+//     return res.sendFile(path.resolve('static/homepage.html'));
+//   });
 
 router.route("/") //homepage
   .get(async (req, res) => {
     //code here for GET
-    return res.sendFile(path.resolve('static/homepage.html'));
-  });
-  /**
-   * .post(async (req,res) => {
-   *  return res.render(req.)
-   * })
-   *  
-   * */
-  
-
-router.route("/apartments") //apt list
-  .get(async (req, res) => {
-    if (req.session.user) return res.render('apartments/aptList');
-    else return res.redirect('users/login');
-  })
-  .post(async (req, res) => {
+    //return res.sendFile(path.resolve('static/homepage.html'));
     if (req.session.user) {
-      return res.render('apartments/addApt')
+      return res.render('homepage',{user:req.session.user});
     } else {
-      return res.render('userAccount/login')
+      return res.render('homepage');
     }
+    
   });
 
 router
-  .route("/apartments/:ApartmentId") //singular apt
+  .route("/apartments") //apt list
+  .get(async (req, res) => {
+    try {
+     
+      if (req.session.user) {
+        const apts = await getAllApartments();
+        let apartmentData = req.body;
+        let sortCondition = apartmentData.sortByInput;
+        //if (apts.length == 0) return res.status(404).render("error",{title:"No Apartments Found", message: "Error code: 404, no apartments found"})
+
+        if (sortCondition == "Cost") {
+          console.log("Cost")
+          apts = await sortApartmentByCost();
+        } else {
+          
+        }
+        const data = {apt:apts,user:req.session.user};
+        return res.render('apartments/aptList', data);
+      }
+      else return res.redirect('/users/login');
+    } catch (error) {
+      return res.render('error',{title:error,user:req.session.user})
+    }
+   
+  })
+  .post(async (req, res) => {
+    if (req.session.user) {
+      return res.render('apartments/addApt',{user:req.session.user})
+    } else {
+      return res.render('userAccount/login',{user:req.session.user})
+    }
+  });
+
+
+router
+  .route("/apartments/apartment/:apartmentId") //singular apt
   .get(async (req, res) => {
     //code here for GET
     if (req.session.user) {
       try {
         const title = "Apartment Found";
-        const ApartmentId = helpers.checkID(req.params.ApartmentId);
+        req.params.apartmentId = helpers.checkID(req.params.apartmentId);
         //let apt = {};
         try{
-          const apt = await getApartmentById(ApartmentId); //!idk if this saves outside the try catch
+          const apt = await getApartmentById(req.params.apartmentId); //!idk if this saves outside the try catch
+          const tempData = {title: title, apt:apt,user:req.session.user};
+          return res.render("apartments/apartment",tempData);
         } catch (e) {
-          return res.status(400).render("error", {title: "Apartment Not Found", message: "400 Error: Apartment not found."});  // can alert this instead
+          return res.status(400).render("error", {title: "Apartment Not Found", message: "400 Error: Apartment not found.",user:req.session.user});  // can alert this instead
         }
-        const tempData = {title: title, apt:apt};
-        return res.render("apartment",tempData);
+        
       } catch (e) {
         
-        return res.status(404).render("error", {title: "Apartment Not Found", message: "404 Error: Page not found."});
+        return res.status(404).render("error", {title: "Apartment Not Found", message: "404 Error: Page not found.",user:req.session.user});
       }
     } else {
-      return res.render('userAccount/login');
+      return res.render('userAccount/login',{user:req.session.user});
+    }
+  })
+
+router
+  .route("/apartments/add-new-apartment")
+  .get(async (req,res) => {
+    if (req.session.user) {
+      return res.render('apartments/addApt',{user:req.session.user});
+    } else {
+      return res.render('userAccount/login',{user:req.session.user});
+    }
+  })
+  .post(async (req,res) => {
+    if (req.session.user) {
+      // return res.render('apartments/addApt');
+      try{
+        let apartmentData = req.body;
+        let apartmentName = apartmentData.apartmentNameInput; 
+        let streetAddress = apartmentData.streetAddressInput;
+        let rentPerMonth = apartmentData.rentPerMonthInput;
+        let rentDuration = apartmentData.rentDurationInput;
+        let maxResidents = apartmentData.maxResidentsInput;
+        let numBedrooms = apartmentData.numBedroomsInput;
+        let numBathrooms = apartmentData.numBathroomsInput;
+        let laundry = apartmentData.laundryInput;
+        if(laundry == "true") laundry = true
+        else if(laundry == "false") laundry = false
+        let floorNum = apartmentData.floorNumInput;
+        let roomNum = apartmentData.roomNumInput;
+        let appliancesIncluded = apartmentData.appliancesIncludedInput;
+        appliancesIncluded = appliancesIncluded.split(",");
+        let maxPets = apartmentData.maxPetsInput;
+        let utilitiesIncluded = apartmentData.utilitiesIncludedInput;
+        utilitiesIncluded = utilitiesIncluded.split(",")
+        //console.log(laundry)
+      
+        let apt = await createApartment(apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
+        // if(!apt.overallRating == 0) return res.render('error',{title:"Error in creating apartment"});
+        //console.log(apt)
+        let pathRedirect = '/apartments/apartment/' + apt;
+        //console.log(apt);
+        res.redirect(pathRedirect);
+      } catch (e) {
+        return res.render('error',{title:"Error in creating apartment", message:e,user:req.session.user});
+      }
+
+
+    } else {
+      return res.render('userAccount/login',{user:req.session.user});
     }
   })
   // .delete(async (req, res) => {

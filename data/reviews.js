@@ -6,13 +6,12 @@ const { getApartmentById } = require("./apartments");
 
 const createReview = async (
   apartmentId, 
-  userId,
   userName,
   comments,
   rating //!include a comment title??
 ) => {
   
-  let params = helpers.checkReviewsParameters(apartmentId,  userId, userName, comments, rating)
+  let params = helpers.checkReviewsParameters(apartmentId, userName, comments, rating)
 
   if (params.rating % 1 === 0) {
     params.rating = parseInt(params.rating);
@@ -36,7 +35,6 @@ const createReview = async (
   rating*/
   const newReview = {
     _id: ObjectId(), //include userID??
-    userId: params.userId,
     //reviewTitle: params.reviewTitle,
     reviewDate: today, //added this.
     reviewModified: "N/A",

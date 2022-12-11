@@ -46,13 +46,14 @@ const createApartment = async (
     reviews: [],
     overallRating: 0
   };
-
+  
   const insertInfo = await apartmentCollection.insertOne(newApartment);
   if (!insertInfo.acknowledged || !insertInfo.insertedId) throw "Could not add Apartment";
   const newId = insertInfo.insertedId.toString();
   const apt = await getApartmentById(newId);
+  
   apt._id = apt._id.toString();
-  return apt;
+  return apt._id;
 };
 
 const getAllApartments = async () => {
@@ -92,9 +93,11 @@ const removeApartment = async (apartmentId) => {
   return `${apartName} has been successfully deleted!`; //what do i want to return?
 };
 
-const sortApartmentByCost = async () => {
-  
-  return ;
+const sortApartmentByCost = async () => 
+{
+  let apartmentList = getAllApartments();
+  apartmentList.sort((a,b) => (a.rentPerMonth - b.rentPerMonth));
+  return apartmentList;
 }
 
 const updateApartment = async (
@@ -169,5 +172,6 @@ module.exports = {
   getAllApartments,
   getApartmentById,
   removeApartment,
-  updateApartment
+  updateApartment,
+  sortApartmentByCost
 };

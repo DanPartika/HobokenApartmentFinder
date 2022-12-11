@@ -66,14 +66,15 @@ function checkRent(rentPerMonth) {
   if (!rentPerMonth) throw "You must provide a valid number for your rating";
   if (isNaN(rentPerMonth)) throw `${rentPerMonth} must be a number`;
   if (rentPerMonth.toString().includes('.')) throw `${rentPerMonth} should be a whole number`;
-  if (rentPerMonth <= -1) throw "Number must be positive";
-  return ;
+  let rntPM = parseInt(rentPerMonth)
+  if (rntPM <= -1) throw "Number must be positive";
+  return rntPM;
 }
 
 //
 function checkRentDuration(rentDuration) {
   if(!rentDuration) throw "must include rent duration"
-  if ( !(/\d/.test(rentDuration) && /[a-zA-Z]/.test(rentDuration)) ) throw `${rentDuration} must contain a specified number of length`
+  if ( !(/\d/.test(rentDuration)) ) throw `${rentDuration} must contain a specified number of length`
   let rntDur = rentDuration.trim();
   return rntDur;
 }
@@ -180,10 +181,9 @@ function checkRating(a) {
   return a;
 }
 
-function checkReviewsParameters(apartmentId,  userId, userName, comments, rating) {
+function checkReviewsParameters(apartmentId, userName, comments, rating) {
   return {
     apartmentId: checkID(apartmentId), 
-    userId: checkID(userId),
     userName: checkReviewerName(userName), 
     comments: checkReview(comments), 
     rating: checkRating(rating)
