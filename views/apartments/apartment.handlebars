@@ -78,9 +78,10 @@ apartmentName, //do we need users' id here?
     {{#each apt.reviews}}
   <li>
 
-    <h3>{{userName}}</h3> <h4>{{reviewDate}} </h4>
+    <h3>{{userName}} </h3> 
+    <p>Created review on: {{reviewDate}} </p>
     <h4>Rating: {{rating}}</h4>
-    <p>{{comments}}</p>
+    <p>Review: {{comments}}</p>
   </li>
     {{/each}}
 

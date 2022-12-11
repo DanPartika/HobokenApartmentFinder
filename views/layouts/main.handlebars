@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <title>{{title}}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../public/main.css">
 </head>
 
 {{!-- <header>
@@ -31,14 +32,14 @@
 
     {{#if user.username}}
       <form id="logout-form" action="/users/logout" method="GET"> 
-        <button class="logout" type = "submit"> Logout </button>
+        <button class="logout-button" type = "submit"> Logout </button>
       </form>
 
     {{else}}
       <form id="login-form" action="/users/login" method="GET"> 
-        <button class="Login-Signup-button" type = "submit"> LogIn/Sign </button>
+        <button class="Login-Signup-button" type = "submit"> LogIn/Signup </button>
       </form>
-      
+
     {{/if}}
 
 

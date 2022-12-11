@@ -19,7 +19,7 @@ router
   .get(async (req, res) => {
     //code here for GET
     if (req.session.user) return res.redirect('/protected'); //if user is already logged in and they attempt to register, goto account page
-    else return res.render('userAccount/signup');
+    else return res.render('userAccount/signup',{user:req.session.user});
   })
   .post(async (req, res) => {
     //code here for POST
@@ -41,7 +41,8 @@ router
     } catch (e) {
       let templateData = {
         title: 'Register Error',
-        error: e
+        error: e,
+        user:req.session.user
       }
       return res.status(400).render('userAccount/signup', templateData); //error
     }
@@ -49,7 +50,8 @@ router
     else {
       let templateData = {
         title: 'Register',
-        error: 'Internal Server Error'
+        error: 'Internal Server Error',
+        user:req.session.user
       }
       return res.status(500).render('userAccount/signup', templateData)
       }
@@ -59,7 +61,7 @@ router
   .route('/login')
   .get(async (req, res) => {
     if (req.session.user) return res.redirect('/');
-    else return res.render('userAccount/login');
+    else return res.render('userAccount/login',{user:req.session.user});
   })
   .post(async (req, res) => {
     //code here for POST
@@ -76,7 +78,8 @@ router
     } catch (e) {
       let templateData = {
         title: 'Login Error',
-        error: e
+        error: e,
+        user:req.session.user
       }
       return res.status(400).render('userAccount/login', templateData)
     }
@@ -84,11 +87,12 @@ router
       req.session.user = {
         username: user
       }
-      return res.render('userAccount/userhomepage'); //does this have to be /users/protected?
+      return res.render('userAccount/userhomepage',{user:req.session.user}); //does this have to be /users/protected?
     } else {
       let templateData = {
         title: 'Login',
-        error: 'You did not provide a valid username and/or password.'
+        error: 'You did not provide a valid username and/or password.',
+        user:req.session.user
       }
       return res.status(400).render('userAccount/login', templateData);
     }
@@ -102,13 +106,14 @@ router
       let curDate = new Date();
     let templateData = {
       username: req.session.user.username, //this may be something different
-      date: curDate
+      date: curDate,
+      user:req.session.user
       //also might want to add other things to users account page, all apts listed, other account information
       //add user's reviews and apartments posted
     }
     return res.render('userAccount/userhomepage', templateData)
     } catch (error) {
-      return res.render('error',{title:"Error",error:"Cannot get account page"})
+      return res.render('error',{title:"Error",error:"Cannot get account page",user:req.session.user})
     }
     
   })
@@ -118,7 +123,7 @@ router
   .get(async (req, res) => {
     //code here for GET
     req.session.destroy();
-    res.status(200).render('userAccount/logout', { title: "Logged Out" });
+    res.status(200).render('userAccount/logout', { title: "Logged Out"});
   })
 
 module.exports = router;

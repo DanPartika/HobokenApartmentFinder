@@ -80,13 +80,13 @@ const { review } = require("../data");
   .get(async (req,res) => {
 
     if (req.session.user) {
-      return res.render('apartments/addReview',{apt:req.params.apartmentId});
+      return res.render('apartments/addReview',{apt:req.params.apartmentId,user:req.session.user});
     } else {
-      return res.render('userAccount/login',{});
+      return res.render('userAccount/login',{user:req.session.user});
     }
   })
   .post(async (req,res) => {
-    console.log(req.session.user);
+    //console.log(req.session.user);
     if (req.session.user) {
       // return res.render('apartments/addApt');
       try{
@@ -106,12 +106,12 @@ const { review } = require("../data");
         res.redirect(pathRedirect);
         //res.redirect('/apartments/apartment/:apartmentId')
       } catch (e) {
-        return res.render('error',{title:"Error in creating apartment", message:e});
+        return res.render('error',{title:"Error in creating apartment", message:e,user:req.session.user});
       }
 
 
     } else {
-      return res.render('userAccount/login',{});
+      return res.render('userAccount/login',{user:req.session.user});
     }
   })
 

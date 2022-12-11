@@ -19,7 +19,13 @@ const path = require('path');
 router.route("/") //homepage
   .get(async (req, res) => {
     //code here for GET
-    return res.sendFile(path.resolve('static/homepage.html'));
+    //return res.sendFile(path.resolve('static/homepage.html'));
+    if (req.session.user) {
+      return res.render('homepage',{user:req.session.user});
+    } else {
+      return res.render('homepage');
+    }
+    
   });
 
 router
@@ -39,20 +45,20 @@ router
         } else {
           
         }
-        const data = {apt:apts};
+        const data = {apt:apts,user:req.session.user};
         return res.render('apartments/aptList', data);
       }
       else return res.redirect('/users/login');
     } catch (error) {
-      return res.render('error',{title:error})
+      return res.render('error',{title:error,user:req.session.user})
     }
    
   })
   .post(async (req, res) => {
     if (req.session.user) {
-      return res.render('apartments/addApt')
+      return res.render('apartments/addApt',{user:req.session.user})
     } else {
-      return res.render('userAccount/login')
+      return res.render('userAccount/login',{user:req.session.user})
     }
   });
 
@@ -68,18 +74,18 @@ router
         //let apt = {};
         try{
           const apt = await getApartmentById(req.params.apartmentId); //!idk if this saves outside the try catch
-          const tempData = {title: title, apt:apt};
+          const tempData = {title: title, apt:apt,user:req.session.user};
           return res.render("apartments/apartment",tempData);
         } catch (e) {
-          return res.status(400).render("error", {title: "Apartment Not Found", message: "400 Error: Apartment not found."});  // can alert this instead
+          return res.status(400).render("error", {title: "Apartment Not Found", message: "400 Error: Apartment not found.",user:req.session.user});  // can alert this instead
         }
         
       } catch (e) {
         
-        return res.status(404).render("error", {title: "Apartment Not Found", message: "404 Error: Page not found."});
+        return res.status(404).render("error", {title: "Apartment Not Found", message: "404 Error: Page not found.",user:req.session.user});
       }
     } else {
-      return res.render('userAccount/login');
+      return res.render('userAccount/login',{user:req.session.user});
     }
   })
 
@@ -87,9 +93,9 @@ router
   .route("/apartments/add-new-apartment")
   .get(async (req,res) => {
     if (req.session.user) {
-      return res.render('apartments/addApt');
+      return res.render('apartments/addApt',{user:req.session.user});
     } else {
-      return res.render('userAccount/login',{});
+      return res.render('userAccount/login',{user:req.session.user});
     }
   })
   .post(async (req,res) => {
@@ -118,17 +124,17 @@ router
       
         let apt = await createApartment(apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
         // if(!apt.overallRating == 0) return res.render('error',{title:"Error in creating apartment"});
-        console.log(apt)
+        //console.log(apt)
         let pathRedirect = '/apartments/apartment/' + apt;
-        console.log(apt);
+        //console.log(apt);
         res.redirect(pathRedirect);
       } catch (e) {
-        return res.render('error',{title:"Error in creating apartment", message:e});
+        return res.render('error',{title:"Error in creating apartment", message:e,user:req.session.user});
       }
 
 
     } else {
-      return res.render('userAccount/login',{});
+      return res.render('userAccount/login',{user:req.session.user});
     }
   })
   // .delete(async (req, res) => {
