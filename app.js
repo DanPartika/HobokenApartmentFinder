@@ -4,6 +4,7 @@ const app = express();
 const configRoutes = require('./routes');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
+const static = express.static(__dirname + '/public');
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -15,6 +16,7 @@ app.use(session({
   saveUninitialized: true
 }))
 app.use(express.static('images'));
+app.use('/public', static);
 // Authentication middleware
 app.use('/protected', async (req, res, next) => {
   if (req.session.user) next()
