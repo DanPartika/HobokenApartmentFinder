@@ -3,13 +3,28 @@
   {{! insert all user data that we want to display here}}
   {{#if username}}
   <h2>Welcome back {{username}}!</h2>
+  
+  <dl> 
+      <dt>First Name</dt>
+      <dd>{{user.firstName}}</dd>
+      <dt>Last Name</dt>
+      <dd>{{user.lastName}}</dd>
+      <dt>Email</dt>
+      <dd>{{user.email}}</dd>
+      <dt>Gender</dt>
+      <dd>{{user.gender}}</dd>
+      <dt>Age</dt>
+      <dd>{{user.age}}</dd>
+    </dl>
+
   {{/if}}
 
+{{!-- firstName,
+  lastName,
+  email,
+  gender,
+  age, --}}
+
 </body>
-<footer> 
-  <nav> 
-    <a href="/">Go to home</a>
-    <a href="/users/logout">Click here to logout</a>
-  </nav>
-</footer>
+
 <!-- Add user information that we decide to pass in /users/protected>

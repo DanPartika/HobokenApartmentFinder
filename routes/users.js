@@ -4,6 +4,7 @@ const data = require("../data");
 const usersData = data.users
 const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
+const { getUser } = require("../data/users");
 
 
 router
@@ -111,7 +112,7 @@ router
         let templateData = {
           username: req.session.user.username, //this may be something different
           date: curDate,
-          user:req.session.user
+          user: await getUser(req.session.user.username)
           //also might want to add other things to users account page, all apts listed, other account information
           //add user's reviews and apartments posted
         }
