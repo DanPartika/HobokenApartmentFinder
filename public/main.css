@@ -14,6 +14,50 @@ h1 {
     font-style: italic;
 }
 
+h2{
+
+}
+
+h3{
+
+}
+
+h4{
+
+}
+
+label{
+
+}
+
+nav{
+
+}
+
+header{
+
+}
+
+form{
+
+}
+
+br{
+
+}
+
+input{
+
+}
+
+option{
+
+}
+
+footer{
+
+}
+
 a {
     color: rgb(49, 117, 218);
     text-decoration: solid;
@@ -43,6 +87,10 @@ li{
     list-style-type:square;
     color: red;
     font-size: 15pt;
+}
+
+ul{
+    
 }
 
 section{
