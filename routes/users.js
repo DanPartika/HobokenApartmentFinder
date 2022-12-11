@@ -66,6 +66,7 @@ router
   .post(async (req, res) => {
     //code here for POST
     //let { username, password } = req.body
+    
     let userData = req.body;
     let username = userData.usernameInput
     let password = userData.passwordInput
@@ -102,20 +103,23 @@ router
   .route('/protected')
   .get(async (req, res) => {
     //code here for GET
-    try {
-      let curDate = new Date();
-    let templateData = {
-      username: req.session.user.username, //this may be something different
-      date: curDate,
-      user:req.session.user
-      //also might want to add other things to users account page, all apts listed, other account information
-      //add user's reviews and apartments posted
+    if (!req.session.user) {
+      return res.redirect('/users/login'); //if user is already logged in and they attempt to register, goto account page
+    } else {
+      try {
+        let curDate = new Date();
+        let templateData = {
+          username: req.session.user.username, //this may be something different
+          date: curDate,
+          user:req.session.user
+          //also might want to add other things to users account page, all apts listed, other account information
+          //add user's reviews and apartments posted
+        }
+        return res.render('userAccount/userhomepage', templateData)
+      } catch (error) {
+        return res.render('error',{title:"Error",error:"Cannot get account page",user:req.session.user})
+      }
     }
-    return res.render('userAccount/userhomepage', templateData)
-    } catch (error) {
-      return res.render('error',{title:"Error",error:"Cannot get account page",user:req.session.user})
-    }
-    
   })
 
 router
