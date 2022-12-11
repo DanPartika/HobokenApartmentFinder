@@ -1,3 +1,72 @@
+body {
+    background-color: #dab79d;
+}
+
+main {
+    max-width: 105%;
+    margin: auto;
+}
+
+h1 {
+    color: #570ccf;
+    font-family: Georgia;
+    font-size: 30px;
+    font-style: italic;
+}
+
+a {
+    color: rgb(49, 117, 218);
+    text-decoration: solid;
+    font-size: 16pt;
+    background: rgb(204, 149, 149);
+}
+
+a:hover {
+    color: rgb(136, 226, 140);
+    text-decoration: underline;
+}
+
+
+p{
+    background: rgb(202, 119, 119);
+    color: rgb(6, 7, 7);
+    font-size: 14pt;
+
+}
+
+button{
+    color: rgb(121, 191, 231);
+    background: rgb(196, 25, 25);
+}
+
+li{
+    list-style-type:square;
+    color: red;
+    font-size: 15pt;
+}
+
+section{
+    border:ridge;
+    border-color: rgb(218, 42, 94);
+    border-width: 3pt;
+}
+
+dt{
+    color: rgb(189, 54, 189);
+    font-size: 18pt;
+}
+
+dl{
+    border-style: groove;
+    border-color: rgb(5, 73, 45);
+    font-size: 5pt;
+}
+
+dd{
+    color: green;
+    font-size: 13pt;
+}
+
 .Homepage-button{
 
 }
@@ -8,4 +77,12 @@
 
 .Account-button{
   
+} 
+
+.logout-button {
+
+}
+
+.Login-Signup-button {
+
 }
