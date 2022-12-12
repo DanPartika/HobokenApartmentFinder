@@ -1,7 +1,8 @@
 const helpers = require("../helpers");
-const { users } = require('../config/mongoCollections');
+const { users, apartments } = require('../config/mongoCollections');
 const bcrypt = require('bcrypt');
 const { getApartmentById } = require("./apartments");
+const { ObjectId } = require("mongodb");
 const saltRounds = 4;
 
 const createUser = async (
@@ -48,6 +49,25 @@ const createUser = async (
   U._id = U._id.toString();
   return {insertedUser: true};
 };
+
+const addApartmentUser = async (aptId, userName) => {
+  //console.log("In AddAPTUSR" + aptId + userName)
+  const apartment = await getApartmentById(aptId);
+  const user = await getUser(userName);
+  if (apartment === null) throw "cant get apartment"
+  const usersCollection = await users();
+  let newApt = {
+    _id: apartment._id,
+    apartmentName: apartment.apartmentName
+  };
+  await usersCollection.updateOne(
+    {_id: ObjectId(user._id)},
+    { $addToSet: {userApartments:newApt} }
+  );
+  //console.log("INA  \n" + userName)
+  apartment._id = apartment._id.toString();
+  return userName;
+}
 
 const checkUser = async (username, password) => { //login verfier
   const user = helpers.checkUsername(username)
@@ -156,4 +176,4 @@ const changeLogin = async (actualUsername, actualPassword, username, password) =
 };
 
 
-module.exports = {createUser, checkUser, updateUser, getUser, removeUser, changeLogin};
+module.exports = {createUser, addApartmentUser, checkUser, updateUser, getUser, removeUser, changeLogin};

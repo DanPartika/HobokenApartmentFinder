@@ -40,7 +40,9 @@ const createReview = async (
     reviewModified: "N/A",
     userName: params.userName,
     comments: params.comments,
-    rating: rating
+    rating: rating,
+    numLikes: 0,
+    numDislikes: 0
   };
   // const newInsertInformation = await ApartmentCollection.insertOne(newReview);
   // const newId = newInsertInformation.insertedId;
@@ -102,7 +104,6 @@ const removeReview = async (reviewId) => {
   reviewId = helpers.checkID(reviewId);
   const apartmentCollection = await apartments();
   const apartment = await apartmentCollection.find({}).toArray();
-  //console.log("bo")
   // if (apartment.length == 0) throw "no review exists with that id"
   let cou = 0;
   let apart = {};

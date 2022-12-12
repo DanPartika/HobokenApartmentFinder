@@ -4,6 +4,7 @@ const { ObjectId, ListCollectionsCursor } = require("mongodb");
 const helpers = require("../helpers");
 
 const createApartment = async (
+  username,
   apartmentName, //do we need users' id here?
   streetAddress,
   rentPerMonth,
@@ -36,6 +37,7 @@ const createApartment = async (
   let yyyy = today.getFullYear();
   today = mm + "/" + dd + "/" + yyyy;
   let newApartment = {
+    userPosted: username,
     apartmentName: params.apartmentName,
     streetAddress: params.streetAddress,
     rentPerMonth: params.rentPerMonth,

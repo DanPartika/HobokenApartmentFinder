@@ -9,6 +9,7 @@ const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
 const { getApartmentById, createApartment, getAllApartments, sortApartmentByCost } = require("../data/apartments");
 const path = require('path');
+const { addApartmentUser } = require("../data/users");
 
 // router.route("/") //homepage
 //   .get(async (req, res) => {
@@ -135,9 +136,11 @@ router
         let utilitiesIncluded = apartmentData.utilitiesIncludedInput;
         utilitiesIncluded = utilitiesIncluded.split(",")
       
-        let apt = await createApartment(apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
+        let apt = await createApartment(req.session.user.username, apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
         // if(!apt.overallRating == 0) return res.render('error',{title:"Error in creating apartment"});
         //console.log(apt)
+        let usersName = await addApartmentUser(apt, req.session.user.username);
+        //console.log(usersName)
         let pathRedirect = '/apartments/apartment/' + apt;
         //console.log(apt);
         res.redirect(pathRedirect);

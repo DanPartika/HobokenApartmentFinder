@@ -1,26 +1,14 @@
 {{!Page where user that is logged in can view a specific Apt
-Todo 3: change all these to fit apartment
-apartmentName, //do we need users' id here?
-  streetAddress,
-  rentPerMonth,
-  rentDuration,
-  maxResidents,
-  numBedrooms,
-  numBathrooms,
-  laundry,
-  floorNum,
-  roomNum,
-  appliancesIncluded,
-  maxPets,
-  utilitiesIncluded, also probably pictures
   todo4: figureout how to get images stored in mongodb
-  google map will also be shown here
+  google map will also be shown here?
 }}
 
 
 <h1>{{title}}</h1>
   {{#if apt._id}}
     <h2>{{apt.apartmentName}}</h2>
+
+    <p>Posted by: {{apt.userPosted}}</p>user.
     <p>Date Posted: {{apt.datePosted}}</p>
     
     <dl> 
@@ -51,37 +39,33 @@ apartmentName, //do we need users' id here?
 
     </dl>
 
-
-    {{!-- <ul>
-      {{#each rev}}
-      <li>
-        <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}} {{this.rentPerMonth}} {{this.numBedrooms}}<a>
-      </li>
-      {{/each}}
-    </ul> --}}
-
   {{else}}
     <p>Apartment with {{apt.id}} does not exist</p>
   {{/if}}
 
-
-
   <footer>
-   
-    <h2>Apartment Reviews</h2>
-    <br>
-     <form id="addReview-form" action="/reviews/add-review/{{apt._id}}" method="GET">
-      <label for="usernameInput">Add Review</label>
-      <button type="submit">+</button>
-    </form>
     {{#if apt.reviews}}
-    
+      <h2>Apartment Reviews</h2>
+      <br>
+      <form id="addReview-form" action="/reviews/add-review/{{apt._id}}" method="GET">
+        <label for="usernameInput">Add Review</label>
+        <button type="submit">+</button>
+      </form>
+      
       {{#each apt.reviews}}
         <li>
           <h3>{{userName}} </h3> 
           <p>Created review on: {{reviewDate}} </p>
           <h4>Rating: {{rating}}</h4>
           <p>Review: {{comments}}</p>
+          
+          {{!-- <form id="likeReviewForm">
+            <button type="submit">Likes: {{numLikes}}</button> {{!-- Change this from "Likes:" to thumbs up and thumbs down --}}
+          </form>
+            
+          <form id="dislikeReviewForm">
+            <button type="submit">Dislikes: {{numDislikes}}</button> 
+          </form> --}}
         </li>
       {{/each}}
 
@@ -90,4 +74,4 @@ apartmentName, //do we need users' id here?
     {{/if}}
 
   </footer>
-
+{{!-- <script src="../../public/js/main.js"></script> --}}

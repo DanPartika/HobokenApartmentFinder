@@ -20,7 +20,7 @@ router
   .get(async (req, res) => {
     //code here for GET
     if (req.session.user) return res.redirect('/protected'); //if user is already logged in and they attempt to register, goto account page
-    else return res.render('userAccount/signup',{user:req.session.user});
+    else return res.render('userAccount/signup', {user:req.session.user});
   })
   .post(async (req, res) => {
     //code here for POST
@@ -38,7 +38,7 @@ router
       // let user = helpers.checkUsername(username);
       // let pass = helpers.checkPassword(password);
       register = await usersData.createUser(firstname, lastname, email, gender, age, username, password);
-
+      //! if (register.insertedUser) return res.status(200).redirect("/");
     } catch (e) {
       let templateData = {
         title: 'Register Error',
@@ -104,15 +104,15 @@ router
   .route('/protected')
   .get(async (req, res) => {
     //code here for GET
-    if (!req.session.user) {
-      return res.redirect('/users/login'); //if user is already logged in and they attempt to register, goto account page
-    } else {
+    if (req.session.user) {
       try {
         let curDate = new Date();
+        //console.log("USERNAME:"+req.session.user.username)
+        let user = await getUser(req.session.user.username);
         let templateData = {
           username: req.session.user.username, //this may be something different
           date: curDate,
-          user: await getUser(req.session.user.username)
+          user: user
           //also might want to add other things to users account page, all apts listed, other account information
           //add user's reviews and apartments posted
         }
@@ -120,6 +120,11 @@ router
       } catch (error) {
         return res.render('error',{title:"Error",error:"Cannot get account page",user:req.session.user})
       }
+
+
+    } else {
+      return res.redirect('/users/login'); //if user is already logged in and they attempt to register, goto account page
+
     }
   })
 

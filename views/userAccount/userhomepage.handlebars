@@ -15,7 +15,39 @@
       <dd>{{user.gender}}</dd>
       <dt>Age</dt>
       <dd>{{user.age}}</dd>
+      <dt>Account Created</dt>
+      <dd>{{user.userCreated}}</dd>
     </dl>
+
+    {{#if user.userApartments}}
+      <h4>List of all posted apartments:</h4>
+
+      {{#each user.userApartments}}
+        <li>
+          
+          <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}}<a>
+        </li>
+      {{/each}}
+
+    {{else}}
+      <p>No Apartments posted yet</p>
+      <a href="/apartments/add-new-apartment">Click here to add apartments</a>
+    {{/if}}
+  {{/if}}
+
+
+  {{#if user.userReviews}}
+      <h4>List of all posted reviews:</h4>
+
+      {{#each user.userReviews}}
+        <li>
+          
+          <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}}<a>
+        </li>
+      {{/each}}
+
+    {{else}}
+      <p>No reviews posted yet</p>
 
   {{/if}}
 
