@@ -1,14 +1,17 @@
 
+const sortApartmentsBy = array => {
+
+}
+
 let form = document.getElementById("sortBy-form");
 let input = document.getElementById("sortByInput");
 let results = document.getElementById("results");
 
 if (form){
-    form.addEventListener('submit', (event) =>{
-        event.preventDefault();
-
+    form.addEventListener('submit', (e) =>{
+        e.preventDefault()
         try{
-           
+           let resultingList
             const listItem = document.createElement('li');
 
           
@@ -18,8 +21,8 @@ if (form){
             listItem.appendChild(content);
             results.appendChild(listItem);
             //form.reset();
-        } catch (e) {
-            alert(e);
+        } catch (err) {
+            alert(err);
         }
     });
 }
