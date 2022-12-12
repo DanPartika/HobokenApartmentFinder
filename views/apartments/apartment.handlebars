@@ -20,7 +20,7 @@ apartmentName, //do we need users' id here?
 
 <h1>{{title}}</h1>
   <h2>{{apt.apartmentName}}</h2>
-  <main> 
+
     {{#if apt._id}}
     <dl> 
       <dt>Street Address</dt>
@@ -63,7 +63,7 @@ apartmentName, //do we need users' id here?
     <p>Apartment with {{apt.id}} does not exist</p>
   {{/if}}
 
-  </main>
+
 
   <footer>
    
@@ -75,15 +75,14 @@ apartmentName, //do we need users' id here?
     </form>
     {{#if apt.reviews}}
     
-    {{#each apt.reviews}}
-  <li>
-
-    <h3>{{userName}} </h3> 
-    <p>Created review on: {{reviewDate}} </p>
-    <h4>Rating: {{rating}}</h4>
-    <p>Review: {{comments}}</p>
-  </li>
-    {{/each}}
+      {{#each apt.reviews}}
+        <li>
+          <h3>{{userName}} </h3> 
+          <p>Created review on: {{reviewDate}} </p>
+          <h4>Rating: {{rating}}</h4>
+          <p>Review: {{comments}}</p>
+        </li>
+      {{/each}}
 
     {{else}}
       <p>Sorry, No reviews found</p>

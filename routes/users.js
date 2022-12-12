@@ -96,7 +96,7 @@ router
         error: 'You did not provide a valid username and/or password.',
         user:req.session.user
       }
-      return res.status(400).render('userAccount/login', templateData);
+      return res.status(400).render('userAccount/userhomepage', templateData);
     }
   })
 

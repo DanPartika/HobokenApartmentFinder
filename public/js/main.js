@@ -1,4 +1,4 @@
-const { getAllApartments } = require("../../data/apartments");
+//const { getAllApartments } = require("../../data/apartments");
 
 
 const sortApartmentsBy = (apts, by) => {
@@ -35,14 +35,15 @@ const sortApartmentsBy = (apts, by) => {
 let form = document.getElementById("sortByform");
 let input = document.getElementById("sortByInput");
 let results = document.getElementById("results");
-console.log("tahyr")
+console.log("in client code")
+
 if (form){
-  form.addEventListener('submit', async e => {
+  form.addEventListener('submit', e => {
   e.preventDefault()
     try {
       console.log("Daniel" + input.value);
       const sortBy = input.value;
-      const apts = await getAllApartments();
+      //const apts = await getAllApartments();
       const sortedApts = sortApartmentsBy(apts, sortBy);
       
 

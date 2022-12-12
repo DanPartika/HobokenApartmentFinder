@@ -22,12 +22,14 @@ todo1: add a + symbol in the top right to add apartments}}
     </form>
 
     <ul>
+      
       {{#each apt}}
       <li>
         <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}} [${{this.rentPerMonth}}/Month , {{this.numBedrooms}} Bedroom]<a>
       </li>
       {{/each}}
     </ul>
+
   </main>
   
   <footer>

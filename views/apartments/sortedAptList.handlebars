@@ -3,11 +3,10 @@
 <body>
   <p>Hello apt list</p>
   {{!list of all avaiable apartments}}
-  <main>
 
     <form id="sortByform">
     <label for="sortByInput">Sort By:</label>
-    <select name = "sortByInput" id = "sortByInput"> 
+    <select name="sortByInput" id="sortByInput"> 
       <option value="Alphabetical">Alphabetical</option>
       <option value="Cost">Cost</option>
       <option value="NumBed">Number of Bedrooms</option>
@@ -22,10 +21,10 @@
   <ul id="results"></ul>
 
   <footer>
-    <form id="addNewApt-form" action="/apartments/add-new-apartment" method="GET">
-    <label for="usernameInput">Add Apartment</label>
-    <button type="submit">+</button>
-  </form>
+    {{!-- <form id="addNewApt-form" action="/apartments/add-new-apartment" method="GET">
+      <label for="usernameInput">Add Apartment</label>
+      <button type="submit">+</button>
+    </form> --}}
   </footer>
 </body>
 <script src="../../public/js/main.js"></script>

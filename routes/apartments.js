@@ -21,9 +21,9 @@ router.route("/") //homepage
     //code here for GET
     //return res.sendFile(path.resolve('static/homepage.html'));
     if (req.session.user) {
-      return res.render('homepage',{user:req.session.user});
+      return res.render('homepage',{title:"Hoboken Apartment Finder",user:req.session.user});
     } else {
-      return res.render('homepage');
+      return res.render('homepage',{title:"Hoboken Apartment Finder"});
     }
     
   });
@@ -85,7 +85,7 @@ router
         req.params.apartmentId = helpers.checkID(req.params.apartmentId);
         //let apt = {};
         try{
-          const apt = await getApartmentById(req.params.apartmentId); //!idk if this saves outside the try catch
+          const apt = await getApartmentById(req.params.apartmentId); 
           const tempData = {title: title, apt:apt,user:req.session.user};
           return res.render("apartments/apartment",tempData);
         } catch (e) {
