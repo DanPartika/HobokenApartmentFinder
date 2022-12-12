@@ -101,6 +101,8 @@ function checkBathrooms(numBathrooms) {
 function checkLaundry(laundry) {
   if ( typeof laundry !== 'boolean' ) throw "laundry must be either true or false."
   if (laundry === null) throw "value for laundry must be supplied"
+  if (laundry) laundry = "Yes"
+  else laundry = "No"
   return laundry;
 }
 
@@ -133,8 +135,11 @@ function checkAppliances(appliancesIncluded) {
 
 //
 function checkPets(maxPets) {
-  
-  return checkNum(maxPets); //type of pets?
+  if ( typeof maxPets !== 'boolean' ) throw "Pets must be either true or false."
+  if (maxPets === null) throw "value for laundry must be supplied"
+  if (maxPets) maxPets = "Yes"
+  else maxPets = "No"
+  return maxPets;
 }
 
 //

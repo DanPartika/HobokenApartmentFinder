@@ -24,11 +24,11 @@ const main = async () =>
 
     try
     {
-        let apartment1 = await apartments.createApartment("Test Place 1","123 Test St", "2000", "24", "3", "3", "1", false, "2", "2C", ["Toaster,TV"], "0", ["N/A"]);
-        let apartment2 = await apartments.createApartment("Test Place 2","901 NotReal Lane", "1000", "12", "1", "1", "1", true, "2", "2A", ["N/A"], "0", ["N/A"]);
-        let apartment3 = await apartments.createApartment("Test Place 3","465 Fabricated Dr", "3000", "10", "4", "4", "2", true, "1", "1C", ["Fridge,TV,Oven"], "1", ["Water,Electric"]);
-        let apartment4 = await apartments.createApartment("Test Place 4","137 Joy Lane", "1500", "12", "2", "1", "1", false, "5", "5A", ["Toaster"], "0", ["N/A"]);
-        let apartment5 = await apartments.createApartment("Test Place 5","816 Bender Ave", "500", "12", "1", "1", "1", false, "2", "2B", ["N/A"], "0", ["N/A"]);
+        let apartment1 = await apartments.createApartment("Test Place 1","123 Test St", "2000", "24", "3", "3", "1", false, "2", "2C", ["Toaster,TV"], true, ["N/A"]);
+        let apartment2 = await apartments.createApartment("Test Place 2","901 NotReal Lane", "1000", "12", "1", "1", "1", true, "2", "2A", ["N/A"], false, ["N/A"]);
+        let apartment3 = await apartments.createApartment("Test Place 3","465 Fabricated Dr", "3000", "10", "4", "4", "2", true, "1", "1C", ["Fridge,TV,Oven"], true, ["Water,Electric"]);
+        let apartment4 = await apartments.createApartment("Test Place 4","137 Joy Lane", "1500", "12", "2", "1", "1", false, "5", "5A", ["Toaster"], false, ["N/A"]);
+        let apartment5 = await apartments.createApartment("Test Place 5","816 Bender Ave", "500", "12", "1", "1", "1", false, "2", "2B", ["N/A"], false, ["N/A"]);
 
         let user1 = await users.createUser("Cody","Fernandez","cfernan2@stevens.edu","Male","20","CodyF02","Password1!");
         let user2 = await users.createUser("Daniel","Partikas","dpartik@stevens.edu","Male","20","Dman","Password1!");

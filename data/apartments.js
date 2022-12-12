@@ -35,12 +35,6 @@ const createApartment = async (
   let dd = String(today.getDate()).padStart(2, "0");
   let yyyy = today.getFullYear();
   today = mm + "/" + dd + "/" + yyyy;
-
-  if(params.laundry === true){
-    params.laundry = "Yes" 
-  }
-  else params.laundry = "No"
-
   let newApartment = {
     apartmentName: params.apartmentName,
     streetAddress: params.streetAddress,
@@ -71,7 +65,7 @@ const createApartment = async (
   return apt._id;
 };
 
-const getAllApartments = async () => {
+const getAllApartments = async () => { //for sort, maybe pass the sorting parameter here
   const apartmentCollection = await apartments();
   const apartmentList = await apartmentCollection.find({}).toArray(); //?
   if (!apartmentList) throw "Could not get all Apartments";
@@ -177,9 +171,6 @@ const updateApartment = async (
   update = update;
   return update;
 };
-
-//sortby blank?
-
 
 
 module.exports = {

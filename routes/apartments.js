@@ -130,9 +130,10 @@ router
         let appliancesIncluded = apartmentData.appliancesIncludedInput;
         appliancesIncluded = appliancesIncluded.split(",");
         let maxPets = apartmentData.maxPetsInput;
+        if(maxPets == "true") maxPets = true
+        else if(maxPets == "false") maxPets = false
         let utilitiesIncluded = apartmentData.utilitiesIncludedInput;
         utilitiesIncluded = utilitiesIncluded.split(",")
-        //console.log(laundry)
       
         let apt = await createApartment(apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
         // if(!apt.overallRating == 0) return res.render('error',{title:"Error in creating apartment"});

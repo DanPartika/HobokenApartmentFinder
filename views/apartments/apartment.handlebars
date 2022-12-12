@@ -19,9 +19,10 @@ apartmentName, //do we need users' id here?
 
 
 <h1>{{title}}</h1>
-  <h2>{{apt.apartmentName}}</h2>
-
-    {{#if apt._id}}
+  {{#if apt._id}}
+    <h2>{{apt.apartmentName}}</h2>
+    <p>Date Posted: {{apt.datePosted}}</p>
+    
     <dl> 
       <dt>Street Address</dt>
       <dd>{{apt.streetAddress}}</dd>
@@ -43,7 +44,7 @@ apartmentName, //do we need users' id here?
       <dd>{{apt.roomNum}}</dd>
       <dt>Appliances Included</dt>
       <dd>{{apt.appliancesIncluded}}</dd>
-      <dt>Allowed number of Pets</dt>
+      <dt>Pets?</dt>
       <dd>{{apt.maxPets}}</dd>
       <dt>Utilities Included</dt>
       <dd>{{apt.utilitiesIncluded}}</dd>

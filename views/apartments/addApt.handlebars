@@ -86,9 +86,11 @@ apartmentName,
     <input for="appliancesIncludedInput" name="appliancesIncludedInput" type="text" placeholder="appliances included seperated by comma" required/>
     <br>
 
-    <label for="maxPetsInput">maxPets:</label>
-    <input id="maxPetsInput" name="maxPetsInput" type="text" placeholder="Number of pets allowed" required />
-    <br>
+    <p>Pets:</p>
+    <input name="maxPetsInput" type="radio" id="yes" value="true" />
+    <label for="yes">Yes</label> <br>
+    <input name="maxPetsInput" type="radio" id="no" value="false" />
+    <label for="no">No</label> <br>
 
     <label for="utilitiesIncludedInput">utilitiesIncluded:</label>
     <input id="utilitiesIncludedInput" name="utilitiesIncludedInput" type="text" placeholder="utilities included seperated by comma" required />
