@@ -22,6 +22,10 @@ apartmentName,
   <p class="error">{{error}}</p>
   {{/if}}
   <form id="newApartment-form" action="/apartments/add-new-apartment" method="POST">
+
+  <p>If you want to leave any parameters empty, please enter N/A</p>
+
+
     <label for="apartmentNameInput">Apartment Name:</label>
     <input for="apartmentNameInput" name="apartmentNameInput"  type="text" placeholder="Name of Apt Complex" required/>
     <br>
@@ -43,7 +47,7 @@ apartmentName,
     <br>
 
     <label for="numBedroomsInput">numBedrooms:</label>
-    <select name = "numBedroomsInput" id = "numBedroomsInput"> 
+    <select name = "numBedroomsInput" id = "numBedroomsInput" placeholder="Number of Bedrooms"> 
       <option value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
@@ -55,7 +59,7 @@ apartmentName,
 
 
     <label for="numBathroomsInput">numBathrooms:</label>
-      <select name = "numBathroomsInput" id = "numBathroomsInput"> 
+      <select name = "numBathroomsInput" id = "numBathroomsInput"  placeholder="Number of Bathrooms"> 
       <option value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
@@ -71,23 +75,23 @@ apartmentName,
     <label for="no">No</label> <br>
 
     <label for="floorNumInput">floorNum:</label>
-    <input for="floorNumInput" name="floorNumInput" type="text" required/>
+    <input for="floorNumInput" name="floorNumInput" type="text" placeholder="Floor the room is on" required/>
     <br>
 
     <label for="roomNumInput">unit:</label>
-    <input for="roomNumInput" name="roomNumInput" type="text" required/>
+    <input for="roomNumInput" name="roomNumInput" type="text" placeholder="Room Number"required/>
     <br>
 
     <label for="appliancesIncludedInput">appliancesIncluded:</label>
-    <input for="appliancesIncludedInput" name="appliancesIncludedInput" type="text" required/>
+    <input for="appliancesIncludedInput" name="appliancesIncludedInput" type="text" placeholder="appliances included seperated by comma" required/>
     <br>
 
     <label for="maxPetsInput">maxPets:</label>
-    <input id="maxPetsInput" name="maxPetsInput" type="text" required />
+    <input id="maxPetsInput" name="maxPetsInput" type="text" placeholder="Number of pets allowed" required />
     <br>
 
     <label for="utilitiesIncludedInput">utilitiesIncluded:</label>
-    <input id="utilitiesIncludedInput" name="utilitiesIncludedInput" type="text" required />
+    <input id="utilitiesIncludedInput" name="utilitiesIncludedInput" type="text" placeholder="utilities included seperated by comma" required />
 
     <button type="submit">Register</button>
   </form>
