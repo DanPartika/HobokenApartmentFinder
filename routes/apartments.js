@@ -62,6 +62,18 @@ router
     }
   });
 
+router
+  .route("/apartments/sortedBy")
+  .get(async (req,res) => {
+    if (req.session.user) {
+      // console.log(req.body)
+      // console.log("===========\n" + req.query.sortByInput)
+      return res.render('apartments/sortedAptList',{user:req.session.user, sortByInput:req.query.sortByInput})
+    } else {
+      return res.render('userAccount/login',{user:req.session.user})
+    }
+  })
+
 
 router
   .route("/apartments/apartment/:apartmentId") //singular apt
