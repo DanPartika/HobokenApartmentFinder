@@ -11,11 +11,6 @@ const { getApartmentById, createApartment, getAllApartments, sortApartmentByCost
 const path = require('path');
 const { addApartmentUser } = require("../data/users");
 
-// router.route("/") //homepage
-//   .get(async (req, res) => {
-//     //code here for GET
-//     return res.sendFile(path.resolve('static/homepage.html'));
-//   });
 
 router.route("/") //homepage
   .get(async (req, res) => {
@@ -117,7 +112,7 @@ router
       try{
         let apartmentData = req.body;
         let apartmentName = apartmentData.apartmentNameInput; 
-        let streetAddress = apartmentData.streetAddressInput;
+        let streetAddress = apartmentData.buildingNumberInput + apartmentData.streetAddressInput + " Hoboken, NJ 07030";
         let rentPerMonth = apartmentData.rentPerMonthInput;
         let rentDuration = apartmentData.rentDurationInput;
         let maxResidents = apartmentData.maxResidentsInput;
@@ -135,6 +130,15 @@ router
         else if(maxPets == "false") maxPets = false
         let utilitiesIncluded = apartmentData.utilitiesIncludedInput;
         utilitiesIncluded = utilitiesIncluded.split(",")
+        let HobokenStreets = ["Adams s", "Bloomfield s", "Castle Point Terrace","Clinton s", "Eighth s","Eleventh s",
+        "Fifteenth s","Fifth s", "First s","Fourteenth s","Fourth s","Garden s","Grand s","Grove s","Harrison s","Henderson s",
+        "Hudson P","Hudson S","Jackson s","Jefferson s","Madison s","Marshall s","Monroe s","Newark s","Ninth s","Observer h",
+        "Park A","Paterson a","River s","River Terrace","Second s","Seventh s","Sinatra Drive","Sixteenth s",
+        "Sixth s","Tenth s","Third s","Thirteenth s","Twelfth s","Vezzetti Way","Washington s","Willow a"];
+        let checker = true;
+        for (let i = 0; i < HobokenStreets.length; i++) 
+          if (apartmentData.streetAddressInput.toLowerCase().includes(HobokenStreets[i].toLowerCase()) ) checker = false;
+        if(checker) throw `${apartmentData.streetAddressInput} is not a valid street name in Hoboken.`;
       
         let apt = await createApartment(req.session.user.username, apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
         // if(!apt.overallRating == 0) return res.render('error',{title:"Error in creating apartment"});
@@ -179,43 +183,7 @@ router
   //   }
   // })
 
-  /*
-  .post(async (req, res) => { // todo adding new apartment
-    //code here for PUT
-    if (req.session.user) {
-      return res.render('apartments/addApt')
-    }
-    else {
-      return res.render('userAccount/login')
-    }
-
-    if (!req.params.ApartmentId) {
-      res.status(400).json({ error: "must supply and ID to delete" });
-      return;
-    }
-    req.params.ApartmentId = req.params.ApartmentId.trim();
-    if (!ObjectId.isValid(req.params.ApartmentId)) {
-      res.status(400).json({ error: "Invalid ObjectID" });
-      return;
-    }
-
-    let ApartmentsPData = req.body;
-    try {
-      let params = helpers.checkApartmentParameters(apartmentName, streetAddress,rentPerMonth,rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
-
-    } catch (e) {
-      //console.log("ERROR")
-      res.status(400).json({ error: e });
-      return;
-    }
-
-    try {
-      
-      res.status(200).json(newPost);
-    } catch (e) {
-      res.status(404).json({ error: e });
-    }
-  });*/
+  
 
 
 module.exports = router;

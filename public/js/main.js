@@ -71,3 +71,11 @@
 
 //   })
 // })
+
+$(document).ready(function(e) {
+  $("#likeReviewForm").click(function(e) { //btn1 is button id
+    var o = $(this).val();
+    o++;
+    $(this).val(o);
+  });
+});

@@ -44,9 +44,11 @@
   {{/if}}
 
   <footer>
+    <h2>Apartment Reviews</h2>
+    <br>
+
     {{#if apt.reviews}}
-      <h2>Apartment Reviews</h2>
-      <br>
+      
       <form id="addReview-form" action="/reviews/add-review/{{apt._id}}" method="GET">
         <label for="usernameInput">Add Review</label>
         <button type="submit">+</button>
@@ -59,19 +61,23 @@
           <h4>Rating: {{rating}}</h4>
           <p>Review: {{comments}}</p>
           
-          {{!-- <form id="likeReviewForm">
-            <button type="submit">Likes: {{numLikes}}</button> {{!-- Change this from "Likes:" to thumbs up and thumbs down --}}
+          <form id="likeReviewForm">
+            <button type="submit">👍 {{numLikes}}</button> {{!-- Change this from "Likes:" to thumbs up and thumbs down --}}
           </form>
             
           <form id="dislikeReviewForm">
-            <button type="submit">Dislikes: {{numDislikes}}</button> 
-          </form> --}}
+            <button type="submit">👎 {{numDislikes}}</button> 
+          </form> 
         </li>
       {{/each}}
 
     {{else}}
       <p>Sorry, No reviews found</p>
+      <form id="addReview-form" action="/reviews/add-review/{{apt._id}}" method="GET">
+        <label for="usernameInput">Add the first Review</label>
+        <button type="submit">+</button>
+      </form>
     {{/if}}
 
   </footer>
-{{!-- <script src="../../public/js/main.js"></script> --}}
+ <script src="../../public/js/main.js"></script> 
