@@ -21,12 +21,26 @@ const createApartment = async (
   let params = helpers.checkApartmentParameters(apartmentName, streetAddress,rentPerMonth,rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
 
   const apartmentCollection = await apartments();
+  
+  //Checking for duplicate apartments
+  const existingApt = await apartmentCollection.findOne({ apartmentName: params.apartmentName, streetAddress: params.streetAddress, floorNum: params.floorNum, roomNum: params.roomNum});
+  if (existingApt !== null) throw `This apartment has been listed already.`;
+
+  const existingApt2 = await apartmentCollection.findOne({ streetAddress: params.streetAddress, floorNum: params.floorNum, roomNum: params.roomNum});
+  if (existingApt2 !== null) throw `This apartment has been listed already under a different name.`;
+
   //get date variable
   let today = new Date();
   let mm = String(today.getMonth() + 1).padStart(2, "0");
   let dd = String(today.getDate()).padStart(2, "0");
   let yyyy = today.getFullYear();
   today = mm + "/" + dd + "/" + yyyy;
+
+  if(params.laundry === true){
+    params.laundry = "Yes" 
+  }
+  else params.laundry = "No"
+
   let newApartment = {
     apartmentName: params.apartmentName,
     streetAddress: params.streetAddress,
@@ -46,6 +60,7 @@ const createApartment = async (
     reviews: [],
     overallRating: 0
   };
+  
   
   const insertInfo = await apartmentCollection.insertOne(newApartment);
   if (!insertInfo.acknowledged || !insertInfo.insertedId) throw "Could not add Apartment";

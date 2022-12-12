@@ -30,7 +30,7 @@ function checkArr(arr) {
 }
 
 function checkNum(num) {
-  if (!num) throw "You must provide a valid number for your rating";
+  if (!num) throw "You must provide a valid number. ";
   if (isNaN(num)) throw `${num} must be a number`;
   if (num.toString().includes('.')) throw `${num} cannot include '.'`;
   let n = parseInt(num);
@@ -63,7 +63,7 @@ function checkAddress(streetAddress) {
 
 //
 function checkRent(rentPerMonth) {
-  if (!rentPerMonth) throw "You must provide a valid number for your rating";
+  if (!rentPerMonth) throw "You must provide a valid number.";
   if (isNaN(rentPerMonth)) throw `${rentPerMonth} must be a number`;
   if (rentPerMonth.toString().includes('.')) throw `${rentPerMonth} should be a whole number`;
   let rntPM = parseInt(rentPerMonth)
@@ -76,7 +76,7 @@ function checkRentDuration(rentDuration) {
   if(!rentDuration) throw "must include rent duration"
   if ( !(/\d/.test(rentDuration)) ) throw `${rentDuration} must contain a specified number of length`
   let rntDur = rentDuration.trim();
-  return rntDur;
+  return checkNum(rntDur);
 }
 
 //
@@ -99,8 +99,8 @@ function checkBathrooms(numBathrooms) {
 
 //
 function checkLaundry(laundry) {
-  if (!laundry) throw "value for laundry must be supplied"
   if ( typeof laundry !== 'boolean' ) throw "laundry must be either true or false."
+  if (laundry === null) throw "value for laundry must be supplied"
   return laundry;
 }
 
