@@ -120,7 +120,7 @@ router
       try{
         let apartmentData = req.body;
         let apartmentName = apartmentData.apartmentNameInput; 
-        let streetAddress = apartmentData.buildingNumberInput + apartmentData.streetAddressInput + " Hoboken, NJ 07030";
+        let streetAddress = apartmentData.buildingNumberInput + " " + apartmentData.streetAddressInput + " Hoboken, NJ 07030";
         let rentPerMonth = apartmentData.rentPerMonthInput;
         let rentDuration = apartmentData.rentDurationInput;
         let maxResidents = apartmentData.maxResidentsInput;
