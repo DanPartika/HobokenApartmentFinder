@@ -8,6 +8,8 @@ const static = express.static(__dirname + '/public');
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }))
+app.set('view engine', 'handlebars')
 
 app.use(session({
   name: 'AuthCookie',
@@ -35,12 +37,6 @@ app.use(async (req, res, next) => {
   console.log(log)
   next()
 })
-
-app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }))
-app.set('view engine', 'handlebars')
-
-
-
 
 configRoutes(app);
 

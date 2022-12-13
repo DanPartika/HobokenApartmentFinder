@@ -62,12 +62,12 @@
           <p>Review: {{comments}}</p>
           
           <form id="likeReviewForm">
-            <button type="submit">👍 {{numLikes}}</button> {{!-- Change this from "Likes:" to thumbs up and thumbs down --}}
+            <button id="likeButton" type="submit">👍 {{numLikes}}</button> 
           </form>
             
-          <form id="dislikeReviewForm">
+          {{!-- <form id="dislikeReviewForm">
             <button type="submit">👎 {{numDislikes}}</button> 
-          </form> 
+          </form>  --}}
         </li>
       {{/each}}
 
@@ -80,4 +80,10 @@
     {{/if}}
 
   </footer>
- <script src="../../public/js/main.js"></script> 
+  <script
+      src="https://code.jquery.com/jquery-2.2.4.min.js"
+      integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+      crossorigin="anonymous"
+    ></script>
+  <script src="../../public/js/main.js"></script> 
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

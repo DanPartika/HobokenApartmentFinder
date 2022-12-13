@@ -25,6 +25,13 @@ router.route("/") //homepage
   });
 
 router
+  .route("/getApartments")
+  .get(async (req, res) => {
+    const apts = await getAllApartments();
+    res.json(apts);
+  });
+
+router
   .route("/apartments") //apt list
   .get(async (req, res) => {
     try {
@@ -83,7 +90,7 @@ router
         try{
           const apt = await getApartmentById(req.params.apartmentId); 
           const tempData = {title: title, apt:apt,user:req.session.user};
-          return res.render("apartments/apartment",tempData);
+          return res.render("apartments/apartment", tempData);
         } catch (e) {
           return res.status(400).render("error", {title: "Apartment Not Found", message: "400 Error: Apartment not found.",user:req.session.user});  // can alert this instead
         }
@@ -93,9 +100,10 @@ router
         return res.status(404).render("error", {title: "Apartment Not Found", message: "404 Error: Page not found.",user:req.session.user});
       }
     } else {
-      return res.render('userAccount/login',{user:req.session.user});
+      return res.render('userAccount/login', {user:req.session.user});
     }
-  })
+  });
+
 
 router
   .route("/apartments/add-new-apartment")

@@ -72,10 +72,46 @@
 //   })
 // })
 
-$(document).ready(function(e) {
-  $("#likeReviewForm").click(function(e) { //btn1 is button id
-    var o = $(this).val();
-    o++;
-    $(this).val(o);
+
+var likeReviewForm = $('#likeReviewForm');
+
+likeReviewForm.submit(async function (event) {
+  event.preventDefault();
+  //let aptData = axios.get('http://localhost:3000/getApartments');
+  axios.get('/getApartments').then((response) => {
+    console.log(response.data); //* this is a list of apts. 
+  }, (error) => {
+    console.log(error);
   });
+
+  //todo set likes with a post request 
+    /*todo  Like this
+     * axios.post('/login', {  // id of apt and user, send those to server to increment (increment happens in route that calls data)
+  firstName: 'Finn',
+  lastName: 'Williams'
+})
+.then((response) => {
+  console.log(response);
+}, (error) => {
+  console.log(error);
 });
+     */
+  
+  //console.log(aptData);
+});
+
+
+//var likeButton = $('#likeButton');
+//disable like button
+
+//axios
+
+
+
+// $(document).ready(function(e) {
+//   $("#likeReviewForm").click(function(e) { 
+//     var o = $(this).val();
+//     o++;
+//     $(this).val(o);
+//   });
+// });
