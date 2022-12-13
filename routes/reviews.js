@@ -4,7 +4,8 @@ const router = express.Router();
 const data = require("../data");
 const reviewsData = data.reviews;
 const { ObjectId } = require("mongodb");
-const { getAllReviews, getReview, removeReview, createReview } = require("../data/reviews");
+const { getAllReviews, createReview } = require("../data/reviews");
+const { addReviewUser } = require("../data/users")
 const helpers = require("../helpers");
 const { review } = require("../data");
 
@@ -98,7 +99,12 @@ const { review } = require("../data");
         let username = req.session.user.username
 
         let apt = await createReview(apartmentID, username, comment, rating);
+        let allReviews = await getAllReviews(apt._id);
+        console.log(allReviews.length)
+        console.log("==============\n")
+        let revId = allReviews[allReviews.length - 1]
         
+        let reviewersName = await addReviewUser(revId._id, req.session.user.username, apt._id);
         // if(!apt.overallRating == 0) return res.render('error',{title:"Error in creating apartment"});
         //console.log(apt)
         let pathRedirect = '/apartments/apartment/' + apartmentID;
@@ -106,7 +112,7 @@ const { review } = require("../data");
         res.redirect(pathRedirect);
         //res.redirect('/apartments/apartment/:apartmentId')
       } catch (e) {
-        return res.render('error',{title:"Error in creating apartment", message:e,user:req.session.user});
+        return res.render('error',{title:"Error in creating review", message:e, user:req.session.user});
       }
 
 

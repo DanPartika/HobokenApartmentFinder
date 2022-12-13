@@ -51,6 +51,7 @@ const createReview = async (
     { _id: ObjectId(apartmentId) },
     { $addToSet: { reviews: newReview } }
   );
+  
   const apt = await getApartmentById(apartmentId);
   let overall_rating = 0;
   let c = 0;
@@ -73,7 +74,7 @@ const createReview = async (
 };
 
 const getAllReviews = async (apartmentId) => {
-  apartmentId = helpers.checkApartmentId(apartmentId);
+  apartmentId = helpers.checkID(apartmentId);
   const apartmentCollection = await apartments();
   const apartment = await getApartmentById(apartmentId);
   if (apartment === null) throw "no Apartment exists with that id";
@@ -82,6 +83,8 @@ const getAllReviews = async (apartmentId) => {
   });
   return apartment.reviews;
 };
+
+
 
 const getReview = async (reviewId) => {
   reviewId = helpers.checkID(reviewId);

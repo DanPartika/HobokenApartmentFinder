@@ -2,6 +2,7 @@ const helpers = require("../helpers");
 const { users, apartments } = require('../config/mongoCollections');
 const bcrypt = require('bcrypt');
 const { getApartmentById } = require("./apartments");
+const { getReview } = require("./reviews");
 const { ObjectId } = require("mongodb");
 const saltRounds = 4;
 
@@ -67,6 +68,37 @@ const addApartmentUser = async (aptId, userName) => {
   //console.log("INA  \n" + userName)
   apartment._id = apartment._id.toString();
   return userName;
+}
+
+const addReviewUser = async (reviewId, userName, aptId) => {
+  //console.log("In AddAPTUSR" + aptId + userName)
+  console.log("2")
+  const review = await getReview(reviewId);
+  if (review === null) throw "cant get review"
+  let  apartmentName = await getApartmentById(aptId);
+  apartmentName = apartmentName.apartmentName;
+  const user = await getUser(userName);
+  const usersCollection = await users();
+  console.log("3")
+  let newRev = {
+    _id: review._id,
+    aptId: aptId,
+    aptName: apartmentName
+  };
+
+  await usersCollection.updateOne(
+    {_id: ObjectId(user._id)},
+    { $addToSet: {userReviews:newRev} }
+  );
+  console.log("4")
+  //console.log("INA  \n" + userName)
+  //if(!updateInfo.acknowledged || updateInfo.matchedCount !== 1 || updateInfo.modifiedCount !== 1) throw "cannot update user"
+  //let revId = updateInfo.upsertedId ;
+  //console.log(revId)
+  const update = await getUser(userName);
+  update._id = update._id.toString();
+  console.log("5")
+  return update;
 }
 
 const checkUser = async (username, password) => { //login verfier
@@ -176,4 +208,4 @@ const changeLogin = async (actualUsername, actualPassword, username, password) =
 };
 
 
-module.exports = {createUser, addApartmentUser, checkUser, updateUser, getUser, removeUser, changeLogin};
+module.exports = {createUser, addApartmentUser, addReviewUser, checkUser, updateUser, getUser, removeUser, changeLogin};
