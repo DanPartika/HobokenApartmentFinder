@@ -104,10 +104,39 @@ const removeApartment = async (apartmentId) => {
   return `${apartName} has been successfully deleted!`; //what do i want to return?
 };
 
-const sortApartmentByCost = async () => 
-{
-  let apartmentList = getAllApartments();
-  apartmentList.sort((a,b) => (a.rentPerMonth - b.rentPerMonth));
+const sortApartmentsBy = async (by) => {
+  let apts = getAllApartments();
+  console.log(by)
+  switch (by) {
+    case "Cost":
+      console.log("HERE")
+      apts.sort((a,b) => (a.rentPerMonth > b.rentPerMonth) ? 1 : -1);
+      break;
+
+    case "NumBed":
+      apts.sort((a,b) => (a.numBedrooms > b.numBedrooms) ? 1 : -1);
+      break;
+
+    case "NumBath":
+      apts.sort((a,b) => (a.numBathrooms > b.numBathrooms) ? 1 : -1);
+      break;
+
+    case "NumRes":
+      apts.sort((a,b) => (a.maxResidents > b.maxResidents) ? 1 : -1);
+      break;
+
+    case "Alphabetical":
+
+      break;
+
+    case "PetsAll":
+      let aptsPets = apts.filter(apts => apts.maxPets == true);
+      return aptsPets;
+      break;
+
+    default:
+      break;
+  }
   return apartmentList;
 }
 
@@ -181,5 +210,5 @@ module.exports = {
   getApartmentById,
   removeApartment,
   updateApartment,
-  sortApartmentByCost
+  sortApartmentsBy
 };

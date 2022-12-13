@@ -7,7 +7,7 @@ const apartmentsData = data.Apartments;
 const usersData = data.users
 const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
-const { getApartmentById, createApartment, getAllApartments, sortApartmentByCost } = require("../data/apartments");
+const { getApartmentById, createApartment, getAllApartments, sortApartmentsBy } = require("../data/apartments");
 const path = require('path');
 const { addApartmentUser, addReviewUser } = require("../data/users");
 const { getReview } = require("../data/reviews");
@@ -26,10 +26,11 @@ router.route("/") //homepage
   });
 
 router
-  .route("/getApartments/:id")
+  .route("/getReview/:id")
   .get(async (req, res) => {
-    const apts = await getAllApartments();
-    res.json(apts);
+    //make sure id exists
+    const review = await getReview(id);
+    res.json(review);
   });
 
 router
@@ -38,17 +39,18 @@ router
     try {
      
       if (req.session.user) {
-        const apts = await getAllApartments();
+        //const apts = await getAllApartments();
         let apartmentData = req.body;
         let sortCondition = apartmentData.sortByInput;
+        console.log("=================\n\n\n" + req.body)
         //if (apts.length == 0) return res.status(404).render("error",{title:"No Apartments Found", message: "Error code: 404, no apartments found"})
-
-        if (sortCondition == "Cost") {
-          console.log("Cost")
-          apts = await sortApartmentByCost();
+        let apts = [];
+        if (sortCondition!==null) {
+          apts = await getAllApartments();
         } else {
-          
+          apts = await sortApartmentsBy(sortCondition);
         }
+        console.log(apts);
         const data = {apt:apts,user:req.session.user};
         return res.render('apartments/aptList', data);
       }
