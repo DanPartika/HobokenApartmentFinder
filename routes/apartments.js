@@ -26,7 +26,7 @@ router.route("/") //homepage
   });
 
 router
-  .route("/getApartments")
+  .route("/getApartments/:id")
   .get(async (req, res) => {
     const apts = await getAllApartments();
     res.json(apts);

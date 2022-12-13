@@ -10,6 +10,9 @@ likeReviewForm.submit(async function (event) {
     console.log(error);
   });
 
+
+  //!Change add review to client side
+  //Have a user upload on add apt page and store the path in mongo to later access it.
   //todo set likes with a post request 
     /*todo  Like this
      * axios.post('/login', {  // id of apt and user, send those to server to increment (increment happens in route that calls data)
