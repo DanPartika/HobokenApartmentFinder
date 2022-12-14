@@ -1,12 +1,16 @@
 
 var likeReviewForm = $('#likeReviewForm');
+var revId = document.getElementById('likeReviewForm')
+console.log(revId)
 
 likeReviewForm.submit(async function (event) {
+  console.log("EVENT: " + event + "\n\n\n" + event.target.querySelector('button').id)
   event.preventDefault();
+  
   //let aptData = axios.get('http://localhost:3000/getApartments');
-  axios.get('/getReview/:id').then((response) => {
+  await axios.get(`/getReview/${event.target.querySelector('button').id}`).then((response) => {
     console.log(response.data); 
-    //todo display new num likes 
+    //todo display new num likes using a selector 
   }, (error) => {
     console.log(error);
   });

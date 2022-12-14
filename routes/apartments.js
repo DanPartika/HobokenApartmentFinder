@@ -7,7 +7,7 @@ const apartmentsData = data.Apartments;
 const usersData = data.users
 const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
-const { getApartmentById, createApartment, getAllApartments, sortApartmentsBy } = require("../data/apartments");
+const { getApartmentById, createApartment, getAllApartments, sortApartmentsBy, updateApartment } = require("../data/apartments");
 const path = require('path');
 const { addApartmentUser, addReviewUser } = require("../data/users");
 const { getReview } = require("../data/reviews");
@@ -29,7 +29,9 @@ router
   .route("/getReview/:id")
   .get(async (req, res) => {
     //make sure id exists
-    const review = await getReview(id); //get the review
+    console.log(req.params.id)
+    const review = await getReview(req.params.id); //get the review
+    //create a new data function that increments numlikes and stores in mongo
     review.numLikes ++;
     res.json(review);
   });
@@ -176,8 +178,52 @@ router
   })
   .post(async (req,res) => {
     if (req.session.user) {
-      let pathRedirect = '/apartments/apartment/' + req.params.apartmentId;
-      return res.redirect(pathRedirect);
+      try {
+        req.params.apartmentId.toString();
+        let apt = await getApartmentById(req.params.apartmentId);
+      
+        let apartmentData = req.body;
+        let apartmentName = apartmentData.apartmentNameInput; 
+        let streetAddress = apartmentData.buildingNumberInput + " " + apartmentData.streetAddressInput + " Hoboken, NJ 07030";
+        let rentPerMonth = apartmentData.rentPerMonthInput;
+        let rentDuration = apartmentData.rentDurationInput;
+        let maxResidents = apartmentData.maxResidentsInput;
+        let numBedrooms = apartmentData.numBedroomsInput;
+        let numBathrooms = apartmentData.numBathroomsInput;
+        let laundry = apartmentData.laundryInput;
+        if(laundry == "true") laundry = true
+        else if(laundry == "false") laundry = false
+        let floorNum = apartmentData.floorNumInput;
+        let roomNum = apartmentData.roomNumInput;
+        let appliancesIncluded = apartmentData.appliancesIncludedInput;
+        appliancesIncluded = appliancesIncluded.split(",");
+        let maxPets = apartmentData.maxPetsInput;
+        if(maxPets == "true") maxPets = true
+        else if(maxPets == "false") maxPets = false
+        let utilitiesIncluded = apartmentData.utilitiesIncludedInput;
+        utilitiesIncluded = utilitiesIncluded.split(",")
+        let HobokenStreets = ["Adams s", "Bloomfield s", "Castle Point Terrace","Clinton s", "Eighth s","Eleventh s",
+        "Fifteenth s","Fifth s", "First s","Fourteenth s","Fourth s","Garden s","Grand s","Grove s","Harrison s","Henderson s",
+        "Hudson P","Hudson S","Jackson s","Jefferson s","Madison s","Marshall s","Monroe s","Newark s","Ninth s","Observer h",
+        "Park A","Paterson a","River s","River Terrace","Second s","Seventh s","Sinatra Drive","Sixteenth s",
+        "Sixth s","Tenth s","Third s","Thirteenth s","Twelfth s","Vezzetti Way","Washington s","Willow a"];
+        let checker = true;
+        for (let i = 0; i < HobokenStreets.length; i++) 
+          if (apartmentData.streetAddressInput.toLowerCase().includes(HobokenStreets[i].toLowerCase()) ) checker = false;
+        if(checker) throw `${apartmentData.streetAddressInput} is not a valid street name in Hoboken.`;
+  
+        req.params.apartmentId.toString();
+        let newApt = await updateApartment(req.params.apartmentId, req.session.user.username, apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
+        
+        //let usersName = await addApartmentUser(newApt._id, req.session.user.username);
+
+        let pathRedirect = '/apartments/apartment/' + req.params.apartmentId;
+        return res.redirect(pathRedirect); 
+      }
+     catch (e) {
+      return res.render('error',{title:"Error in updating apartment", message:e,user:req.session.user});
+    }
+      
     } else {
       return res.render('userAccount/login',{user:req.session.user});
     }
