@@ -24,8 +24,11 @@
 
       {{#each user.userApartments}}
         <li>
-{{!--      Add a way to remove the apartment here      --}}
           <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}}<a> 
+            {{!--      Add a way to remove the apartment here      --}}
+          <form id="editApt-form" action="/apartments/editApartment/{{this._id}}" method="GET"> 
+            <button type="submit"> Edit Apt </button>
+          </form>
         </li>
       {{/each}}
 

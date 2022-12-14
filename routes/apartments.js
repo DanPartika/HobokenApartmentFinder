@@ -163,6 +163,26 @@ router
       return res.render('userAccount/login',{user:req.session.user});
     }
   })
+
+  router
+  .route("/apartments/editApartment/:apartmentId") //singular apt
+  .get(async (req, res) => {
+    if (req.session.user) {
+      let apt = getApartmentById(req.params.apartmentId);
+      return res.render('apartments/editApt',{user:req.session.user, apt:apt});
+    } else {
+      return res.render('userAccount/login',{user:req.session.user});
+    }
+  })
+  .post(async (req,res) => {
+    if (req.session.user) {
+      let pathRedirect = '/apartments/apartment/' + req.params.apartmentId;
+      return res.redirect(pathRedirect);
+    } else {
+      return res.render('userAccount/login',{user:req.session.user});
+    }
+  })
+
   // .delete(async (req, res) => {
   //   //code here for DELETE
   //   //!make sure user is logged in
