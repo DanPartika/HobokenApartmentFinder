@@ -7,7 +7,7 @@ const apartmentsData = data.Apartments;
 const usersData = data.users
 const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
-const { getApartmentById, createApartment, getAllApartments, sortApartmentsBy, updateApartment } = require("../data/apartments");
+const { getApartmentById, createApartment, getAllApartments, sortApartmentsBy, updateApartment, removeApartment } = require("../data/apartments");
 const path = require('path');
 const { addApartmentUser, updateApartmentUser, addReviewUser } = require("../data/users");
 const { getReview } = require("../data/reviews");
@@ -215,7 +215,7 @@ router
         req.params.apartmentId.toString();
         let newApt = await updateApartment(req.params.apartmentId, req.session.user.username, apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
         
-        let usersName = await updateApartmentUser(newApt._id, req.session.user.username);
+        //let usersName = await updateApartmentUser(newApt._id, req.session.user.username);
 
         let pathRedirect = '/apartments/apartment/' + req.params.apartmentId;
         return res.redirect(pathRedirect); 
@@ -228,6 +228,32 @@ router
       return res.render('userAccount/login',{user:req.session.user});
     }
   })
+
+  router
+    .route("/apartments/deleteApt/:apartmentId")
+    .get(async (req,res) => {
+
+      if (req.session.user) {
+        return res.render('userAccount/userhomepage',{user:req.session.user});
+      } else {
+        return res.render('userAccount/login',{user:req.session.user});
+      }
+    })
+    .post(async (req,res) => {
+      req.params.apartmentId = req.params.apartmentId.trim();
+
+      if (!ObjectId.isValid(req.params.apartmentId)) {
+        res.render('error', {title: "Id is not valid"})//({ error: 'Invalid ObjectID' });
+        return;
+      }
+      try {
+        const apartment = await removeApartment(req.params.apartmentId);
+        const user = await updateApartmentUser()
+        return res.render('userAccount/userhomepage',{user:req.session.user});
+      } catch (e) {
+        res.render('error', {title: "Error", message: e});
+      }
+    })
 
   // .delete(async (req, res) => {
   //   //code here for DELETE

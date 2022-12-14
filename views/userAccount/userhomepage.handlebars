@@ -29,6 +29,9 @@
           <form id="editApt-form" action="/apartments/editApartment/{{this._id}}" method="GET"> 
             <button type="submit"> Edit Apt </button>
           </form>
+          <form id="deleteApartment-form" action="/apartments/deleteApt/{{this._id}}" method="POST"> 
+            <button type="submit"> Delete Apt </button>
+          </form>
           {{!-- <form id="deleteApt-form" action="/apartments/editApartment/{{this._id}}" method="GET"> 
             <button type="submit"> Edit Apt </button>
           </form> --}}
@@ -49,6 +52,9 @@
         <li>
           
           <a href="/apartments/apartment/{{this.aptId}}">{{this.aptName}}<a>
+            {{!-- <form id="deleteReview-form" action="/reviews/deleteReview/{{this._id}}" method="POST"> 
+            <button type="submit"> Delete Review </button>
+          </form> --}}
         </li>
       {{/each}}
 
