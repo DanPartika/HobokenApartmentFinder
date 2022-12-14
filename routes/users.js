@@ -89,14 +89,15 @@ router
       req.session.user = {
         username: user
       }
-      return res.render('userAccount/userhomepage',{user:req.session.user}); //does this have to be /users/protected?
+      return res.render('homepage',{user:req.session.user});
+      //return res.render('userAccount/userhomepage',{user:req.session.user}); //does this have to be /users/protected?
     } else {
       let templateData = {
         title: 'Login',
         error: 'You did not provide a valid username and/or password.',
         user:req.session.user
       }
-      return res.status(400).render('userAccount/userhomepage', templateData);
+      return res.status(400).render('userAccount/userhomepage', templateData); 
     }
   })
 
