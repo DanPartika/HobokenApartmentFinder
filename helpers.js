@@ -149,8 +149,10 @@ function checkUtilities(utilitiesIncluded) {
 }
 
 //function that returns a object of all the trimmed parameters for apartments.js file
-function checkApartmentParameters(apartmentName, streetAddress,rentPerMonth,rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded) {
-  return { apartmentName: checkName(apartmentName),
+function checkApartmentParameters(userName, apartmentName, streetAddress,rentPerMonth,rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded) {
+  return { 
+  userName: checkUsername(userName),
+  apartmentName: checkName(apartmentName),
   streetAddress: checkAddress(streetAddress),
   rentPerMonth: checkRent(rentPerMonth),
   rentDuration: checkRentDuration(rentDuration),
@@ -189,7 +191,7 @@ function checkRating(a) {
 function checkReviewsParameters(apartmentId, userName, comments, rating) {
   return {
     apartmentId: checkID(apartmentId), 
-    userName: checkReviewerName(userName), 
+    userName: checkUsername(userName), 
     comments: checkReview(comments), 
     rating: checkRating(rating)
   }

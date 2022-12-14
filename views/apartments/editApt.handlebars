@@ -21,7 +21,7 @@ apartmentName,
   <h2> {{title}} </h2>
   <p class="error">{{error}}</p>
   {{/if}}
-  <form id="editApartment-form" action="/apartments/editApartment/:id" method="POST">
+  <form id="editApartment-form" action="/apartments/editApartment/{{apt._id}}" method="POST">
 
   <p>If you want to leave any parameters empty, please enter N/A</p>
 
@@ -35,7 +35,7 @@ apartmentName,
     <input for="buildingNumberInput" name="buildingNumberInput" type="text" value= {{apt.streetAddress}} required/>
     
     <label for="streetAddressInput">Street Name:</label>
-    <input for="streetAddressInput" name="streetAddressInput" type="text" value= {{apt.streetAddress}} required/>
+    <input for="streetAddressInput" name="streetAddressInput" type="text" required/>
     
     <br>
 
