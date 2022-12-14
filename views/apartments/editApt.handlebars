@@ -27,7 +27,7 @@ apartmentName,
 
     {{!-- <p>Prev Value was: {{apt.apartmentName}}</p> --}}
     <label for="apartmentNameInput">Apartment Name:</label>
-    <input for="apartmentNameInput" name="apartmentNameInput" type="text" value= {{apt.apartmentName}} required/>
+    <input for="apartmentNameInput" name="apartmentNameInput" type="text" value={{apt.apartmentName}} required/>
     {{!-- value does not work, migght have to set Previous value: {{apt...}} and leave the form blank. --}}
     <br>
 
@@ -51,6 +51,7 @@ apartmentName,
     <input for="maxResidentsInput" name="maxResidentsInput" type="text" value= {{apt.maxResidents}} required/>
     <br>
 
+    <p>Previous Value: {{apt.numBedrooms}}</p>
     <label for="numBedroomsInput">numBedrooms:</label>
     <select name = "numBedroomsInput" id = "numBedroomsInput" placeholder="Number of Bedrooms"> 
       <option value="1">1</option>
@@ -62,7 +63,7 @@ apartmentName,
     <br>
     {{!-- <input id="numBedroomsInput" name="numBedroomsInput" type="text" placeholder="Integer number" required /> --}}
 
-
+    <p>Previous Value: {{apt.numBathrooms}}</p>
     <label for="numBathroomsInput">numBathrooms:</label>
       <select name = "numBathroomsInput" id = "numBathroomsInput"  placeholder="Number of Bathrooms"> 
       <option value="1">1</option>
@@ -73,6 +74,7 @@ apartmentName,
     </select>
     {{!-- <input for="numBathroomsInput" name="numBathroomsInput" type="text" required/> --}}
 
+    <p>Previous Value: {{apt.laundry}}</p>
     <p>Laundry:</p>
     <input name="laundryInput" type="radio" id="yes" value="true" />
     <label for="yes">Yes</label> <br>
@@ -91,6 +93,7 @@ apartmentName,
     <input for="appliancesIncludedInput" name="appliancesIncludedInput" type="text" value= {{apt.appliancesIncluded}} required/>
     <br>
 
+    <p>Previous Value: {{apt.maxPets}}</p>
     <p>Pets:</p>
     <input name="maxPetsInput" type="radio" id="yes" value="true" />
     <label for="yes">Yes</label> <br>
