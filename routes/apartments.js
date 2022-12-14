@@ -29,7 +29,9 @@ router
   .route("/getReview/:id")
   .get(async (req, res) => {
     //make sure id exists
-    const review = await getReview(id); //get the review
+    console.log(req.params.id)
+    const review = await getReview(req.params.id); //get the review
+    //create a new data function that increments numlikes and stores in mongo
     review.numLikes ++;
     res.json(review);
   });
