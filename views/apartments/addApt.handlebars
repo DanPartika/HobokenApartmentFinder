@@ -99,6 +99,16 @@ apartmentName,
     <label for="utilitiesIncludedInput">utilitiesIncluded(separate each with comma, or write N/A):</label>
     <input id="utilitiesIncludedInput" name="utilitiesIncludedInput" type="text" placeholder="List of utilities included" required />
 
+    <br>
+    {{!-- <form id="upload-form" type="file" action="/apartments/editApartment/{{this._id}}" method="GET"> 
+      <button type="submit"> Upload Image </button>
+    </form> --}}
+    
+    <label for="uploadInput"Upload Image:></label>
+    <input id="uploadInput" name="uploadInput" type="file" accept="image/*">
+
+    <br>
+
     <button type="submit">Register</button>
   </form>
 </main>
