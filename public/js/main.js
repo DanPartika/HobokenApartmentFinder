@@ -4,11 +4,20 @@ var likeReviewForm = $('#likeReviewForm');
 likeReviewForm.submit(async function (event) {
   event.preventDefault();
   //let aptData = axios.get('http://localhost:3000/getApartments');
-  axios.get('/getApartments').then((response) => {
-    console.log(response.data); //* this is a list of apts. 
+  axios.get('/getReview/:id').then((response) => {
+    console.log(response.data); 
+    //todo display new num likes 
   }, (error) => {
     console.log(error);
   });
+  
+  // document.addEventListener("DOMContentLoaded", function() {
+//   fetch('http://localhost:3000/apartments/apartment/63977361f5435a2db481a4ab')
+//   .then(resourse => resourse.json())
+//   .then((data) => {
+
+//   })
+// })
 
 
   //!Change add review to client side

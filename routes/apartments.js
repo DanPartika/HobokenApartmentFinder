@@ -29,7 +29,8 @@ router
   .route("/getReview/:id")
   .get(async (req, res) => {
     //make sure id exists
-    const review = await getReview(id);
+    const review = await getReview(id); //get the review
+    review.numLikes ++;
     res.json(review);
   });
 

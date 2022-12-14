@@ -112,12 +112,8 @@ const sortApartmentsBy = async (by) => {
     Apartment._id = Apartment._id.toString();
   });
   
-  //let apts = getAllApartments();
-  // console.log("HERE2")
-  // console.log(by)
   switch (by) {
     case "Cost":
-      
       apartmentList.sort((a,b) => (a.rentPerMonth > b.rentPerMonth) ? 1 : -1);
       break;
 
