@@ -94,8 +94,8 @@ const getApartmentById = async (apartmentId) => {
 };
 
 const removeApartment = async (apartmentId) => {
-  apartmentId = helpers.checkID(apartmentId);
-  //apartmentId = apartmentId.trim();
+  apartmentId = helpers.checkID(apartmentId.toString());
+  apartmentId = apartmentId.trim();
   const apartmentCollection = await apartments();
   let aptName = await getApartmentById(apartmentId.toString());
   let apartName = aptName.apartmentName;
