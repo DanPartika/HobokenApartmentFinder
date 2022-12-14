@@ -230,5 +230,15 @@ const changeLogin = async (actualUsername, actualPassword, username, password) =
   return update;
 };
 
+// const removeUserApartment = async (username, apartmentId) => {
+//   username = helpers.checkUsername(username);
+//   const usersCollection = await users();
+//   let user = await getUser(username.toString());
+//   let usersName = user.username;
+//   const deletionInfo = await usersCollection.deleteOne(usersName,{userApartments: {_id:ObjectId(apartmentId)}});
+//   if (deletionInfo.deletedCount === 0) throw `Could not delete apartment from user with username of ${usersName}`;
+//   return `${apartmentId} has been successfully deleted!`; //what do i want to return?
+// };
 
-module.exports = {createUser, addApartmentUser,updateApartmentUser, addReviewUser, checkUser, updateUser, getUser, removeUser, changeLogin};
+
+module.exports = {createUser, addApartmentUser,updateApartmentUser, addReviewUser, checkUser, updateUser, getUser, removeUser, changeLogin, /*removeUserApartment*/};

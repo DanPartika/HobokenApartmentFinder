@@ -9,7 +9,7 @@ const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
 const { getApartmentById, createApartment, getAllApartments, sortApartmentsBy, updateApartment, removeApartment } = require("../data/apartments");
 const path = require('path');
-const { addApartmentUser, updateApartmentUser, addReviewUser } = require("../data/users");
+const { addApartmentUser, updateApartmentUser, addReviewUser, removeUserApartment } = require("../data/users");
 const { getReview } = require("../data/reviews");
 
 
@@ -248,7 +248,7 @@ router
       }
       try {
         const apartment = await removeApartment(req.params.apartmentId);
-        const user = await updateApartmentUser()
+        //const userdata = await removeUserApartment(req.session.user.username, req.params.apartmentId);
         return res.render('userAccount/userhomepage',{user:req.session.user});
       } catch (e) {
         res.render('error', {title: "Error", message: e});
