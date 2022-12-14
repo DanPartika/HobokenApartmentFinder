@@ -9,7 +9,7 @@ const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
 const { getApartmentById, createApartment, getAllApartments, sortApartmentsBy, updateApartment } = require("../data/apartments");
 const path = require('path');
-const { addApartmentUser, addReviewUser } = require("../data/users");
+const { addApartmentUser, updateApartmentUser, addReviewUser } = require("../data/users");
 const { getReview } = require("../data/reviews");
 
 
@@ -215,7 +215,7 @@ router
         req.params.apartmentId.toString();
         let newApt = await updateApartment(req.params.apartmentId, req.session.user.username, apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
         
-        //let usersName = await addApartmentUser(newApt._id, req.session.user.username);
+        let usersName = await updateApartmentUser(newApt._id, req.session.user.username);
 
         let pathRedirect = '/apartments/apartment/' + req.params.apartmentId;
         return res.redirect(pathRedirect); 

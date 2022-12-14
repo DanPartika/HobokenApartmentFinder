@@ -51,6 +51,33 @@ const createUser = async (
   return {insertedUser: true};
 };
 
+const updateApartmentUser = async (aptId, userName) => {
+  const apartment = await getApartmentById(aptId);
+  const user = await getUser(userName);
+  if (apartment === null) throw "cant get apartment"
+  const usersCollection = await users();
+  let newApt = {
+    _id: apartment._id,
+    apartmentName: apartment.apartmentName
+  };
+  
+// await movieCollection.updateOne({_id: movie._id} , {$pull: {reviews: {_id: ObjectId(reviewId)}}});
+
+  // await usersCollection.deleteOne(
+  //   {userApartments: newApt}
+  // )
+
+  await usersCollection.updateOne(
+    {_id: user._id},
+    { $set: {userApartments: newApt} }
+  );
+
+
+  //console.log("INA  \n" + userName)
+  apartment._id = apartment._id.toString();
+  return userName;
+}
+
 const addApartmentUser = async (aptId, userName) => {
   //console.log("In AddAPTUSR" + aptId + userName)
   const apartment = await getApartmentById(aptId);
@@ -204,4 +231,4 @@ const changeLogin = async (actualUsername, actualPassword, username, password) =
 };
 
 
-module.exports = {createUser, addApartmentUser, addReviewUser, checkUser, updateUser, getUser, removeUser, changeLogin};
+module.exports = {createUser, addApartmentUser,updateApartmentUser, addReviewUser, checkUser, updateUser, getUser, removeUser, changeLogin};
