@@ -168,7 +168,7 @@ router
   .route("/apartments/editApartment/:apartmentId") //singular apt
   .get(async (req, res) => {
     if (req.session.user) {
-      let apt = getApartmentById(req.params.apartmentId);
+      let apt = await getApartmentById(req.params.apartmentId);
       return res.render('apartments/editApt',{user:req.session.user, apt:apt});
     } else {
       return res.render('userAccount/login',{user:req.session.user});
