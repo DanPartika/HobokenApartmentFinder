@@ -37,20 +37,12 @@ router
   .route("/apartments") //apt list
   .get(async (req, res) => {
     try {
-     
       if (req.session.user) {
-        //const apts = await getAllApartments();
-        let apartmentData = req.body;
-        let sortCondition = apartmentData.sortByInput;
-        console.log("=================\n\n\n" + req.body)
         //if (apts.length == 0) return res.status(404).render("error",{title:"No Apartments Found", message: "Error code: 404, no apartments found"})
         let apts = [];
-        if (sortCondition!==null) {
-          apts = await getAllApartments();
-        } else {
-          apts = await sortApartmentsBy(sortCondition);
-        }
-        console.log(apts);
+        if (req.query.sortByInput == null) apts = await getAllApartments();
+        else apts = await sortApartmentsBy(req.query.sortByInput);
+
         const data = {apt:apts,user:req.session.user};
         return res.render('apartments/aptList', data);
       }

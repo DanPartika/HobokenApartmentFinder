@@ -105,36 +105,46 @@ const removeApartment = async (apartmentId) => {
 };
 
 const sortApartmentsBy = async (by) => {
-  let apts = getAllApartments();
-  console.log(by)
+  const apartmentCollection = await apartments();
+  let apartmentList = await apartmentCollection.find({}).toArray(); //?
+  if (!apartmentList) throw "Could not get all Apartments";
+  apartmentList.forEach((Apartment) => {
+    Apartment._id = Apartment._id.toString();
+  });
+  
+  //let apts = getAllApartments();
+  // console.log("HERE2")
+  // console.log(by)
   switch (by) {
     case "Cost":
-      console.log("HERE")
-      apts.sort((a,b) => (a.rentPerMonth > b.rentPerMonth) ? 1 : -1);
+      
+      apartmentList.sort((a,b) => (a.rentPerMonth > b.rentPerMonth) ? 1 : -1);
       break;
 
     case "NumBed":
-      apts.sort((a,b) => (a.numBedrooms > b.numBedrooms) ? 1 : -1);
+      apartmentList.sort((a,b) => (a.numBedrooms > b.numBedrooms) ? 1 : -1);
       break;
 
     case "NumBath":
-      apts.sort((a,b) => (a.numBathrooms > b.numBathrooms) ? 1 : -1);
+      apartmentList.sort((a,b) => (a.numBathrooms > b.numBathrooms) ? 1 : -1);
       break;
 
     case "NumRes":
-      apts.sort((a,b) => (a.maxResidents > b.maxResidents) ? 1 : -1);
+      apartmentList.sort((a,b) => (a.maxResidents > b.maxResidents) ? 1 : -1);
       break;
 
     case "Alphabetical":
-
+      apartmentList.sort((a,b) => (a.apartmentName.toLowerCase() > b.apartmentName.toLowerCase()) ? 1 : -1);
       break;
 
     case "PetsAll":
-      let aptsPets = apts.filter(apts => apts.maxPets == true);
-      return aptsPets;
+      let apts = apartmentList.filter( function (apt) {
+        if (apt.maxPets =="Yes") return apt;
+      });
+      return apts;
       break;
 
-    default:
+    default: //error?
       break;
   }
   return apartmentList;
