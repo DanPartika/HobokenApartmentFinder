@@ -72,14 +72,12 @@ const addApartmentUser = async (aptId, userName) => {
 
 const addReviewUser = async (reviewId, userName, aptId) => {
   //console.log("In AddAPTUSR" + aptId + userName)
-  console.log("2")
   const review = await getReview(reviewId);
   if (review === null) throw "cant get review"
   let  apartmentName = await getApartmentById(aptId);
   apartmentName = apartmentName.apartmentName;
   const user = await getUser(userName);
   const usersCollection = await users();
-  console.log("3")
   let newRev = {
     _id: review._id,
     aptId: aptId,
@@ -90,14 +88,12 @@ const addReviewUser = async (reviewId, userName, aptId) => {
     {_id: ObjectId(user._id)},
     { $addToSet: {userReviews:newRev} }
   );
-  console.log("4")
   //console.log("INA  \n" + userName)
   //if(!updateInfo.acknowledged || updateInfo.matchedCount !== 1 || updateInfo.modifiedCount !== 1) throw "cannot update user"
   //let revId = updateInfo.upsertedId ;
   //console.log(revId)
   const update = await getUser(userName);
   update._id = update._id.toString();
-  console.log("5")
   return update;
 }
 

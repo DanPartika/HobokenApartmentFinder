@@ -70,7 +70,8 @@ const createReview = async (
   apt.reviews.forEach((a) => {
     a._id = a._id.toString();
   });
-  return apt;
+  //return apt;
+  return apt.reviews[apt.reviews.length-1];
 };
 
 const getAllReviews = async (apartmentId) => {
