@@ -101,14 +101,14 @@ const addReviewUser = async (reviewId, userName, aptId) => {
   //console.log("In AddAPTUSR" + aptId + userName)
   const review = await getReview(reviewId);
   if (review === null) throw "cant get review"
-  let  apartmentName = await getApartmentById(aptId);
-  apartmentName = apartmentName.apartmentName;
+  let  apartment = await getApartmentById(aptId);
+  //apartmentName = apartmentName.apartmentName;
   const user = await getUser(userName);
   const usersCollection = await users();
   let newRev = {
-    _id: review._id,
+    _id: reviewId,
     aptId: aptId,
-    aptName: apartmentName
+    aptName: apartment.apartmentName
   };
 
   await usersCollection.updateOne(

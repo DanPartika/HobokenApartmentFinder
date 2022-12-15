@@ -190,7 +190,7 @@ function checkRating(a) {
 
 function checkReviewsParameters(apartmentId, userName, comments, rating) {
   return {
-    apartmentId: checkID(apartmentId), 
+    apartmentId: checkID(apartmentId.toString()), 
     userName: checkUsername(userName), 
     comments: checkReview(comments), 
     rating: checkRating(rating)
