@@ -157,4 +157,35 @@ const removeReview = async (reviewId) => {
   return update;
 };
 
-module.exports = { createReview, getAllReviews, getReview, removeReview };
+const incrementLikesReview = async (aptId, reviewId) => {
+  //let apartment = await getApartmentById(aptId);
+  let review = await getReview(reviewId);
+  console.log(review)
+  let reviewLikes = review.numLikes++;
+  console.log("1")
+  const apartmentCollection = await apartments();
+  console.log("2")
+  
+  const update = await apartmentCollection.updateOne(
+    
+  );
+  // {
+  //   _id: (ObjectId(aptId)),
+  //   "reviews._id": (ObjectId(reviewId))
+  // },
+  // {$set:{
+  //   "reviews.$.numLikes":1
+  // }},
+  //   );
+
+     // {_id: aptId, "reviews._id": reviewId},
+    // {$set:{"reviews.$.numLikes":1}} );
+
+    // {$pull: {reviews: {_id: ObjectId(reviewId)}},
+    // $set: {numLikes: reviewLikes}}
+ 
+  console.log("\n\n\n" + JSON.stringify(update) + "\n\n\nOK\n\n\n")
+  return await getReview(reviewId);
+}
+
+module.exports = { createReview, getAllReviews, getReview, removeReview, incrementLikesReview };
