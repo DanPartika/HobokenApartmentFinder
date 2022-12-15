@@ -245,15 +245,15 @@ const userRemoveReview = async (username, reviewId) => {
   const usersCollection = await users();
   let user = await getUser(username.toString());
   let userId = user._id.toString();
+  console.log(user.userReviews)
+  console.log(reviewId)
   const deleteReview = await usersCollection.updateOne(
     { _id: ObjectId(userId) },
-    { $pull: { userReviews: { _id: ObjectId(reviewId) } } }
+    {$pull:{userReviews:{_id: reviewId}}}
   )
   
   const update = await getUser(username);
   
-  console.log(update);
-
   update._id = update._id.toString();
   return username;
   
