@@ -9,7 +9,7 @@ likeReviewForm.submit(async function (event) {
   
   //let aptData = axios.get('http://localhost:3000/getApartments');
   await axios.get(`/getReview/${event.target.querySelector('button').id}`).then((response) => {
-    console.log(response.data); 
+    console.log("Dan" + response.data); 
     //todo display new num likes using a selector 
   }, (error) => {
     console.log(error);

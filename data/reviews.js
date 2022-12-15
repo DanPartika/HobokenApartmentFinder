@@ -1,8 +1,9 @@
 const mongoCollections = require("../config/mongoCollections");
 const apartments = mongoCollections.apartments;
-const { ObjectId } = require("mongodb");
+const { ObjectId, Db } = require("mongodb");
 const helpers = require("../helpers");
 const { getApartmentById } = require("./apartments");
+const { dbConnection } = require("../config/mongoConnection");
 
 const createReview = async (
   apartmentId, 

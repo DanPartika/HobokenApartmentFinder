@@ -10,7 +10,7 @@ const helpers = require("../helpers");
 const { getApartmentById, createApartment, getAllApartments, sortApartmentsBy, updateApartment, removeApartment } = require("../data/apartments");
 const path = require('path');
 const { addApartmentUser, updateApartmentUser, addReviewUser, removeUserApartment } = require("../data/users");
-const { getReview } = require("../data/reviews");
+const { getReview, incrementLikesReview } = require("../data/reviews");
 
 
 router.route("/") //homepage
@@ -29,11 +29,20 @@ router
   .route("/getReview/:id")
   .get(async (req, res) => {
     //make sure id exists
-    console.log(req.params.id)
-    const review = await getReview(req.params.id); //get the review
-    //create a new data function that increments numlikes and stores in mongo
-    review.numLikes ++;
-    res.json(review);
+    try {
+      if (req.session.user) {
+        console.log(req.params.id)
+        let reviewId = req.params.id;
+        const review = await getReview(reviewId); //get the review
+        console.log("Review: " + review);
+        let newReview = await incrementLikesReview(review.aptId, reviewId);
+        console.log("newReview: " + JSON.stringify(newReview));
+        //create a new data function that increments numlikes and stores in mongo
+        res.json(newReview.numLikes);
+      } else return res.redirect('/users/login');
+    } catch (error) {
+      res.render('error', {title: error})
+    }
   });
 
 router
