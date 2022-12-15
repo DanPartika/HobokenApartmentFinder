@@ -230,23 +230,30 @@ const changeLogin = async (actualUsername, actualPassword, username, password) =
   return update;
 };
 
-// const removeUserApartment = async (username, apartmentId) => {
-//   username = helpers.checkUsername(username);
-//   const usersCollection = await users();
-//   let user = await getUser(username.toString());
-//   let usersName = user.username;
-//   const deletionInfo = await usersCollection.deleteOne(usersName,{userApartments: {_id:ObjectId(apartmentId)}});
-//   if (deletionInfo.deletedCount === 0) throw `Could not delete apartment from user with username of ${usersName}`;
-//   return `${apartmentId} has been successfully deleted!`; //what do i want to return?
-// };
+const removeUserApartment = async (username, apartmentId) => {
+  username = helpers.checkUsername(username);
+  const usersCollection = await users();
+  let user = await getUser(username.toString());
+  let userId = user._id.toString();
+
+  const deletionInfo = await usersCollection.updateOne(
+    { _id: ObjectId(userId) },
+    {$pull:{userApartments:{_id: apartmentId}}}
+  );
+  
+  const update = await getUser(username);
+  
+  update._id = update._id.toString();
+  return username;
+
+};
 
 const userRemoveReview = async (username, reviewId) => {
   username = helpers.checkUsername(username);
   const usersCollection = await users();
   let user = await getUser(username.toString());
   let userId = user._id.toString();
-  console.log(user.userReviews)
-  console.log(reviewId)
+  
   const deleteReview = await usersCollection.updateOne(
     { _id: ObjectId(userId) },
     {$pull:{userReviews:{_id: reviewId}}}
@@ -259,4 +266,4 @@ const userRemoveReview = async (username, reviewId) => {
   
 }
 
-module.exports = {createUser, addApartmentUser,updateApartmentUser, addReviewUser, checkUser, updateUser, getUser, removeUser, changeLogin, userRemoveReview /*removeUserApartment*/};
+module.exports = {createUser, addApartmentUser,updateApartmentUser, addReviewUser, checkUser, updateUser, getUser, removeUser, changeLogin, userRemoveReview, removeUserApartment};

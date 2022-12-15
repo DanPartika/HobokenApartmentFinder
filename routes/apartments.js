@@ -258,7 +258,7 @@ router
       }
       try {
         const apartment = await removeApartment(req.params.apartmentId);
-        //const userdata = await removeUserApartment(req.session.user.username, req.params.apartmentId);
+        const userdata = await removeUserApartment(req.session.user.username, req.params.apartmentId);
         return res.render('userAccount/userhomepage',{user:req.session.user});
       } catch (e) {
         res.render('error', {title: "Error", message: e});
