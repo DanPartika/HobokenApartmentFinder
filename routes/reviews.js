@@ -90,25 +90,20 @@ const { review } = require("../data");
     //console.log(req.session.user);
     if (req.session.user) {
       // return res.render('apartments/addApt');
-      try{
-
+      try {
         let reviewData = req.body;
-        console.log("req.body CONTAINS:" + reviewData + "\n\n\n")
         let comment = reviewData.commentInput; 
         let rating = reviewData.ratingInput;
         let apartmentID = req.params.apartmentId
         let username = req.session.user.username
-        console.log(apartmentID + " " + username + " " + comment + " " + rating + "\n\n\n")
         let reviewId = await createReview(apartmentID, username, comment, rating);
         // let allReviews = await getAllReviews(apt._id);
         // console.log(allReviews.length)
         // console.log("==============\n")
         // let revId = allReviews[allReviews.length - 1]
-        console.log(reviewId._id + " " + username + " " + apartmentID + "\n\n\n")
         let reviewersName = await addReviewUser(reviewId._id, username, apartmentID);
         // if(!apt.overallRating == 0) return res.render('error',{title:"Error in creating apartment"});
         //console.log(apt)
-        console.log("\n\n\n\nDONE\n\n\n\n")
         let pathRedirect = '/apartments/apartment/' + apartmentID;
         //console.log(apt);
         res.redirect(pathRedirect);
