@@ -52,15 +52,19 @@ router
 
 
         let likeReview = await incrementLikesReview(aptId, reviewId);
-
+        if(likeReview != 1) {
+          return res.render('error', {title:"Error", message: "could not increment like button"})
+        }
         //let dislikeReview = await incrementDislikesReview(aptId, reviewId);
         
         //create a new data function that increments numlikes and stores in mongo
-        res.redirect('/apartments/apartment/:' + aptId)
+        let pathRedirect = '/apartments/apartment/' + aptId;
+        //console.log(apt);
+        res.redirect(pathRedirect);
         //res.json(newReview.numLikes);
       } else return res.redirect('/users/login');
     } catch (error) {
-      res.render('error', {title: error})
+      return res.render('error', {title: error})
     }
   });
 

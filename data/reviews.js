@@ -204,7 +204,7 @@ const incrementLikesReview = async (aptId, reviewId) => {
     { $addToSet: {reviews: newRev} }
   );
  
-  return await getReview(reviewId);
+  return update.modifiedCount;
 }
 
 const incrementDislikesReview = async (aptId, reviewId) => {
