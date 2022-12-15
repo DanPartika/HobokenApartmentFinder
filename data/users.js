@@ -51,33 +51,6 @@ const createUser = async (
   return {insertedUser: true};
 };
 
-const updateApartmentUser = async (aptId, userName) => {
-  const apartment = await getApartmentById(aptId);
-  const user = await getUser(userName);
-  if (apartment === null) throw "cant get apartment"
-  const usersCollection = await users();
-  let newApt = {
-    _id: apartment._id,
-    apartmentName: apartment.apartmentName
-  };
-  
-// await movieCollection.updateOne({_id: movie._id} , {$pull: {reviews: {_id: ObjectId(reviewId)}}});
-
-  // await usersCollection.deleteOne(
-  //   {userApartments: newApt}
-  // )
-
-  await usersCollection.updateOne(
-    {_id: user._id},
-    { $set: {userApartments: newApt} }
-  );
-
-
-  //console.log("INA  \n" + userName)
-  apartment._id = apartment._id.toString();
-  return userName;
-}
-
 const addApartmentUser = async (aptId, userName) => {
   //console.log("In AddAPTUSR" + aptId + userName)
   const apartment = await getApartmentById(aptId);
@@ -229,6 +202,31 @@ const changeLogin = async (actualUsername, actualPassword, username, password) =
   update._id = update._id.toString();
   return update;
 };
+
+const updateApartmentUser = async (aptId, userName) => {
+  const apartment = await getApartmentById(aptId);
+  let user = await getUser(username);
+  let userId = user._id.toString();
+  if (apartment === null) throw "cant get apartment"
+  const usersCollection = await users();
+  let newApt = {
+    _id: apartment._id,
+    apartmentName: apartment.apartmentName
+  };
+
+  const deletionInfo = await usersCollection.updateOne(
+    { _id: ObjectId(userId) },
+    {$pull:{userApartments:{_id: apartmentId}}}
+  );
+
+  const updateInfo = await usersCollection.updateOne(
+    {_id: ObjectId(userId)},
+    { $addToSet: {userApartments: newApt} }
+  );
+
+  apartment._id = apartment._id.toString();
+  return userName;
+}
 
 const removeUserApartment = async (username, apartmentId) => {
   username = helpers.checkUsername(username);

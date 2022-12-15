@@ -127,8 +127,10 @@ router
       // return res.render('apartments/addApt');
       try{
         let apartmentData = req.body;
-        let apartmentName = xss(apartmentData.apartmentNameInput); 
-        let streetAddress = xss(apartmentData.buildingNumberInput) + " " + apartmentData.streetAddressInput + " Hoboken, NJ 07030";
+        let apartmentName = xss(apartmentData.apartmentNameInput);
+        let buildingNumber = xss(apartmentData.buildingNumberInput);
+        let streetAdressInput = xss(apartmentData.streetAddressInput);
+        let streetAddress = buildingNumber + " " + streetAdressInput + " Hoboken, NJ 07030";
         let rentPerMonth = xss(apartmentData.rentPerMonthInput);
         let rentDuration = xss(apartmentData.rentDurationInput);
         let maxResidents = xss(apartmentData.maxResidentsInput);
@@ -145,7 +147,7 @@ router
         if(maxPets == "true") maxPets = true
         else if(maxPets == "false") maxPets = false
         let utilitiesIncluded = xss(apartmentData.utilitiesIncludedInput);
-        utilitiesIncluded = xss(utilitiesIncluded.split(","))
+        utilitiesIncluded = utilitiesIncluded.split(",")
         let HobokenStreets = ["Adams s", "Bloomfield s", "Castle Point Terrace","Clinton s", "Eighth s","Eleventh s",
         "Fifteenth s","Fifth s", "First s","Fourteenth s","Fourth s","Garden s","Grand s","Grove s","Harrison s","Henderson s",
         "Hudson P","Hudson S","Jackson s","Jefferson s","Madison s","Marshall s","Monroe s","Newark s","Ninth s","Observer h",
@@ -192,9 +194,11 @@ router
         req.params.apartmentId.toString();
         let apt = await getApartmentById(req.params.apartmentId);
       
-        let apartmentData = xss(req.body);
+        let apartmentData = req.body;
         let apartmentName = xss(apartmentData.apartmentNameInput); 
-        let streetAddress = xss(apartmentData.buildingNumberInput) + " " + apartmentData.streetAddressInput + " Hoboken, NJ 07030";
+        let buildingNumber = xss(apartmentData.buildingNumberInput);
+        let streetAdressInput = xss(apartmentData.streetAddressInput);
+        let streetAddress = buildingNumber + " " + streetAdressInput + " Hoboken, NJ 07030";
         let rentPerMonth = xss(apartmentData.rentPerMonthInput);
         let rentDuration = xss(apartmentData.rentDurationInput);
         let maxResidents = xss(apartmentData.maxResidentsInput);
@@ -211,7 +215,7 @@ router
         if(maxPets == "true") maxPets = true
         else if(maxPets == "false") maxPets = false
         let utilitiesIncluded = xss(apartmentData.utilitiesIncludedInput);
-        utilitiesIncluded = xss(utilitiesIncluded.split(","))
+        utilitiesIncluded = utilitiesIncluded.split(",")
         let HobokenStreets = ["Adams s", "Bloomfield s", "Castle Point Terrace","Clinton s", "Eighth s","Eleventh s",
         "Fifteenth s","Fifth s", "First s","Fourteenth s","Fourth s","Garden s","Grand s","Grove s","Harrison s","Henderson s",
         "Hudson P","Hudson S","Jackson s","Jefferson s","Madison s","Marshall s","Monroe s","Newark s","Ninth s","Observer h",
