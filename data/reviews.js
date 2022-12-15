@@ -116,7 +116,6 @@ const removeReview = async (reviewId) => {
       if (tmpApt.reviews[i]._id.toString() === reviewId.toString()) {
         count = 1;
         apart = tmpApt;
-        console.log(apart);
       }
     }
   }
@@ -130,24 +129,29 @@ const removeReview = async (reviewId) => {
   );
 
   const apt = await getApartmentById(apartmentId.toString());
-  console.log(apt)
+  
   let overall_rating = 0;
   let c = 0;
+  
   apt.reviews.forEach((a) => {
     overall_rating += Number(a.rating);
     c += 1;
   });
+
   overall_rating = overall_rating / c;
+
   overall_rating = overall_rating.toPrecision(2);
-  if(apt.reviews = []) {
+
+  if(apt.reviews.length === 0) {
     overall_rating = 0;
   }
+
   await apartmentCollection.updateOne(
     { _id: ObjectId(apartmentId) },
     { $set: { overallRating: overall_rating } }
   );
   const update = await getApartmentById(apartmentId.toString());
-  console.log(update);
+  
   update._id = update._id.toString();
   return update;
 };
