@@ -11,6 +11,7 @@ const { getApartmentById, createApartment, getAllApartments, sortApartmentsBy, u
 const path = require('path');
 const { addApartmentUser, updateApartmentUser, addReviewUser, removeUserApartment } = require("../data/users");
 const { getReview, incrementLikesReview } = require("../data/reviews");
+const xss = require("xss");
 
 
 router.route("/") //homepage
@@ -126,25 +127,25 @@ router
       // return res.render('apartments/addApt');
       try{
         let apartmentData = req.body;
-        let apartmentName = apartmentData.apartmentNameInput; 
-        let streetAddress = apartmentData.buildingNumberInput + " " + apartmentData.streetAddressInput + " Hoboken, NJ 07030";
-        let rentPerMonth = apartmentData.rentPerMonthInput;
-        let rentDuration = apartmentData.rentDurationInput;
-        let maxResidents = apartmentData.maxResidentsInput;
-        let numBedrooms = apartmentData.numBedroomsInput;
-        let numBathrooms = apartmentData.numBathroomsInput;
-        let laundry = apartmentData.laundryInput;
+        let apartmentName = xss(apartmentData.apartmentNameInput); 
+        let streetAddress = xss(apartmentData.buildingNumberInput) + " " + apartmentData.streetAddressInput + " Hoboken, NJ 07030";
+        let rentPerMonth = xss(apartmentData.rentPerMonthInput);
+        let rentDuration = xss(apartmentData.rentDurationInput);
+        let maxResidents = xss(apartmentData.maxResidentsInput);
+        let numBedrooms = xss(apartmentData.numBedroomsInput);
+        let numBathrooms = xss(apartmentData.numBathroomsInput);
+        let laundry = xss(apartmentData.laundryInput);
         if(laundry == "true") laundry = true
         else if(laundry == "false") laundry = false
-        let floorNum = apartmentData.floorNumInput;
-        let roomNum = apartmentData.roomNumInput;
-        let appliancesIncluded = apartmentData.appliancesIncludedInput;
+        let floorNum = xss(apartmentData.floorNumInput);
+        let roomNum = xss(apartmentData.roomNumInput);
+        let appliancesIncluded = xss(apartmentData.appliancesIncludedInput);
         appliancesIncluded = appliancesIncluded.split(",");
-        let maxPets = apartmentData.maxPetsInput;
+        let maxPets = xss(apartmentData.maxPetsInput);
         if(maxPets == "true") maxPets = true
         else if(maxPets == "false") maxPets = false
-        let utilitiesIncluded = apartmentData.utilitiesIncludedInput;
-        utilitiesIncluded = utilitiesIncluded.split(",")
+        let utilitiesIncluded = xss(apartmentData.utilitiesIncludedInput);
+        utilitiesIncluded = xss(utilitiesIncluded.split(","))
         let HobokenStreets = ["Adams s", "Bloomfield s", "Castle Point Terrace","Clinton s", "Eighth s","Eleventh s",
         "Fifteenth s","Fifth s", "First s","Fourteenth s","Fourth s","Garden s","Grand s","Grove s","Harrison s","Henderson s",
         "Hudson P","Hudson S","Jackson s","Jefferson s","Madison s","Marshall s","Monroe s","Newark s","Ninth s","Observer h",
@@ -191,26 +192,26 @@ router
         req.params.apartmentId.toString();
         let apt = await getApartmentById(req.params.apartmentId);
       
-        let apartmentData = req.body;
-        let apartmentName = apartmentData.apartmentNameInput; 
-        let streetAddress = apartmentData.buildingNumberInput + " " + apartmentData.streetAddressInput + " Hoboken, NJ 07030";
-        let rentPerMonth = apartmentData.rentPerMonthInput;
-        let rentDuration = apartmentData.rentDurationInput;
-        let maxResidents = apartmentData.maxResidentsInput;
-        let numBedrooms = apartmentData.numBedroomsInput;
-        let numBathrooms = apartmentData.numBathroomsInput;
-        let laundry = apartmentData.laundryInput;
+        let apartmentData = xss(req.body);
+        let apartmentName = xss(apartmentData.apartmentNameInput); 
+        let streetAddress = xss(apartmentData.buildingNumberInput) + " " + apartmentData.streetAddressInput + " Hoboken, NJ 07030";
+        let rentPerMonth = xss(apartmentData.rentPerMonthInput);
+        let rentDuration = xss(apartmentData.rentDurationInput);
+        let maxResidents = xss(apartmentData.maxResidentsInput);
+        let numBedrooms = xss(apartmentData.numBedroomsInput);
+        let numBathrooms = xss(apartmentData.numBathroomsInput);
+        let laundry = xss(apartmentData.laundryInput);
         if(laundry == "true") laundry = true
         else if(laundry == "false") laundry = false
-        let floorNum = apartmentData.floorNumInput;
-        let roomNum = apartmentData.roomNumInput;
-        let appliancesIncluded = apartmentData.appliancesIncludedInput;
+        let floorNum = xss(apartmentData.floorNumInput);
+        let roomNum = xss(apartmentData.roomNumInput);
+        let appliancesIncluded = xss(apartmentData.appliancesIncludedInput);
         appliancesIncluded = appliancesIncluded.split(",");
-        let maxPets = apartmentData.maxPetsInput;
+        let maxPets = xss(apartmentData.maxPetsInput);
         if(maxPets == "true") maxPets = true
         else if(maxPets == "false") maxPets = false
-        let utilitiesIncluded = apartmentData.utilitiesIncludedInput;
-        utilitiesIncluded = utilitiesIncluded.split(",")
+        let utilitiesIncluded = xss(apartmentData.utilitiesIncludedInput);
+        utilitiesIncluded = xss(utilitiesIncluded.split(","))
         let HobokenStreets = ["Adams s", "Bloomfield s", "Castle Point Terrace","Clinton s", "Eighth s","Eleventh s",
         "Fifteenth s","Fifth s", "First s","Fourteenth s","Fourth s","Garden s","Grand s","Grove s","Harrison s","Henderson s",
         "Hudson P","Hudson S","Jackson s","Jefferson s","Madison s","Marshall s","Monroe s","Newark s","Ninth s","Observer h",

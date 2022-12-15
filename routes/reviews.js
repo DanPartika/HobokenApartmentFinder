@@ -8,6 +8,7 @@ const { getAllReviews, createReview, removeReview } = require("../data/reviews")
 const { addReviewUser, userRemoveReview } = require("../data/users")
 const helpers = require("../helpers");
 const { review } = require("../data");
+const xss = require("xss");
 
 // router
 //   .route("/:ApartmentId")
@@ -92,10 +93,10 @@ const { review } = require("../data");
       // return res.render('apartments/addApt');
       try {
         let reviewData = req.body;
-        let comment = reviewData.commentInput; 
-        let rating = reviewData.ratingInput;
-        let apartmentID = req.params.apartmentId
-        let username = req.session.user.username
+        let comment = xss(reviewData.commentInput); 
+        let rating = xss(reviewData.ratingInput);
+        let apartmentID = req.params.apartmentId //idk if this requires xss
+        let username = req.session.user.username //idk if this requires xss
         let reviewId = await createReview(apartmentID, username, comment, rating);
         // let allReviews = await getAllReviews(apt._id);
         // console.log(allReviews.length)

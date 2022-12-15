@@ -5,7 +5,7 @@ const usersData = data.users
 const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
 const { getUser } = require("../data/users");
-
+const xss = require("xss");
 
 router
   // .route('/')
@@ -25,14 +25,14 @@ router
   .post(async (req, res) => {
     //code here for POST
     //let { usernameInput, passwordInput } = req.body
-    let userData = req.body;
-    let firstname = userData.firstnameInput;
-    let lastname = userData.lastnameInput;
-    let email = userData.emailInput;
-    let gender = userData.genderInput;
-    let age = userData.ageInput;
-    let username = userData.usernameInput;
-    let password = userData.passwordInput;
+    let userData = xss(req.body);
+    let firstname = xss(userData.firstnameInput);
+    let lastname = xss(userData.lastnameInput);
+    let email = xss(userData.emailInput);
+    let gender = xss(userData.genderInput);
+    let age = xss(userData.ageInput);
+    let username = xss(userData.usernameInput);
+    let password = xss(userData.passwordInput);
     let register = {};
     try {
       // let user = helpers.checkUsername(username);
@@ -69,8 +69,8 @@ router
     //let { username, password } = req.body
     
     let userData = req.body;
-    let username = userData.usernameInput
-    let password = userData.passwordInput
+    let username = xss(userData.usernameInput)
+    let password = xss(userData.passwordInput)
     let authCookie = {};
     let user = '';
     try {
