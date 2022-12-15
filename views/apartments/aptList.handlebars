@@ -25,7 +25,11 @@ todo1: add a + symbol in the top right to add apartments}}
     
     {{#each apt}}
     <li>
-      <div id="display-image"></div>
+      {{!-- <div id="display-image"></div> --}}
+      <div class="display-image">
+   <img id="image-input">
+ </div>
+
       <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}} [${{this.rentPerMonth}}/Month , {{this.numBedrooms}} Bedroom, {{this.overallRating}} Rating]<a>
     </li>
     {{/each}}
