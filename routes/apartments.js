@@ -53,8 +53,8 @@ router
 
         let newReview = await incrementLikesReview(aptId, reviewId);
         //create a new data function that increments numlikes and stores in mongo
-        
-        res.json(newReview.numLikes);
+        res.redirect('/apartments/apartment/:' + aptId)
+        //res.json(newReview.numLikes);
       } else return res.redirect('/users/login');
     } catch (error) {
       res.render('error', {title: error})
