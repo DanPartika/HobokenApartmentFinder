@@ -8,7 +8,7 @@ main{
 }
 
 h1{
-    color: #570ccf;
+    color: #dde3e7;
     font-family: Georgia;
     font-size: 30px;
     font-style: italic;
@@ -54,9 +54,7 @@ option{
 
 }
 
-footer{
 
-}
 
 a {
     color: rgb(49, 117, 218);
@@ -72,7 +70,7 @@ a:hover {
 
 
 p{
-    background: rgb(202, 119, 119);
+
     color: rgb(6, 7, 7);
     font-size: 14pt;
 
@@ -84,9 +82,18 @@ button{
 }
 
 li{
-    list-style-type:square;
+   
+    /* list-style: square; */
     color: red;
     font-size: 15pt;
+}
+ul.b {
+    list-style-type: square;
+  }
+
+.p1{
+    color: rgb(10, 98, 180);
+    font-size: 20pt;
 }
 
 ul{
@@ -114,6 +121,82 @@ dd{
     color: green;
     font-size: 13pt;
 }
+.apt_d{
+    background-color: #dab79d;
+    box-sizing: border-box;
+    display: block;
+    text-align: center;
+    float: left; 
+    width: 100%;
+    padding: 0;
+    padding-top: 20px;
+    margin: 0;
+}
+ .apt_title{
+    background-color: red;
+    padding: 5px;
+    text-align: center;
+} 
+.title_p{
+    overflow: hidden;
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+.apartment_p{
+    overflow: hidden;
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+.account_p{
+    overflow: hidden;
+      float: left;
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+}
+.log_p{
+    overflow: hidden;
+      float: left;
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+}
+.login_p{
+    width: 80%;
+    float: left;
+    padding-left: 1%;
+}
+.image{
+
+    float: right;
+    margin-left: 10px;
+    clear:both;
+}
+ /* .footer {
+    background-color: #f1f1f1;
+    padding: 10px;
+    text-align: center;
+  }  */
+
+.homepage_c{
+    /* margin-left: 30px; */
+    text-align: center;
+    overflow:auto;
+    /* display:block; */
+    display: table;
+  } 
 
 .Homepage-button{
 

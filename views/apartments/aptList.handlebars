@@ -4,7 +4,7 @@ todo1: add a + symbol in the top right to add apartments}}
 <body>
   {{!add a way to sort apartments}}
   {{!list of all avaiable apartments}}
-
+   <div class="apt_title"></div>
   <form id="sortBy-form" action="/apartments" method="GET">
   <label for="sortByInput">Sort By:</label>
     <select name = "sortByInput" id = "sortByInput"> 
@@ -16,9 +16,11 @@ todo1: add a + symbol in the top right to add apartments}}
       <option value="PetsAll">Pets Allowed</option>
     </select>
 
+
     <button type="submit">+</button>
   </form>
-
+      </div>
+ <div class = "apt_d">
   <ul>
     
     {{#each apt}}
@@ -27,6 +29,7 @@ todo1: add a + symbol in the top right to add apartments}}
     </li>
     {{/each}}
   </ul>
+
   
   <footer>
     <form id="addNewApt-form" action="/apartments/add-new-apartment" method="GET">
@@ -34,6 +37,7 @@ todo1: add a + symbol in the top right to add apartments}}
     <button type="submit">+</button>
   </form>
   </footer>
+    </div>
   {{!-- <script src="../../public/js/main.js"></script>  --}}
   
 </body>
