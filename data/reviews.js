@@ -85,23 +85,39 @@ const getAllReviews = async (apartmentId) => {
   return apartment.reviews;
 };
 
-
-
 const getReview = async (reviewId) => {
   reviewId = helpers.checkID(reviewId);
+  reviewId = reviewId.trim();
+  //console.log(reviewId);
+
+  if (!ObjectId.isValid(reviewId)){
+    throw 'Error: invalid object ID';
+  } 
+
   const apartmentCollection = await apartments();
-  const apt = await apartmentCollection.findOne({
-    reviews: { $elemMatch: { _id: ObjectId(reviewId) } }
-  });
-  if (apt === null) throw "no review exists with that id";
-  let rev = [];
-  apt.reviews.forEach((r) => {
-    if (r._id == r._id) {
-      rev.push(r);
+  const newApartmentCollection = await apartmentCollection.find({}).toArray();
+
+
+  let review = {};
+  let counter = 0;
+
+  for(i in newApartmentCollection) {
+    let tempApartment = newApartmentCollection[i];
+    for(j in tempApartment.reviews) {
+      if(tempApartment.reviews[j]._id.toString() === reviewId) {
+        counter = 1;
+        review =  tempApartment.reviews[j]
+      }
     }
-  });
-  rev[0]._id = rev[0]._id.toString();
-  return rev[0];
+  }
+
+  if (counter === 0){
+    throw 'Error: No review with that id';
+  } 
+
+  review._id = review._id.toString();
+  return review;
+
 };
 
 const removeReview = async (reviewId) => {
@@ -165,7 +181,7 @@ const incrementLikesReview = async (aptId, reviewId) => {
   const apartmentCollection = await apartments();
 
   let newRev = {
-    _id: review._id,
+    _id: ObjectId(review._id),
     reviewDate: review.reviewDate,
     reviewModified: review.reviewModified,
     userName: review.userName,
@@ -179,6 +195,9 @@ const incrementLikesReview = async (aptId, reviewId) => {
     { _id: ObjectId(aptId) },
     {$pull:{reviews:{_id: ObjectId(reviewId)}}}
   );
+  // if(deletionInfo.modifiedCount === 1) {
+  //   console.log("deletes")
+  // }
 
   const update = await apartmentCollection.updateOne(
     {_id: ObjectId(aptId)},
@@ -188,4 +207,38 @@ const incrementLikesReview = async (aptId, reviewId) => {
   return await getReview(reviewId);
 }
 
-module.exports = { createReview, getAllReviews, getReview, removeReview, incrementLikesReview };
+const incrementDislikesReview = async (aptId, reviewId) => {
+  let review = await getReview(reviewId);
+  let reviewDislikes = review.numDislikes;
+  reviewDislikes = reviewDislikes + 1;
+
+  const apartmentCollection = await apartments();
+
+  let newRev = {
+    _id: ObjectId(review._id),
+    reviewDate: review.reviewDate,
+    reviewModified: review.reviewModified,
+    userName: review.userName,
+    comments: review.comments,
+    rating: review.rating,
+    numLikes: review.numLikes,
+    numDislikes: reviewDislikes,
+  };
+
+  const deletionInfo = await apartmentCollection.updateOne(
+    { _id: ObjectId(aptId) },
+    {$pull:{reviews:{_id: ObjectId(reviewId)}}}
+  );
+  // if(deletionInfo.modifiedCount === 1) {
+  //   console.log("deletes")
+  // }
+
+  const update = await apartmentCollection.updateOne(
+    {_id: ObjectId(aptId)},
+    { $addToSet: {reviews: newRev} }
+  );
+ 
+  return await getReview(reviewId);
+}
+
+module.exports = { createReview, getAllReviews, getReview, removeReview, incrementLikesReview, incrementDislikesReview };

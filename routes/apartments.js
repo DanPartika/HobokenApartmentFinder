@@ -10,7 +10,7 @@ const helpers = require("../helpers");
 const { getApartmentById, createApartment, getAllApartments, sortApartmentsBy, updateApartment, removeApartment } = require("../data/apartments");
 const path = require('path');
 const { addApartmentUser, updateApartmentUser, addReviewUser, removeUserApartment, getUser } = require("../data/users");
-const { getReview, incrementLikesReview } = require("../data/reviews");
+const { getReview, incrementLikesReview, incrementDislikesReview } = require("../data/reviews");
 const xss = require("xss");
 const { users } = require("../config/mongoCollections");
 
@@ -51,10 +51,13 @@ router
         }
 
 
-        let newReview = await incrementLikesReview(aptId, reviewId);
-        //create a new data function that increments numlikes and stores in mongo
+        let likeReview = await incrementLikesReview(aptId, reviewId);
+
+        //let dislikeReview = await incrementDislikesReview(aptId, reviewId);
         
-        res.json(newReview.numLikes);
+        //create a new data function that increments numlikes and stores in mongo
+        res.redirect('/apartments/apartment/:' + aptId)
+        //res.json(newReview.numLikes);
       } else return res.redirect('/users/login');
     } catch (error) {
       res.render('error', {title: error})
