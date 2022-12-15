@@ -12,7 +12,7 @@ const path = require('path');
 const { addApartmentUser, updateApartmentUser, addReviewUser, removeUserApartment, getUser } = require("../data/users");
 const { getReview, incrementLikesReview, incrementDislikesReview } = require("../data/reviews");
 const xss = require("xss");
-const { users } = require("../config/mongoCollections");
+const { users, apartments } = require("../config/mongoCollections");
 
 
 router.route("/") //homepage
@@ -33,22 +33,49 @@ router
     //make sure id exists
     try {
       if (req.session.user) {
+        console.log("1")
         let reviewId = req.params.id;
         const review = await getReview(reviewId); //get the review
-
+        console.log("2")
         //const userCollection = await users();
-        let user = req.session.user.username;
-        let userCollection = await getUser(user);
+        // let user = req.session.user.username;
+        // let userCollection = await getUser(user);
         
         let aptId = "";
 
-        let uRev = userCollection.userReviews;
+        // let uRev = userCollection.userReviews;
 
-        for(i in userCollection.userReviews) {
-            if(uRev[i]._id === reviewId) {
-              aptId = uRev[i].aptId
+        // for(i in userCollection.userReviews) {
+        //     if(uRev[i]._id === reviewId) {
+        //       aptId = uRev[i].aptId
+        //     }
+        // }
+        //get all apts
+        console.log("3")
+        const apartments = await getAllApartments();
+
+        //console.log("\n\n"+JSON.stringify(apartments)+"\n\n")
+        //loop through their reviews
+        for (let i = 0; i < apartments.length; i++) {
+          console.log("\ni:" + i)
+          for (let j = 0; j < apartments[i].reviews.length; j++) {
+            console.log("\nj:" + j)
+
+            if(apartments[i].reviews[j]._id.toString() === reviewId.toString()) {
+              aptId = apartments[i]._id;
+              console.log("\nAPTID" + aptId)
+              continue;
             }
+          }
         }
+        for(i in apartments){
+          for(j in i.reviews) {
+              console.log("\n\ni: " + i.j)
+              
+          }
+          
+        }
+        //find the right aptid by matching the review id
 
 
         let likeReview = await incrementLikesReview(aptId, reviewId);
@@ -57,11 +84,11 @@ router
         }
         //let dislikeReview = await incrementDislikesReview(aptId, reviewId);
         
-        //create a new data function that increments numlikes and stores in mongo
-        let pathRedirect = '/apartments/apartment/' + aptId;
-        //console.log(apt);
-        res.redirect(pathRedirect);
-        //res.json(newReview.numLikes);
+
+        // let pathRedirect = '/apartments/apartment/' + aptId;
+        // res.redirect(pathRedirect);
+        //res.redirect('apartments/apartment/'+aptId )
+        res.json(newReview.numLikes);
       } else return res.redirect('/users/login');
     } catch (error) {
       return res.render('error', {title: error})

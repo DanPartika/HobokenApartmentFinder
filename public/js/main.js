@@ -1,7 +1,7 @@
 
 var likeReviewForm = $('#likeReviewForm');
 var revId = document.getElementById('likeReviewForm')
-console.log("LIKE: " + JSON.stringify(revId))
+
 
 likeReviewForm.submit(async function (event) {
   //console.log("EVENT: " + event + "\n\n\n" + event.target.querySelector('button').id)
@@ -9,28 +9,38 @@ likeReviewForm.submit(async function (event) {
   
   //let aptData = axios.get('http://localhost:3000/getApartments');
   await axios.get(`/getReview/${event.target.querySelector('button').id}`).then((response) => {
-    //console.log("Dan" + response.data); 
+    //console.log("Dan" + JSON.stringify(response) ); 
     //todo display new num likes using a selector 
+    //console.log("\n\n\ncompleted\n\n\n" +JSON.stringify(event) +"\n\n"+JSON.stringify(event.target) +"\n\n")
     
+    window.location.reload();
   }, (error) => {
-    console.log(error);
+    console.log("Error" + error);
   });
 });
-var dislikeReviewForm = $('#dislikeReviewForm');
-var revId1 = document.getElementById('dislikeReviewForm')
-console.log("DISLIKE: " + JSON.stringify(revId1))
 
-dislikeReviewForm.submit(async function (event) {
-  console.log("EVENT: " + event + "\n\n\n" + event.target.querySelector('button').id)
-  event.preventDefault();
-  await axios.get(`/getReview/${event.target.querySelector('button').id}`).then((response) => {
-    console.log("Dan" + response.data); 
-    //todo display new num likes using a selector 
-  }, (error) => {
-    console.log(error);
-  });
 
-});
+
+
+
+
+
+
+// var dislikeReviewForm = $('#dislikeReviewForm');
+// var revId1 = document.getElementById('dislikeReviewForm')
+// console.log("DISLIKE: " + JSON.stringify(revId1))
+
+// dislikeReviewForm.submit(async function (event) {
+//   console.log("EVENT: " + event + "\n\n\n" + event.target.querySelector('button').id)
+//   event.preventDefault();
+//   await axios.get(`/getReview/${event.target.querySelector('button').id}`).then((response) => {
+//     console.log("Dan" + response.data); 
+//     //todo display new num likes using a selector 
+//   }, (error) => {
+//     console.log(error);
+//   });
+
+// });
 
 
   

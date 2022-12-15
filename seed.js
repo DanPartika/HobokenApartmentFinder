@@ -47,7 +47,7 @@ const main = async () =>
         await users.addApartmentUser(apartment5,"randoman");
 
 
-        let review1 = await reviews.createReview(apartment5, "CodyF02", "Mid","2.5");
+        let review1 = await reviews.createReview(apartment5, "codyF02", "Mid","2.5");
         await users.addReviewUser(review1._id,"codyf02",apartment5);
 
         let review2 = await reviews.createReview(apartment1, "dan1", "Awesome","5.0");
