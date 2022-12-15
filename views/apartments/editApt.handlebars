@@ -107,8 +107,17 @@ apartmentName,
 
     
  {{!-- <input type="file" id="file-ip-1" accept="image/*" onchange="showPreview(event);"> --}}
-    <input type="file" id="image-input" accept="image/jpeg, image/png, image/jpg" onchange="showPreview(event);">
+    {{!-- <input type="file" id="image-input" accept="image/jpeg, image/png, image/jpg" onchange="showPreview(event);"> --}}
+<form method="POST" action="/profile-upload-single" enctype="multipart/form-data">
+    <div>
+        <label>Upload profile picture</label>
+        <input type="file" name="profile-file" required/>
+    </div>
+    <div>
+        <input type="submit" value="Upload" />
+    </div>
+</form>
 
-    <button type="submit">Register</button>
+    {{!-- <button type="submit">Register</button> --}}
   </form>
 </main>
