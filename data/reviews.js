@@ -158,24 +158,12 @@ const removeReview = async (reviewId) => {
 };
 
 const incrementLikesReview = async (aptId, reviewId) => {
-  //let apartment = await getApartmentById(aptId);
   let review = await getReview(reviewId);
-  console.log(review)
-  //let reviewLikes = review.numLikes++;
-  let reviewLikes = 1;
-  console.log(reviewLikes)
-  const apartmentCollection = await apartments();
-/*
-_id
-reviewDate
-reviewModified
-userName
-comments
-rating
-numLikes
-numDislikes
+  let reviewLikes = review.numLikes;
+  reviewLikes = reviewLikes + 1;
 
-*/
+  const apartmentCollection = await apartments();
+
   let newRev = {
     _id: review._id,
     reviewDate: review.reviewDate,
@@ -187,48 +175,16 @@ numDislikes
     numDislikes: review.numDislikes,
   };
 
-  console.log(newRev)
-
-  console.log(aptId)
-  console.log(reviewId)
-  
-  const deletionInfo = await usersCollection.updateOne(
+  const deletionInfo = await apartmentCollection.updateOne(
     { _id: ObjectId(aptId) },
-    {$pull:{reviews:{_id: reviewId}}}
+    {$pull:{reviews:{_id: ObjectId(reviewId)}}}
   );
 
-  const update = await usersCollection.updateOne(
+  const update = await apartmentCollection.updateOne(
     {_id: ObjectId(aptId)},
     { $addToSet: {reviews: newRev} }
   );
-
-  
-  // const update = await apartmentCollection.updateOne(
-  //   { _id:ObjectId(aptId),
-  //     reviews: {$elemMatch: {numLikes:{$gte:(reviewLikes-1)}}}
-  //     },
-  //     { $set: { "reviews.$.numLikes": reviewLikes}}
-    // );
-    //   {_id: ObjectId(aptId)},
-  //   {$set: updatedRev}
-  // );
-
-  // {
-  //   _id: (ObjectId(aptId)),
-  //   "reviews._id": (ObjectId(reviewId))
-  // },
-  // {$set:{
-  //   "reviews.$.numLikes":1
-  // }},
-  //   );
-
-     // {_id: aptId, "reviews._id": reviewId},
-    // {$set:{"reviews.$.numLikes":1}} );
-
-    // {$pull: {reviews: {_id: ObjectId(reviewId)}},
-    // $set: {numLikes: reviewLikes}}
  
-  console.log("\n\n\n" + JSON.stringify(update) + "\n\n\nOK\n\n\n")
   return await getReview(reviewId);
 }
 

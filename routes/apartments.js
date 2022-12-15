@@ -9,9 +9,10 @@ const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
 const { getApartmentById, createApartment, getAllApartments, sortApartmentsBy, updateApartment, removeApartment } = require("../data/apartments");
 const path = require('path');
-const { addApartmentUser, updateApartmentUser, addReviewUser, removeUserApartment } = require("../data/users");
+const { addApartmentUser, updateApartmentUser, addReviewUser, removeUserApartment, getUser } = require("../data/users");
 const { getReview, incrementLikesReview } = require("../data/reviews");
 const xss = require("xss");
+const { users } = require("../config/mongoCollections");
 
 
 router.route("/") //homepage
@@ -32,13 +33,27 @@ router
     //make sure id exists
     try {
       if (req.session.user) {
-        console.log(req.params.id)
         let reviewId = req.params.id;
         const review = await getReview(reviewId); //get the review
-        console.log("Review: " + review);
-        let newReview = await incrementLikesReview(review.aptId, reviewId);
-        console.log("newReview: " + JSON.stringify(newReview));
+
+        //const userCollection = await users();
+        let user = req.session.user.username;
+        let userCollection = await getUser(user);
+        
+        let aptId = "";
+
+        let uRev = userCollection.userReviews;
+
+        for(i in userCollection.userReviews) {
+            if(uRev[i]._id === reviewId) {
+              aptId = uRev[i].aptId
+            }
+        }
+
+
+        let newReview = await incrementLikesReview(aptId, reviewId);
         //create a new data function that increments numlikes and stores in mongo
+        
         res.json(newReview.numLikes);
       } else return res.redirect('/users/login');
     } catch (error) {
