@@ -165,10 +165,18 @@ const incrementLikesReview = async (aptId, reviewId) => {
   console.log("1")
   const apartmentCollection = await apartments();
   console.log("2")
-  
+  let updatedRev = {numLikes: 1};
+
   const update = await apartmentCollection.updateOne(
-    
-  );
+    { _id:ObjectId(aptId),
+      reviews: {$elemMatch: {numLikes:{$gte:(reviewLikes-1)}}}
+      },
+      { $set: { "reviews.$.numLikes": reviewLikes}}
+    );
+    //   {_id: ObjectId(aptId)},
+  //   {$set: updatedRev}
+  // );
+
   // {
   //   _id: (ObjectId(aptId)),
   //   "reviews._id": (ObjectId(reviewId))
