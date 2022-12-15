@@ -60,13 +60,13 @@ a {
     color: rgb(49, 117, 218);
     text-decoration: solid;
     font-size: 16pt;
-    background: rgb(204, 149, 149);
+    /* background: rgb(204, 149, 149); */
 }
 
-a:hover {
+/* a:hover {
     color: rgb(136, 226, 140);
     text-decoration: underline;
-}
+} */
 
 
 p{
@@ -143,7 +143,7 @@ dd{
     display: block;
     color: #f2f2f2;
     text-align: center;
-    padding: 14px 16px;
+    padding: 20px 24px;
     text-decoration: none;
 }
 .apartment_p{
@@ -152,7 +152,7 @@ dd{
     display: block;
     color: #f2f2f2;
     text-align: center;
-    padding: 14px 16px;
+    padding: 20px 24px;
     text-decoration: none;
 }
 .account_p{
@@ -161,7 +161,7 @@ dd{
       display: block;
       color: #f2f2f2;
       text-align: center;
-      padding: 14px 16px;
+      padding: 20px 24px;
       text-decoration: none;
 }
 .log_p{
@@ -170,7 +170,7 @@ dd{
       display: block;
       color: #f2f2f2;
       text-align: center;
-      padding: 14px 16px;
+      padding: 20px 24px;
       text-decoration: none;
 }
 .login_p{
@@ -184,6 +184,13 @@ dd{
     margin-left: 10px;
     clear:both;
 }
+#display-image{
+    width: 400px;
+    height: 225px;
+    border: 1px solid black;
+    background-position: center;
+    background-size: cover;
+  }
  /* .footer {
     background-color: #f1f1f1;
     padding: 10px;
