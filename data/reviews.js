@@ -207,4 +207,38 @@ const incrementLikesReview = async (aptId, reviewId) => {
   return await getReview(reviewId);
 }
 
-module.exports = { createReview, getAllReviews, getReview, removeReview, incrementLikesReview };
+const incrementDislikesReview = async (aptId, reviewId) => {
+  let review = await getReview(reviewId);
+  let reviewDislikes = review.numDislikes;
+  reviewDislikes = reviewDislikes + 1;
+
+  const apartmentCollection = await apartments();
+
+  let newRev = {
+    _id: ObjectId(review._id),
+    reviewDate: review.reviewDate,
+    reviewModified: review.reviewModified,
+    userName: review.userName,
+    comments: review.comments,
+    rating: review.rating,
+    numLikes: review.numLikes,
+    numDislikes: reviewDislikes,
+  };
+
+  const deletionInfo = await apartmentCollection.updateOne(
+    { _id: ObjectId(aptId) },
+    {$pull:{reviews:{_id: ObjectId(reviewId)}}}
+  );
+  // if(deletionInfo.modifiedCount === 1) {
+  //   console.log("deletes")
+  // }
+
+  const update = await apartmentCollection.updateOne(
+    {_id: ObjectId(aptId)},
+    { $addToSet: {reviews: newRev} }
+  );
+ 
+  return await getReview(reviewId);
+}
+
+module.exports = { createReview, getAllReviews, getReview, removeReview, incrementLikesReview, incrementDislikesReview };
