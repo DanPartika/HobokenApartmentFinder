@@ -240,5 +240,23 @@ const changeLogin = async (actualUsername, actualPassword, username, password) =
 //   return `${apartmentId} has been successfully deleted!`; //what do i want to return?
 // };
 
+const userRemoveReview = async (username, reviewId) => {
+  username = helpers.checkUsername(username);
+  const usersCollection = await users();
+  let user = await getUser(username.toString());
+  let userId = user._id.toString();
+  console.log(user.userReviews)
+  console.log(reviewId)
+  const deleteReview = await usersCollection.updateOne(
+    { _id: ObjectId(userId) },
+    {$pull:{userReviews:{_id: reviewId}}}
+  )
+  
+  const update = await getUser(username);
+  
+  update._id = update._id.toString();
+  return username;
+  
+}
 
-module.exports = {createUser, addApartmentUser,updateApartmentUser, addReviewUser, checkUser, updateUser, getUser, removeUser, changeLogin, /*removeUserApartment*/};
+module.exports = {createUser, addApartmentUser,updateApartmentUser, addReviewUser, checkUser, updateUser, getUser, removeUser, changeLogin, userRemoveReview /*removeUserApartment*/};

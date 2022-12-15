@@ -1,8 +1,9 @@
 const mongoCollections = require("../config/mongoCollections");
 const apartments = mongoCollections.apartments;
-const { ObjectId } = require("mongodb");
+const { ObjectId, Db } = require("mongodb");
 const helpers = require("../helpers");
 const { getApartmentById } = require("./apartments");
+const { dbConnection } = require("../config/mongoConnection");
 
 const createReview = async (
   apartmentId, 
@@ -108,42 +109,91 @@ const removeReview = async (reviewId) => {
   const apartmentCollection = await apartments();
   const apartment = await apartmentCollection.find({}).toArray();
   // if (apartment.length == 0) throw "no review exists with that id"
-  let cou = 0;
+  let count = 0;
   let apart = {};
   for (j in apartment) {
     let tmpApt = apartment[j];
     for (i in tmpApt.reviews) {
-      if (tmpAov.reviews[i]._id.toString() == reviewId.toString()) {
-        cou = 1;
+      if (tmpApt.reviews[i]._id.toString() === reviewId.toString()) {
+        count = 1;
         apart = tmpApt;
       }
     }
   }
-  if (cou == 0) throw "no reviews with that id";
+  if (count == 0) throw "no reviews with that id";
   
   const apartmentId = apart._id.toString();
   const apartmentCollection1 = await apartments();
   const delete1 = await apartmentCollection1.updateOne(
-    { _id: apartmentId },
+    { _id: ObjectId(apartmentId) },
     { $pull: { reviews: { _id: ObjectId(reviewId) } } }
   );
+
   const apt = await getApartmentById(apartmentId.toString());
+  
   let overall_rating = 0;
   let c = 0;
+  
   apt.reviews.forEach((a) => {
     overall_rating += Number(a.rating);
     c += 1;
   });
+
   overall_rating = overall_rating / c;
+
   overall_rating = overall_rating.toPrecision(2);
+
+  if(apt.reviews.length === 0) {
+    overall_rating = 0;
+  }
 
   await apartmentCollection.updateOne(
     { _id: ObjectId(apartmentId) },
     { $set: { overallRating: overall_rating } }
   );
   const update = await getApartmentById(apartmentId.toString());
+  
   update._id = update._id.toString();
   return update;
 };
 
-module.exports = { createReview, getAllReviews, getReview, removeReview };
+const incrementLikesReview = async (aptId, reviewId) => {
+  //let apartment = await getApartmentById(aptId);
+  let review = await getReview(reviewId);
+  console.log(review)
+  let reviewLikes = review.numLikes++;
+  console.log("1")
+  const apartmentCollection = await apartments();
+  console.log("2")
+  let updatedRev = {numLikes: 1};
+
+  const update = await apartmentCollection.updateOne(
+    { _id:ObjectId(aptId),
+      reviews: {$elemMatch: {numLikes:{$gte:(reviewLikes-1)}}}
+      },
+      { $set: { "reviews.$.numLikes": reviewLikes}}
+    );
+    //   {_id: ObjectId(aptId)},
+  //   {$set: updatedRev}
+  // );
+
+  // {
+  //   _id: (ObjectId(aptId)),
+  //   "reviews._id": (ObjectId(reviewId))
+  // },
+  // {$set:{
+  //   "reviews.$.numLikes":1
+  // }},
+  //   );
+
+     // {_id: aptId, "reviews._id": reviewId},
+    // {$set:{"reviews.$.numLikes":1}} );
+
+    // {$pull: {reviews: {_id: ObjectId(reviewId)}},
+    // $set: {numLikes: reviewLikes}}
+ 
+  console.log("\n\n\n" + JSON.stringify(update) + "\n\n\nOK\n\n\n")
+  return await getReview(reviewId);
+}
+
+module.exports = { createReview, getAllReviews, getReview, removeReview, incrementLikesReview };

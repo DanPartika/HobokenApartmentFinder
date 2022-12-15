@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>{{title}}</title>
+  <title>Hoboken Apartment Finder</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="../../public/css/main.css" rel="stylesheet">
 </head>
@@ -19,17 +19,17 @@
 <header>
   <h1> Hoboken Apartment Finder </h1>
   <nav>
-         </div>
+</div>
   <div class="title_p">     
     <form id="homepage-view" action="/" method="GET"> 
       <button class="Homepage-button" type="submit"> Homepage </button>
     </form>
-     </div> 
+  </div> 
    
-<div class="apartment_p">    
-    <form id="apartments-form" action="/apartments" method="GET"> 
-      <button class="Apartments-button" type="submit"> Apartments </button>
-    </form>
+    <div class="apartment_p">    
+      <form id="apartments-form" action="/apartments" method="GET"> 
+        <button class="Apartments-button" type="submit"> Apartments </button>
+      </form>
     </div>
 {{!-- only show this if user is logged in I think need to add to object in js routes files--}}
 <div class="account_p">   
@@ -38,26 +38,19 @@
     </form>
      </div>
 
-     
-
     <div class="log_p">  
-    {{#if user.username}}
-      <form id="logout-form" action="/users/logout" method="GET"> 
-        <button class="logout-button" type = "submit"> Logout </button>
-      </form>
- 
+      {{#if user.username}}
+        <form id="logout-form" action="/users/logout" method="GET"> 
+          <button class="logout-button" type = "submit"> Logout </button>
+        </form>
+  
+      {{else}}
+        <form id="login-form" action="/users/login" method="GET"> 
+          <button class="Login-Signup-button" type = "submit"> LogIn/Signup </button>
+        </form>
 
- 
- 
-    {{else}}
-      <form id="login-form" action="/users/login" method="GET"> 
-        <button class="Login-Signup-button" type = "submit"> LogIn/Signup </button>
-      </form>
-
-        
-
-    {{/if}}
-          </div>
+      {{/if}}
+    </div>
 
   </nav>
 </header>
@@ -68,11 +61,11 @@
     {{{body}}}
   </main>
   
-  <script
+  {{!-- <script
       src="https://code.jquery.com/jquery-2.2.4.min.js"
       integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
       crossorigin="anonymous"
-    ></script>
+    ></script> --}}
 </body>
 
 </html>
