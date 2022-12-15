@@ -59,8 +59,8 @@ const main = async () =>
         // let review4 = await reviews.createReview(apartment3, "RandoMan", "Horrible","1.0");
         // await users.addReviewUser(review1._id,"RandoMan",apartment5);
 
-        // let review5 = await reviews.createReview(apartment4, "EltonPA", "Mbappe","4.0");
-        // await users.addReviewUser(review1._id,"EltonPA",apartment5);
+        // let review5 = await reviews.createReview(apartment4, "eltonvaz623", "Mbappe","4.0");
+        // await users.addReviewUser(review1._id,"eltonvaz623",apartment5);
 
 
     } 

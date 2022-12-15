@@ -5,7 +5,7 @@ const data = require("../data");
 const reviewsData = data.reviews;
 const { ObjectId } = require("mongodb");
 const { getAllReviews, createReview, removeReview } = require("../data/reviews");
-const { addReviewUser } = require("../data/users")
+const { addReviewUser, userRemoveReview } = require("../data/users")
 const helpers = require("../helpers");
 const { review } = require("../data");
 
@@ -119,18 +119,18 @@ const { review } = require("../data");
   })
 
 ///reviews/deleteReview/
-/*
+
   router
     .route("/deleteReview/:reviewId")
-    .get(async (req,res) => {
+    // .get(async (req,res) => {
 
-      if (req.session.user) {
-        return res.redirect('userAccount/userhomepage',{user:req.session.user});
-      } else {
-        return res.render('userAccount/login',{user:req.session.user});
-      }
-    })
-    .delete(async (req,res) => {
+    //   if (req.session.user) {
+    //     return res.render('userAccount/userhomepage',{user:req.session.user});
+    //   } else {
+    //     return res.render('userAccount/login',{user:req.session.user});
+    //   }
+    // })
+    .post(async (req,res) => {
       req.params.reviewId = req.params.reviewId.trim();
 
       if (!ObjectId.isValid(req.params.reviewId)) {
@@ -139,11 +139,14 @@ const { review } = require("../data");
       }
       try {
         const review = await removeReview(req.params.reviewId);
-        return res.redirect('userAccount/userhomepage',{user:req.session.user});
+        
+        const userupdate = await userRemoveReview(req.session.user.username,req.params.reviewId)
+
+        return res.render('userAccount/userhomepage',{user:req.session.user});
       } catch (e) {
         res.render('error', {title: "Error", message: e});
       }
-    }) */
+    })
 // router
 //   .route("/review/:reviewId")
 //   .get(async (req, res) => {

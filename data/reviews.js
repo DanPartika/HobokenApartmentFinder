@@ -109,40 +109,50 @@ const removeReview = async (reviewId) => {
   const apartmentCollection = await apartments();
   const apartment = await apartmentCollection.find({}).toArray();
   // if (apartment.length == 0) throw "no review exists with that id"
-  let cou = 0;
+  let count = 0;
   let apart = {};
   for (j in apartment) {
     let tmpApt = apartment[j];
     for (i in tmpApt.reviews) {
-      if (tmpAov.reviews[i]._id.toString() == reviewId.toString()) {
-        cou = 1;
+      if (tmpApt.reviews[i]._id.toString() === reviewId.toString()) {
+        count = 1;
         apart = tmpApt;
       }
     }
   }
-  if (cou == 0) throw "no reviews with that id";
+  if (count == 0) throw "no reviews with that id";
   
   const apartmentId = apart._id.toString();
   const apartmentCollection1 = await apartments();
   const delete1 = await apartmentCollection1.updateOne(
-    { _id: apartmentId },
+    { _id: ObjectId(apartmentId) },
     { $pull: { reviews: { _id: ObjectId(reviewId) } } }
   );
+
   const apt = await getApartmentById(apartmentId.toString());
+  
   let overall_rating = 0;
   let c = 0;
+  
   apt.reviews.forEach((a) => {
     overall_rating += Number(a.rating);
     c += 1;
   });
+
   overall_rating = overall_rating / c;
+
   overall_rating = overall_rating.toPrecision(2);
+
+  if(apt.reviews.length === 0) {
+    overall_rating = 0;
+  }
 
   await apartmentCollection.updateOne(
     { _id: ObjectId(apartmentId) },
     { $set: { overallRating: overall_rating } }
   );
   const update = await getApartmentById(apartmentId.toString());
+  
   update._id = update._id.toString();
   return update;
 };
