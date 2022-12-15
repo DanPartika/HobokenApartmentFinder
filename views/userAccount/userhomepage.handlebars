@@ -27,10 +27,10 @@
           <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}}<a> 
             {{!--      Add a way to remove the apartment here      --}}
           <form id="editApt-form" action="/apartments/editApartment/{{this._id}}" method="GET"> 
-            <button type="submit"> Edit Apt </button>
+            <button type="submit"> Edit Apartment </button>
           </form>
           <form id="deleteApartment-form" action="/apartments/deleteApt/{{this._id}}" method="POST"> 
-            <button type="submit"> Delete Apt </button>
+            <button type="submit"> Delete Apartment </button>
           </form>
           {{!-- <form id="deleteApt-form" action="/apartments/editApartment/{{this._id}}" method="GET"> 
             <button type="submit"> Edit Apt </button>
@@ -55,6 +55,9 @@
             {{!-- <form id="deleteReview-form" action="/reviews/deleteReview/{{this._id}}" method="POST"> 
             <button type="submit"> Delete Review </button>
           </form> --}}
+          <form id="deleteApartment-form" action="/apartments/deleteReview/{{this._id}}" method="POST"> 
+            <button type="submit"> Delete Review </button>
+          </form>
         </li>
       {{/each}}
 

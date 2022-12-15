@@ -10,7 +10,6 @@ const createReview = async (
   comments,
   rating //!include a comment title??
 ) => {
-  
   let params = helpers.checkReviewsParameters(apartmentId, userName, comments, rating)
 
   if (params.rating % 1 === 0) {
