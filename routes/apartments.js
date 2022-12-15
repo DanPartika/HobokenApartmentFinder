@@ -229,7 +229,7 @@ router
         req.params.apartmentId.toString();
         let newApt = await updateApartment(req.params.apartmentId, req.session.user.username, apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
         
-        //let usersName = await updateApartmentUser(newApt._id, req.session.user.username);
+        let usersName = await updateApartmentUser(req.params.apartmentId, req.session.user.username);
 
         let pathRedirect = '/apartments/apartment/' + req.params.apartmentId;
         return res.redirect(pathRedirect); 

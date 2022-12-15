@@ -203,8 +203,8 @@ const changeLogin = async (actualUsername, actualPassword, username, password) =
   return update;
 };
 
-const updateApartmentUser = async (aptId, userName) => {
-  const apartment = await getApartmentById(aptId);
+const updateApartmentUser = async (apartmentId, username) => {
+  const apartment = await getApartmentById(apartmentId);
   let user = await getUser(username);
   let userId = user._id.toString();
   if (apartment === null) throw "cant get apartment"
@@ -225,7 +225,7 @@ const updateApartmentUser = async (aptId, userName) => {
   );
 
   apartment._id = apartment._id.toString();
-  return userName;
+  return username;
 }
 
 const removeUserApartment = async (username, apartmentId) => {
