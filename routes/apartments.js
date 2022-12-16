@@ -69,7 +69,7 @@ router
         let apts = [];
         if (req.query.sortByInput == null) apts = await getAllApartments();
         else apts = await sortApartmentsBy(req.query.sortByInput);
-        const data = {apt:apts,user:req.session.user};
+        const data = {apt:apts,user:req.session.user, sortedBy: req.query.sortByInput};
         return res.render('apartments/aptList', data);
       }
       else return res.redirect('/users/login');

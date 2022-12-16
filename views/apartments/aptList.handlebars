@@ -25,7 +25,12 @@ todo1: add a + symbol in the top right to add apartments}}
     <button type="submit" class="plus">+</button>
   </form>
       </div>
+      {{#if sortedBy}} 
+      <p>Sorted by: {{sortedBy}}</p>
+      <br>
+      {{/if}}
  <div class = "apt_d">
+
   <ul>
     
     {{#each apt}}
