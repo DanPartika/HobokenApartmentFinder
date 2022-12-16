@@ -2,6 +2,9 @@
 <body>
   {{! insert all user data that we want to display here}}
   {{#if username}}
+  <br>
+  <br>
+  <br>
   <h2>Welcome back {{username}}!</h2>
   
   <dl> 
@@ -20,7 +23,7 @@
     </dl>
 
     {{#if user.userApartments}}
-      <h4>List of all posted apartments:</h4>
+      <h3>List of all user posted apartments:</h3>
 
       {{#each user.userApartments}}
         <li>
@@ -46,7 +49,7 @@
 
 
   {{#if user.userReviews}}
-      <h4>List of all posted reviews:</h4>
+      <h3>List of all user posted reviews:</h3>
 
       {{#each user.userReviews}}
         <li>
