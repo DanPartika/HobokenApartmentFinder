@@ -121,9 +121,10 @@ dd{
     display: block;
     color: #f2f2f2;
     text-align: center;
-    padding: 20px 24px;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
     text-decoration: none;
-    width: 20%;
+    width: 25%;
 }
 .apartment_p{
     overflow: hidden;
@@ -131,9 +132,10 @@ dd{
     display: block;
     color: #f2f2f2;
     text-align: center;
-    padding: 20px 24px;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
     text-decoration: none;
-    width: 20%;
+    width: 25%;
 }
 .account_p{
     overflow: hidden;
@@ -141,9 +143,10 @@ dd{
       display: block;
       color: #f2f2f2;
       text-align: center;
-      padding: 20px 24px;
+      padding-top: 0.5em;
+    padding-bottom: 0.5em;
       text-decoration: none;
-      width: 20%;
+      width: 25%;
 }
 .log_p{
     overflow: hidden;
@@ -151,9 +154,10 @@ dd{
       display: block;
       color: #f2f2f2;
       text-align: center;
-      padding: 20px 24px;
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
       text-decoration: none;
-      width: 20%;
+      width: 25%;
 }
 .login_p{
     width: 80%;
