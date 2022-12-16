@@ -15,9 +15,14 @@ h1{
 }
 
 a {
-    color: rgb(49, 117, 218);
+    color: rgb(28, 50, 73);
     text-decoration: solid;
     font-size: 16pt;
+}
+
+a:hover{
+    color: rgb(175, 5, 5);
+    text-decoration: underline;
 }
 
 p{
@@ -28,22 +33,44 @@ p{
 }
 
 button{
-    color: rgb(121, 191, 231);
+    color: #dde3e7;
     background: rgb(196, 25, 25);
+    padding: 0.8em 2em;
+    margin: 0 0.3em 0.3em 0;
+}
+
+.plus{
+    padding: 0em 0.4em;
+}
+
+.user-button{
+    padding: 0em 0.4em;
+}
+
+.login-button{
+    padding: 0.3em 0.5em;
+}
+
+.logout{
+    color:rgb(185, 8, 8);
+    font-size: 30px;
 }
 
 li{
-   
-    /* list-style: square; */
-    color: red;
+    color: rgb(185, 8, 8);
     font-size: 15pt;
 }
+
+.sort-class{
+    text-align: center;
+}
+
 ul.b {
     list-style-type: square;
   }
 
 .p1{
-    color: rgb(100, 113, 126);
+    color: rgb(28, 50, 73);
     font-size: 20pt;
 }
 
@@ -96,6 +123,7 @@ dd{
     text-align: center;
     padding: 20px 24px;
     text-decoration: none;
+    width: 20%;
 }
 .apartment_p{
     overflow: hidden;
@@ -105,6 +133,7 @@ dd{
     text-align: center;
     padding: 20px 24px;
     text-decoration: none;
+    width: 20%;
 }
 .account_p{
     overflow: hidden;
@@ -114,6 +143,7 @@ dd{
       text-align: center;
       padding: 20px 24px;
       text-decoration: none;
+      width: 20%;
 }
 .log_p{
     overflow: hidden;
@@ -123,6 +153,7 @@ dd{
       text-align: center;
       padding: 20px 24px;
       text-decoration: none;
+      width: 20%;
 }
 .login_p{
     width: 80%;
@@ -166,56 +197,4 @@ h3{
     color: rgb(20, 1, 1);
     font-size: 23px;
     font-style: italic;
-}
-
-h4{
-
-}
-
-label{
-
-}
-
-nav{
-
-}
-
-header{
-
-}
-
-form{
-
-}
-
-br{
-
-}
-
-input{
-
-}
-
-option{
-
-}
-
-.Homepage-button{
-
-}
-
-.Apts-button{
-
-}
-
-.Account-button{
-  
-} 
-
-.logout-button {
-
-}
-
-.Login-Signup-button {
-
 }
