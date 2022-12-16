@@ -285,7 +285,8 @@ router
             if (!apartment) throw `Could not delete apartment with id of ${apartmentId}`
             const userdata = await removeUserApartment(req.session.user.username, apartmentId);
             if (!userdata) throw `Could not remove apartment from user ${req.session.user.username}`
-            return res.render('userAccount/userhomepage',{user:req.session.user});
+            //return res.render('userAccount/userhomepage',{user:req.session.user});
+            return res.redirect('/users/protected')
           } catch (e) {
             return res.render('error', {title: "Error", message: e});
           }
