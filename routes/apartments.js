@@ -51,10 +51,13 @@ router
           }
         }
 
-        let likeReview = await incrementLikesReview(aptId, reviewId);
-        if(likeReview != 1) return res.render('error', {title:"Error", message: "could not increment like button"})
+        let likeReview = await incrementLikesReview(aptId, reviewId, req.session.user.username);
+        //console.log(likeReview);
+        //if(likeReview != 1) return res.render('error', {title:"Error", message: "could not increment like button"})
 
-        res.json(newReview.numLikes);
+        //res.json(newReview.numLikes);
+        res.json(likeReview);
+        //res.redirect('/apartments/apartment/' + aptId);
       } else return res.redirect('/users/login');
     } catch (error) {
       return res.render('error', {title: error})

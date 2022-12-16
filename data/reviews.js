@@ -35,7 +35,7 @@ const createReview = async (
     userName: params.userName,
     comments: params.comments,
     rating: rating,
-    numLikes: 0
+    numLikes: []
   };
 
   const insertInfo = await apartmentCollection.updateOne(
@@ -157,10 +157,13 @@ const removeReview = async (reviewId) => {
   return update;
 };
 
-const incrementLikesReview = async (aptId, reviewId) => {
+const incrementLikesReview = async (aptId, reviewId, userName) => {
   let review = await getReview(reviewId);
   let reviewLikes = review.numLikes;
-  reviewLikes = reviewLikes + 1;
+  if (reviewLikes.indexOf(userName) != -1) {
+    throw "you have already liked this review";
+  }
+  reviewLikes.push(userName);
 
   const apartmentCollection = await apartments();
 
@@ -186,7 +189,7 @@ const incrementLikesReview = async (aptId, reviewId) => {
   );
   if (!update.matchedCount && !update.modifiedCount) throw 'Update failed';
  
-  return update.modifiedCount;
+  return reviewLikes.length;
 }
 
 module.exports = { createReview, getAllReviews, getReview, removeReview, incrementLikesReview };
