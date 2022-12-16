@@ -19,12 +19,12 @@ router.route("/") //homepage
   .get(async (req, res) => {
     //code here for GET
     //return res.sendFile(path.resolve('static/homepage.html'));
-    if (req.session.user) {
-      return res.render('homepage',{title:"Hoboken Apartment Finder",user:req.session.user});
-    } else {
-      return res.render('homepage',{title:"Hoboken Apartment Finder"});
+    try {
+      if (req.session.user) return res.render('homepage',{title:"Hoboken Apartment Finder",user:req.session.user});
+      else return res.render('homepage',{title:"Hoboken Apartment Finder"});
+    } catch (error) {
+      return res.render('error', {title: "Error", message: error})
     }
-    
   });
 
 router

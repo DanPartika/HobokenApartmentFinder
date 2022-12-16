@@ -20,7 +20,7 @@ const createApartment = async (
   utilitiesIncluded
 ) => { //if added id to params, add check id here
   let params = helpers.checkApartmentParameters(username, apartmentName, streetAddress,rentPerMonth,rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
-
+  if(!params) throw "error in checking Apartment parameters"
   const apartmentCollection = await apartments();
   
   //Checking for duplicate apartments
@@ -167,6 +167,7 @@ const updateApartment = async (
 
   let id = helpers.checkID(apartmentId);
   let params = helpers.checkApartmentParameters(userName, apartmentName, streetAddress,rentPerMonth,rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
+  if(!params) throw "error in checking apartment parameters"
   const apartmentCollection = await apartments();
   const apartment = await getApartmentById(id);
   if (apartment === null) throw "no Apartment exists with that id";

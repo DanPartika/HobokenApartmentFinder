@@ -17,6 +17,7 @@ const createUser = async (
   ) => {
   //check if username exists
   let params = helpers.checkUserParameters(firstName, lastName, email, gender, age, username, password);
+  if(!params) throw "error in checking reviews parameters"
   const usersCollection = await users();
   const account = await usersCollection.findOne({ username: params.username });
   if (account !== null) throw `Account with username ${params.username} exists already.`;
@@ -138,6 +139,7 @@ const updateUser = async (
   //!do not modify reviews or overallRating here
   //parms returns all the prams in a object with the trimmed output
   let params = helpers.checkUserParameters1(userID, firstName, lastName, email, gender, age, username);
+  if(!params) throw "error in checking reviews parameters"
   const usersCollection = await users();
   const user = await getUser(username);
   if (user === null) throw "no Apartment exists with that id";
