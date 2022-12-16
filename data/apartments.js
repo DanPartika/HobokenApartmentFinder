@@ -222,3 +222,10 @@ module.exports = {
   updateApartment,
   sortApartmentsBy
 };
+
+
+
+
+if (condition) {
+
+}
