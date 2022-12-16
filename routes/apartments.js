@@ -173,6 +173,7 @@ router
         else if(maxPets == "false") maxPets = false
         let utilitiesIncluded = xss(apartmentData.utilitiesIncludedInput);
         utilitiesIncluded = utilitiesIncluded.split(",")
+        let file = xss(apartmentData.file);
         let HobokenStreets = ["Adams s", "Bloomfield s", "Castle Point Terrace","Clinton s", "Eighth s","Eleventh s",
         "Fifteenth s","Fifth s", "First s","Fourteenth s","Fourth s","Garden s","Grand s","Grove s","Harrison s","Henderson s",
         "Hudson P","Hudson S","Jackson s","Jefferson s","Madison s","Marshall s","Monroe s","Newark s","Ninth s","Observer h",
@@ -183,7 +184,7 @@ router
           if (apartmentData.streetAddressInput.toLowerCase().includes(HobokenStreets[i].toLowerCase()) ) checker = false;
         if(checker) throw `${apartmentData.streetAddressInput} is not a valid street name in Hoboken.`;
       
-        let aptId = await createApartment(req.session.user.username, apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
+        let aptId = await createApartment(req.session.user.username, apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded,file);
         let usersName = await addApartmentUser(aptId, req.session.user.username);
         
         let pathRedirect = '/apartments/apartment/' + aptId;
