@@ -8,13 +8,7 @@
   <link href="../../public/css/main.css" rel="stylesheet">
 </head>
 
-{{!-- <header>
-  {{#if username}}
-  <h2> Logged in </h2>
-  {{else}}
-  <h2> Noto logged in </h2>
-  {{/if}}
-</header> --}}
+<body>
 <div class="apt_title">
 <header>
   <h1> Hoboken Apartment Finder </h1>
@@ -31,7 +25,7 @@
         <button class="Apartments-button" type="submit"> Apartments </button>
       </form>
     </div>
-{{!-- only show this if user is logged in I think need to add to object in js routes files--}}
+    
 <div class="account_p">   
     <form id="account-form" action="/users/protected" method="GET"> 
       <button class="Account-button" type="submit"> Account </button>
@@ -56,10 +50,11 @@
 </header>
 </div>
 
-{{!-- Start tag body seen but an element of the same type was already open. --}}
     <main>
         {{{body}}}
     </main>
+
+</body>
 
 
 </html>
