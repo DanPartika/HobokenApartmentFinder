@@ -46,14 +46,7 @@ router
       let register = await usersData.createUser(firstname, lastname, email, gender, age, username, password);
       if (!register) throw 'Could not create user'
       //! if (register.insertedUser) return res.status(200).redirect("/");
-    } catch (e) {
-      let templateData = {
-        title: 'Register Error',
-        error: e,
-        user:req.session.user
-      }
-      return res.status(400).render('userAccount/signup', templateData); //error
-    }
+    
     if (register.insertedUser) return res.status(200).render('userAccount/login'); //if they register send them to login
     else {
       let templateData = {
@@ -63,6 +56,14 @@ router
       }
       return res.status(500).render('userAccount/signup', templateData)
     }
+  } catch (e) {
+    let templateData = {
+      title: 'Register Error',
+      error: e,
+      user:req.session.user
+    }
+    return res.status(400).render('userAccount/signup', templateData); //error
+  }
   });
  
 router
