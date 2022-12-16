@@ -9,7 +9,11 @@
 
     <p>Posted by: {{apt.userPosted}}</p>
     <p>Date Posted: {{apt.datePosted}}</p>
-    
+    <div class="display-image">
+           {{#if file}}
+   <img src="{{file}}">
+   {{/if}}
+ </div>
     <dl> 
       <dt>Street Address</dt>
       <dd>{{apt.streetAddress}}</dd>

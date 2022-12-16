@@ -17,9 +17,10 @@ const createApartment = async (
   roomNum,
   appliancesIncluded,
   maxPets,
-  utilitiesIncluded
+  utilitiesIncluded,
+  file
 ) => { //if added id to params, add check id here
-  let params = helpers.checkApartmentParameters(username, apartmentName, streetAddress,rentPerMonth,rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
+  let params = helpers.checkApartmentParameters(username, apartmentName, streetAddress,rentPerMonth,rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded,file);
   if(!params) throw "error in checking Apartment parameters"
   const apartmentCollection = await apartments();
   
@@ -51,6 +52,7 @@ const createApartment = async (
     appliancesIncluded: params.appliancesIncluded,
     maxPets: params.maxPets,
     utilitiesIncluded: params.utilitiesIncluded,
+    file: params.file,
     datePosted: today, //*Added a datePosted
     dateModified: "N/A",
     reviews: [],

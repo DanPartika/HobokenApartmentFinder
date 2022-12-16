@@ -16,11 +16,11 @@ todo1: add a + symbol in the top right to add apartments}}
     <select name = "sortByInput" id = "sortByInput"> 
       <option value="Alphabetical">Alphabetical</option>
       <option value="Cost">Cost</option>
+      <option value="Rating">Rating</option>
       <option value="Number of Bedrooms">Number of Bedrooms</option>
       <option value="Number of Bathrooms">Number of Bathrooms</option>
       <option value="Number of Residents">Number of Residents</option>
       <option value="Pets Allowed">Pets Allowed</option>
-      <option value="Rating">Rating</option>
     </select>
 
     <button type="submit" class="plus">+</button>
@@ -41,7 +41,12 @@ todo1: add a + symbol in the top right to add apartments}}
    <img id="image-input">
  </div>
 
-      <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}} [${{this.rentPerMonth}}/Month , {{this.numBedrooms}} Bedroom, {{this.overallRating}} Rating]<a>
+      <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}} [${{this.rentPerMonth}}/Month, Rating: {{this.overallRating}}, {{this.numBedrooms}} Bedrooms, {{this.numBathrooms}} Bathrooms, Number of Residents: {{this.maxResidents}}, Pets: {{this.maxPets}}]<a>
+      div class="display-image">
+           {{#if file}}
+   <img src="{{file}}">
+   {{/if}}
+ </div>
     </li>
     {{/each}}
   </ul>

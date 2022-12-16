@@ -203,6 +203,10 @@ h3{
     font-style: italic;
 }
 
+.prev-value{
+    font-size: 15px;
+}
+
 .resize {
     width: auto;
     height: 400px;

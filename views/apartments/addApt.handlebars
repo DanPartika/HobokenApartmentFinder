@@ -100,12 +100,18 @@ apartmentName,
 
     <br>
 
-      <label for="file"Upload Image:></label>
-      <img src="/reviews/reviewPic/{{review._id}}" onerror="this.style.display='none'" class="displayimage">
-   <input type="file" id="image-input" accept="image/jpeg, image/png, image/jpg">
-
 
     <br>
 
     <button type="submit">Register</button>
   </form>
+  <form method="POST" action="/apartments" enctype="multipart/form-data">
+             <div>
+                <label>Upload Apartment picture</label>
+                <input type="file" name="samplefile" id ="samplefile"  accept="image/jpeg, image/png, image/jpg"/>
+            </div> 
+            
+            <div>
+                <input type="submit" value="Upload" />
+            </div>
+        </form>
