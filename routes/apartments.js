@@ -183,7 +183,7 @@ router
         for (let i = 0; i < HobokenStreets.length; i++) 
           if (apartmentData.streetAddressInput.toLowerCase().includes(HobokenStreets[i].toLowerCase()) ) checker = false;
         if(checker) throw `${apartmentData.streetAddressInput} is not a valid street name in Hoboken.`;
-      
+        console.log("FILE: " + JSON.stringify(file))
         let aptId = await createApartment(req.session.user.username, apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded,file);
         let usersName = await addApartmentUser(aptId, req.session.user.username);
         
