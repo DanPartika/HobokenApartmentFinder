@@ -202,3 +202,8 @@ h3{
     font-size: 23px;
     font-style: italic;
 }
+
+.resize {
+    width: auto;
+    height: 400px;
+}
