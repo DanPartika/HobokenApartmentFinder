@@ -35,8 +35,7 @@ const createReview = async (
     userName: params.userName,
     comments: params.comments,
     rating: rating,
-    numLikes: 0,
-    numDislikes: 0
+    numLikes: 0
   };
 
   const insertInfo = await apartmentCollection.updateOne(
@@ -172,8 +171,7 @@ const incrementLikesReview = async (aptId, reviewId) => {
     userName: review.userName,
     comments: review.comments,
     rating: review.rating,
-    numLikes: reviewLikes,
-    numDislikes: review.numDislikes,
+    numLikes: reviewLikes
   };
 
   const updateInfo = await apartmentCollection.updateOne(
@@ -191,37 +189,4 @@ const incrementLikesReview = async (aptId, reviewId) => {
   return update.modifiedCount;
 }
 
-const incrementDislikesReview = async (aptId, reviewId) => {
-  let review = await getReview(reviewId);
-  let reviewDislikes = review.numDislikes;
-  reviewDislikes = reviewDislikes + 1;
-
-  const apartmentCollection = await apartments();
-
-  let newRev = {
-    _id: ObjectId(review._id),
-    reviewDate: review.reviewDate,
-    reviewModified: review.reviewModified,
-    userName: review.userName,
-    comments: review.comments,
-    rating: review.rating,
-    numLikes: review.numLikes,
-    numDislikes: reviewDislikes,
-  };
-
-  const updateInfo = await apartmentCollection.updateOne(
-    { _id: ObjectId(aptId) },
-    {$pull:{reviews:{_id: ObjectId(reviewId)}}}
-  );
-  if (!updateInfo.matchedCount && !updateInfo.modifiedCount)  throw 'Update failed';
-
-  const update = await apartmentCollection.updateOne(
-    {_id: ObjectId(aptId)},
-    { $addToSet: {reviews: newRev} }
-  );
-  if (!update.matchedCount && !update.modifiedCount) throw 'Update failed';
-
-  return await getReview(reviewId);
-}
-
-module.exports = { createReview, getAllReviews, getReview, removeReview, incrementLikesReview, incrementDislikesReview };
+module.exports = { createReview, getAllReviews, getReview, removeReview, incrementLikesReview };
