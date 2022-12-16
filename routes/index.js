@@ -10,7 +10,6 @@ const constructorMethod = (app) => {
   app.use('/reviews', reviewsRoutes);
   app.use('/users', usersRoutes);
   app.use('/', apartmentsRoutes);
-  //app.use('/', api);
 
   app.use("*", (req, res) => {
     res.status(404).json({ error: "Not Found" });

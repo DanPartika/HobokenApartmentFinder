@@ -1,7 +1,9 @@
 
 <body>
-  {{! insert all user data that we want to display here}}
   {{#if username}}
+  <br>
+  <br>
+  <br>
   <h2>Welcome back {{username}}!</h2>
   
   <dl> 
@@ -20,21 +22,18 @@
     </dl>
 
     {{#if user.userApartments}}
-      <h4>List of all posted apartments:</h4>
+      <h3>List of all user posted apartments:</h3>
 
       {{#each user.userApartments}}
         <li>
           <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}}<a> 
-            {{!--      Add a way to remove the apartment here      --}}
+
           <form id="editApt-form" action="/apartments/editApartment/{{this._id}}" method="GET"> 
-            <button type="submit"> Edit Apartment </button>
+            <button type="submit" class="user-button"> Edit Apartment </button>
           </form>
           <form id="deleteApartment-form" action="/apartments/deleteApt/{{this._id}}" method="POST"> 
-            <button type="submit"> Delete Apartment </button>
+            <button type="submit" class="user-button"> Delete Apartment </button>
           </form>
-          {{!-- <form id="deleteApt-form" action="/apartments/editApartment/{{this._id}}" method="GET"> 
-            <button type="submit"> Edit Apt </button>
-          </form> --}}
         </li>
       {{/each}}
 
@@ -46,17 +45,14 @@
 
 
   {{#if user.userReviews}}
-      <h4>List of all posted reviews:</h4>
+      <h3>List of all user posted reviews:</h3>
 
       {{#each user.userReviews}}
         <li>
-          
           <a href="/apartments/apartment/{{this.aptId}}">{{this.aptName}}<a>
-            {{!-- <form id="deleteReview-form" action="/reviews/deleteReview/{{this._id}}" method="POST"> 
-            <button type="submit"> Delete Review </button>
-          </form> --}}
+            
           <form id="deleteReview-form" action="/reviews/deleteReview/{{this._id}}" method="POST"> 
-            <button type="submit"> Delete Review </button>
+            <button type="submit" class="user-button"> Delete Review </button>
           </form>
         </li>
       {{/each}}
@@ -66,12 +62,4 @@
 
   {{/if}}
 
-{{!-- firstName,
-  lastName,
-  email,
-  gender,
-  age, --}}
-
 </body>
-
-<!-- Add user information that we decide to pass in /users/protected>

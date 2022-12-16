@@ -1,8 +1,8 @@
 const helpers = require("../helpers");
-const { users, apartments } = require('../config/mongoCollections');
+const { users } = require('../config/mongoCollections');
 const bcrypt = require('bcrypt');
-const { getApartmentById } = require("./apartments");
-const { getReview } = require("./reviews");
+const { getApartmentById, removeApartment } = require("./apartments");
+const { getReview, removeReview } = require("./reviews");
 const { ObjectId } = require("mongodb");
 const saltRounds = 4;
 
@@ -17,6 +17,7 @@ const createUser = async (
   ) => {
   //check if username exists
   let params = helpers.checkUserParameters(firstName, lastName, email, gender, age, username, password);
+  if(!params) throw "error in checking reviews parameters"
   const usersCollection = await users();
   const account = await usersCollection.findOne({ username: params.username });
   if (account !== null) throw `Account with username ${params.username} exists already.`;
@@ -52,20 +53,23 @@ const createUser = async (
 };
 
 const addApartmentUser = async (aptId, userName) => {
-  //console.log("In AddAPTUSR" + aptId + userName)
   const apartment = await getApartmentById(aptId);
   const user = await getUser(userName);
-  if (apartment === null) throw "cant get apartment"
+  if (apartment === null) throw "Cannot get apartment."
   const usersCollection = await users();
   let newApt = {
     _id: apartment._id,
     apartmentName: apartment.apartmentName
   };
-  await usersCollection.updateOne(
+  const updateInfo = await usersCollection.updateOne(
     {_id: ObjectId(user._id)},
     { $addToSet: {userApartments:newApt} }
   );
-  //console.log("INA  \n" + userName)
+  if (updateInfo.insertedCount === 0) {
+    removeApartment(aptId);
+    throw 'Cannot add Apt to User, removing apartment.';
+  }
+  
   apartment._id = apartment._id.toString();
   return userName;
 }
@@ -84,14 +88,15 @@ const addReviewUser = async (reviewId, userName, aptId) => {
     aptName: apartment.apartmentName
   };
 
-  await usersCollection.updateOne(
+  const updateInfo = await usersCollection.updateOne(
     {_id: ObjectId(user._id)},
     { $addToSet: {userReviews:newRev} }
   );
-  //console.log("INA  \n" + userName)
-  //if(!updateInfo.acknowledged || updateInfo.matchedCount !== 1 || updateInfo.modifiedCount !== 1) throw "cannot update user"
-  //let revId = updateInfo.upsertedId ;
-  //console.log(revId)
+  if (updateInfo.insertedCount === 0) {
+    removeReview(reviewId);
+    throw 'Cannot add Apt to User, removing review.';
+  }
+
   const update = await getUser(userName);
   update._id = update._id.toString();
   return update;
@@ -134,6 +139,7 @@ const updateUser = async (
   //!do not modify reviews or overallRating here
   //parms returns all the prams in a object with the trimmed output
   let params = helpers.checkUserParameters1(userID, firstName, lastName, email, gender, age, username);
+  if(!params) throw "error in checking reviews parameters"
   const usersCollection = await users();
   const user = await getUser(username);
   if (user === null) throw "no Apartment exists with that id";
@@ -168,40 +174,40 @@ const removeUser = async (username) => {
   return `${usersName} has been successfully deleted!`; //what do i want to return?
 };
 
-const changeLogin = async (actualUsername, actualPassword, username, password) => { 
-  const user = helpers.checkUsername(username)
-  const pass = helpers.checkPassword(password)
-  const collection = await users();
-  const account = await collection.findOne({ username: actualUsername }); //find by username b/c that is a key in our data as is _id
-  if (account === null) throw `${actualUsername} does not exist`
-  try {
-    const auth = checkUser(actualUsername, actualPassword);
-  } catch (error) {
-    throw error;
-  }
-  if (auth === null) throw 'cannot authencate username/password, please try again'
-  if (! (await auth).authenticatedUser) throw "current username and password do not match current username and password"
-  const hash = await bcrypt.hash(pass, saltRounds);
-  let updatedUser = { 
-    username: user,
-    password: hash, //this line and above are the updates values
-    firstName: params.firstName,
-    lastName: params.lastName,
-    email: params.email,
-    gender: params.gender,
-    age: params.age,
-    userApartments: user.userApartments,
-    userReviews: user.userReviews  //redundant 
-  };
-  const updateInfo = await usersCollection.replaceOne( //replaceOne or updateOne
-    { _id: ObjectId(id) },
-    updatedUser
-  );
-  if(!updateInfo.acknowledged || updateInfo.matchedCount !== 1 || updateInfo.modifiedCount !== 1) throw "cannot update user"
-  const update = await getUser(user);
-  update._id = update._id.toString();
-  return update;
-};
+// const changeLogin = async (actualUsername, actualPassword, username, password) => { 
+//   const user = helpers.checkUsername(username)
+//   const pass = helpers.checkPassword(password)
+//   const collection = await users();
+//   const account = await collection.findOne({ username: actualUsername }); //find by username b/c that is a key in our data as is _id
+//   if (account === null) throw `${actualUsername} does not exist`
+//   try {
+//     const auth = checkUser(actualUsername, actualPassword);
+//   } catch (error) {
+//     throw error;
+//   }
+//   if (auth === null) throw 'cannot authencate username/password, please try again'
+//   if (! (await auth).authenticatedUser) throw "current username and password do not match current username and password"
+//   const hash = await bcrypt.hash(pass, saltRounds);
+//   let updatedUser = { 
+//     username: user,
+//     password: hash, //this line and above are the updates values
+//     firstName: params.firstName,
+//     lastName: params.lastName,
+//     email: params.email,
+//     gender: params.gender,
+//     age: params.age,
+//     userApartments: user.userApartments,
+//     userReviews: user.userReviews  //redundant 
+//   };
+//   const updateInfo = await usersCollection.replaceOne( //replaceOne or updateOne
+//     { _id: ObjectId(id) },
+//     updatedUser
+//   );
+//   if(!updateInfo.acknowledged || updateInfo.matchedCount !== 1 || updateInfo.modifiedCount !== 1) throw "cannot update user"
+//   const update = await getUser(user);
+//   update._id = update._id.toString();
+//   return update;
+// };
 
 const updateApartmentUser = async (apartmentId, username) => {
   const apartment = await getApartmentById(apartmentId);
@@ -218,11 +224,20 @@ const updateApartmentUser = async (apartmentId, username) => {
     { _id: ObjectId(userId) },
     {$pull:{userApartments:{_id: apartmentId}}}
   );
+  if (deletionInfo.deletedCount === 0) {
+    removeApartment(apartmentId);
+    throw "Cannot add apartment to user, removing apartment"
+  }
+  
 
   const updateInfo = await usersCollection.updateOne(
     {_id: ObjectId(userId)},
     { $addToSet: {userApartments: newApt} }
   );
+  if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+    removeApartment(apartmentId);
+    throw "Cannot add apartment to user, removing apartment"
+  }
 
   apartment._id = apartment._id.toString();
   return username;
@@ -238,7 +253,11 @@ const removeUserApartment = async (username, apartmentId) => {
     { _id: ObjectId(userId) },
     {$pull:{userApartments:{_id: apartmentId}}}
   );
-  
+  if (deletionInfo.deletedCount === 0) {
+    removeApartment(apartmentId);
+    throw "Cannot remove apartment from user."
+  }
+
   const update = await getUser(username);
   
   update._id = update._id.toString();
@@ -252,11 +271,14 @@ const userRemoveReview = async (username, reviewId) => {
   let user = await getUser(username.toString());
   let userId = user._id.toString();
   
-  const deleteReview = await usersCollection.updateOne(
+  const deletionInfo = await usersCollection.updateOne(
     { _id: ObjectId(userId) },
     {$pull:{userReviews:{_id: reviewId}}}
   )
-  
+  if (deletionInfo.deletedCount === 0) {
+    removeReview(reviewId);
+    throw "Cannot add remove review from user."
+  }
   const update = await getUser(username);
   
   update._id = update._id.toString();
@@ -264,4 +286,4 @@ const userRemoveReview = async (username, reviewId) => {
   
 }
 
-module.exports = {createUser, addApartmentUser,updateApartmentUser, addReviewUser, checkUser, updateUser, getUser, removeUser, changeLogin, userRemoveReview, removeUserApartment};
+module.exports = {createUser, addApartmentUser,updateApartmentUser, addReviewUser, checkUser, updateUser, getUser, removeUser, userRemoveReview, removeUserApartment};

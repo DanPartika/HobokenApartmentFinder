@@ -1,19 +1,48 @@
 
 var likeReviewForm = $('#likeReviewForm');
 var revId = document.getElementById('likeReviewForm')
-console.log(revId)
+
 
 likeReviewForm.submit(async function (event) {
-  console.log("EVENT: " + event + "\n\n\n" + event.target.querySelector('button').id)
+  //console.log("EVENT: " + event + "\n\n\n" + event.target.querySelector('button').id)
   event.preventDefault();
   
   //let aptData = axios.get('http://localhost:3000/getApartments');
   await axios.get(`/getReview/${event.target.querySelector('button').id}`).then((response) => {
-    console.log("Dan" + response.data); 
+    //console.log("Dan" + JSON.stringify(response) ); 
     //todo display new num likes using a selector 
+    //console.log("\n\n\ncompleted\n\n\n" +JSON.stringify(event) +"\n\n"+JSON.stringify(event.target) +"\n\n")
+    
+    window.location.reload();
   }, (error) => {
-    console.log(error);
+    console.log("Error" + error);
   });
+});
+
+
+
+
+
+
+
+
+// var dislikeReviewForm = $('#dislikeReviewForm');
+// var revId1 = document.getElementById('dislikeReviewForm')
+// console.log("DISLIKE: " + JSON.stringify(revId1))
+
+// dislikeReviewForm.submit(async function (event) {
+//   console.log("EVENT: " + event + "\n\n\n" + event.target.querySelector('button').id)
+//   event.preventDefault();
+//   await axios.get(`/getReview/${event.target.querySelector('button').id}`).then((response) => {
+//     console.log("Dan" + response.data); 
+//     //todo display new num likes using a selector 
+//   }, (error) => {
+//     console.log(error);
+//   });
+
+// });
+
+
   
   // document.addEventListener("DOMContentLoaded", function() {
 //   fetch('http://localhost:3000/apartments/apartment/63977361f5435a2db481a4ab')
@@ -40,7 +69,7 @@ likeReviewForm.submit(async function (event) {
      */
   
   //console.log(aptData);
-});
+
 
 
 //var likeButton = $('#likeButton');
@@ -50,89 +79,3 @@ likeReviewForm.submit(async function (event) {
 
 //!==========================================================================
 
-
-//const { getAllApartments } = require("../../data/apartments");
-
-
-// const sortApartmentsBy = (apts, by) => {
-//   switch (by) {
-//     case "Cost":
-//       apts.sort((a,b) => (a.rentPerMonth > b.rentPerMonth) ? 1 : -1);
-//       break;
-
-//     case "NumBed":
-//       apts.sort((a,b) => (a.numBedrooms > b.numBedrooms) ? 1 : -1);
-//       break;
-
-//     case "NumBath":
-//       apts.sort((a,b) => (a.numBathrooms > b.numBathrooms) ? 1 : -1);
-//       break;
-
-//     case "NumRes":
-//       apts.sort((a,b) => (a.maxResidents > b.maxResidents) ? 1 : -1);
-//       break;
-
-//     case "PetsAll":
-//       const aptsPets = apts.filter(apts => apts.maxPets == true);
-//       return aptsPets;
-//       break;
-
-//     default:
-//       break;
-//   }
-
-//   return apts;
-// }
-
-
-// let form = document.getElementById("sortByform");
-// let input = document.getElementById("sortByInput");
-// let results = document.getElementById("results");
-// console.log("in client code")
-
-// if (form){
-//   form.addEventListener('submit', e => {
-//   e.preventDefault()
-//     try {
-//       console.log("Daniel" + input.value);
-//       const sortBy = input.value;
-//       //const apts = await getAllApartments();
-//       const sortedApts = sortApartmentsBy(apts, sortBy);
-      
-
-//       const listItem = document.createElement('li');
-
-        
-
-//       const text = `${sortedApts}`;
-//       const content = document.createTextNode(text);
-//       listItem.appendChild(content);
-//       results.appendChild(listItem);
-//       //form.reset();
-//     } catch (e) {
-//       alert(e);
-//     }
-//   });
-// }
-
-
-
-// document.addEventListener("DOMContentLoaded", function() {
-//   fetch('http://localhost:3000/apartments/apartment/63977361f5435a2db481a4ab')
-//   .then(resourse => resourse.json())
-//   .then((data) => {
-
-//   })
-// })
-
-
-
-
-
-// $(document).ready(function(e) {
-//   $("#likeReviewForm").click(function(e) { 
-//     var o = $(this).val();
-//     o++;
-//     $(this).val(o);
-//   });
-// });

@@ -47,20 +47,20 @@ const main = async () =>
         await users.addApartmentUser(apartment5,"randoman");
 
 
-        let review1 = await reviews.createReview(apartment5, "CodyF02", "Mid","2.5");
+        let review1 = await reviews.createReview(apartment5, "codyF02", "Mid","2.5");
         await users.addReviewUser(review1._id,"codyf02",apartment5);
 
         let review2 = await reviews.createReview(apartment1, "dan1", "Awesome","5.0");
-        await users.addReviewUser(review2._id,"dan1",apartment5);
+        await users.addReviewUser(review2._id,"dan1",apartment1);
 
         let review3 = await reviews.createReview(apartment2, "sribl", "I like it","3.0");
-        await users.addReviewUser(review3._id,"sribl",apartment5);
+        await users.addReviewUser(review3._id,"sribl",apartment2);
 
         let review4 = await reviews.createReview(apartment3, "randoman", "Horrible","1.0");
-        await users.addReviewUser(review4._id,"randoman",apartment5);
+        await users.addReviewUser(review4._id,"randoman",apartment3);
 
         let review5 = await reviews.createReview(apartment4, "eltonvaz623", "Mbappe","4.0");
-        await users.addReviewUser(review5._id,"eltonvaz623",apartment5);
+        await users.addReviewUser(review5._id,"eltonvaz623",apartment4);
 
 
     } 

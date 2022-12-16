@@ -45,7 +45,7 @@ app.use('/public', static);
 app.use('/protected', async (req, res, next) => {
   if (req.session.user) next()
   else {
-    return res.status(403).render('forbiddenAccess')
+    return res.status(403).render('userAccount/forbiddenAccess')
   }
 })
 
