@@ -23,38 +23,46 @@ apartmentName,
   {{/if}}
   <form id="editApartment-form" action="/apartments/editApartment/{{apt._id}}" method="POST">
 
+  <br>
+  <br>
+  <br>
+  <br>
   <p>If you want to leave any parameters empty, please enter N/A</p>
+  
+  <hr size="5" width="100%" color="red"> 
+  <p class="prev-value">Previous Value: {{apt.apartmentName}}</p>
+  <label for="apartmentNameInput">Apartment Name:</label>
+  <input for="apartmentNameInput" name="apartmentNameInput" type="text" value={{apt.apartmentName}} required/>
+  <br>
 
-    {{!-- <p>Prev Value was: {{apt.apartmentName}}</p> --}}
-    <p>Previous Value: {{apt.apartmentName}}</p>
-    <label for="apartmentNameInput">Apartment Name:</label>
-    <input for="apartmentNameInput" name="apartmentNameInput" type="text" value={{apt.apartmentName}} required/>
-    {{!-- value does not work, migght have to set Previous value: {{apt...}} and leave the form blank. --}}
-    <br>
-
+    <hr size="5" width="100%" color="red"> 
     <label for="buildingNumberInput">Building number:</label>
     <input for="buildingNumberInput" name="buildingNumberInput" type="text" value= {{apt.streetAddress}} required/>
     
     <br>
-    <p>Previous Value: {{apt.streetAddress}}</p>
+    <hr size="5" width="100%" color="red"> 
+    <p class="prev-value">Previous Value: {{apt.streetAddress}}</p>
     <label for="streetAddressInput">Street Name:</label>
     <input for="streetAddressInput" name="streetAddressInput" type="text" required/>
     
     <br>
-
+    <hr size="5" width="100%" color="red"> 
     <label for="rentPerMonthInput">Rent per month:</label>
     <input for="rentPerMonthInput" name="rentPerMonthInput" type="text" value= {{apt.rentPerMonth}} required/>
     <br>
 
+    <hr size="5" width="100%" color="red"> 
     <label for="rentDurationInput">Rent duration (in months):</label>
     <input for="rentDurationInput" name="rentDurationInput" type="text" value= {{apt.rentDuration}} required/>
     <br>
 
+    <hr size="5" width="100%" color="red"> 
     <label for="maxResidentsInput">Max residents:</label>
     <input for="maxResidentsInput" name="maxResidentsInput" type="text" value= {{apt.maxResidents}} required/>
     <br>
 
-    <p>Previous Value: {{apt.numBedrooms}}</p>
+    <hr size="5" width="100%" color="red"> 
+    <p class="prev-value">Previous Value: {{apt.numBedrooms}}</p>
     <label for="numBedroomsInput">Number of bedrooms:</label>
     <select name = "numBedroomsInput" id = "numBedroomsInput" placeholder="Number of Bedrooms"> 
       <option value="1">1</option>
@@ -64,9 +72,9 @@ apartmentName,
       <option value="5">5</option>
     </select>
     <br>
-    {{!-- <input id="numBedroomsInput" name="numBedroomsInput" type="text" placeholder="Integer number" required /> --}}
 
-    <p>Previous Value: {{apt.numBathrooms}}</p>
+    <hr size="5" width="100%" color="red"> 
+    <p class="prev-value">Previous Value: {{apt.numBathrooms}}</p>
     <label for="numBathroomsInput">Number of bathrooms:</label>
       <select name = "numBathroomsInput" id = "numBathroomsInput"  placeholder="Number of Bathrooms"> 
       <option value="1">1</option>
@@ -75,37 +83,44 @@ apartmentName,
       <option value="4">4</option>
       <option value="5">5</option>
     </select>
-    {{!-- <input for="numBathroomsInput" name="numBathroomsInput" type="text" required/> --}}
-
-    <p>Previous Value: {{apt.laundry}}</p>
-    <p>Laundry:</p>
+    
+    <hr size="5" width="100%" color="red">  
+    <p class="prev-value">Previous Value: {{apt.laundry}}</p>
+    <p class="prev-value">Laundry:</p>
     <input name="laundryInput" type="radio" id="yes" value="true" />
     <label for="yes">Yes</label> <br>
     <input name="laundryInput" type="radio" id="no" value="false" />
     <label for="no">No</label> <br>
 
+    <hr size="5" width="100%" color="red"> 
     <label for="floorNumInput">Floor number:</label>
     <input for="floorNumInput" name="floorNumInput" type="text" value= {{apt.floorNum}} required/>
     <br>
 
+    <hr size="5" width="100%" color="red"> 
     <label for="roomNumInput">Room Unit:</label>
     <input for="roomNumInput" name="roomNumInput" type="text" value= {{apt.roomNum}} required/>
     <br>
 
+    <hr size="5" width="100%" color="red"> 
     <label for="appliancesIncludedInput">Appliances that are included (separate each with comma, or write N/A):</label>
     <input for="appliancesIncludedInput" name="appliancesIncludedInput" type="text" value= {{apt.appliancesIncluded}} required/>
     <br>
 
-    <p>Previous Value: {{apt.maxPets}}</p>
-    <p>Pets:</p>
+    <hr size="5" width="100%" color="red"> 
+    <p class="prev-value">Previous Value: {{apt.maxPets}}</p>
+    <p class="prev-value">Pets:</p>
     <input name="maxPetsInput" type="radio" id="yes" value="true" />
     <label for="yes">Yes</label> <br>
     <input name="maxPetsInput" type="radio" id="no" value="false" />
     <label for="no">No</label> <br>
 
+    <hr size="5" width="100%" color="red"> 
     <label for="utilitiesIncludedInput">Utilities that are included (separate each with comma, or write N/A):</label>
     <input id="utilitiesIncludedInput" name="utilitiesIncludedInput" type="text" value= {{apt.utilitiesIncluded}} required />
     <br>
+
+    <hr size="5" width="100%" color="red"> 
 
     <button type="submit">Register</button>
   </form>
