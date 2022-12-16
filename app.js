@@ -7,6 +7,7 @@ const exphbs = require('express-handlebars');
 const session = require('express-session');
 const path = require('path');
 const multer = require("multer");
+const fs = require('fs');
 
 
 app.use(express.static('images'));
@@ -23,10 +24,11 @@ var storage = multer.diskStorage({
     cb(null, path.join(__dirname,'/uploads'))
   },
   filename: function (req, file, cb) {
-    console.log("file",file);  
+    //console.log("file",file);  
     fileExtension = file.originalname.split('.')[1]
-    console.log("Date: " + Date.now())
-    cb(null, file.fieldname + '-' + Date.now()+'.'+fileExtension)
+    console.log("Date: " + __dirname)
+    let length = fs.readdirSync(__dirname+'/uploads').length
+    cb(null, file.fieldname + '-' + length +'.'+fileExtension)
   }
 })
 
