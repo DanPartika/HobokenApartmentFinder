@@ -204,3 +204,7 @@ ul.b {
     overflow:auto;
     display: table;
 } 
+
+.add-apartmentButton{
+    font-size: 20px;
+}
