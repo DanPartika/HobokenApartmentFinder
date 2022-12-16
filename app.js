@@ -25,6 +25,7 @@ var storage = multer.diskStorage({
   filename: function (req, file, cb) {
     console.log("file",file);  
     fileExtension = file.originalname.split('.')[1]
+    console.log("Date: " + Date.now())
     cb(null, file.fieldname + '-' + Date.now()+'.'+fileExtension)
   }
 })
