@@ -147,9 +147,13 @@ function checkUtilities(utilitiesIncluded) {
   
   return checkArr(utilitiesIncluded);
 }
+function checkFile(file) {
+  
+  return file;
+}
 
 //function that returns a object of all the trimmed parameters for apartments.js file
-function checkApartmentParameters(userName, apartmentName, streetAddress,rentPerMonth,rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded) {
+function checkApartmentParameters(userName, apartmentName, streetAddress,rentPerMonth,rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded,file) {
   return { 
   userName: checkUsername(userName),
   apartmentName: checkName(apartmentName),
@@ -164,7 +168,8 @@ function checkApartmentParameters(userName, apartmentName, streetAddress,rentPer
   roomNum: checkRoomNum(roomNum),
   appliancesIncluded: checkAppliances(appliancesIncluded),
   maxPets: checkPets(maxPets),
-  utilitiesIncluded: checkUtilities(utilitiesIncluded) };
+  utilitiesIncluded: checkUtilities(utilitiesIncluded),
+file: checkFile(file) };
 }
 
 /** FUNCTIONS USED FOR REVIEWS */
