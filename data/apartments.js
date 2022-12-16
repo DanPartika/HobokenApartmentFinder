@@ -57,9 +57,8 @@ const createApartment = async (
     overallRating: 0
   };
   
-  
   const insertInfo = await apartmentCollection.insertOne(newApartment);
-  if (!insertInfo.acknowledged || !insertInfo.insertedId) throw "Could not add Apartment";
+  if (insertInfo.insertedCount === 0) throw "Could not add Apartment";
   const newId = insertInfo.insertedId.toString();
   const apt = await getApartmentById(newId);
   
@@ -83,7 +82,7 @@ const getApartmentById = async (apartmentId) => {
   //apartmentId = apartmentId.trim();
   const apartmentCollection = await apartments();
   const newApartments = await apartmentCollection.findOne({_id: ObjectId(apartmentId)});
-  if (newApartments === null) throw "No Apartment with that id";
+  if (!newApartments) throw "No Apartment with that id";
 
   newApartments._id = newApartments._id.toString();
   newApartments.reviews.forEach((apt) => {
@@ -95,7 +94,6 @@ const getApartmentById = async (apartmentId) => {
 
 const removeApartment = async (apartmentId) => {
   apartmentId = helpers.checkID(apartmentId.toString());
-  apartmentId = apartmentId.trim();
   const apartmentCollection = await apartments();
   let aptName = await getApartmentById(apartmentId.toString());
   let apartName = aptName.apartmentName;

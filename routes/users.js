@@ -133,8 +133,9 @@ router
   .route('/logout')
   .get(async (req, res) => {
     //code here for GET
+    let username = req.session.user.username;
     req.session.destroy();
-    res.status(200).render('userAccount/logout', { title: "Logged Out"});
+    res.status(200).render('userAccount/logout', { title: "Logged Out",username:username});
   })
 
 module.exports = router;

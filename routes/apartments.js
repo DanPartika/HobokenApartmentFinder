@@ -12,7 +12,7 @@ const path = require('path');
 const { addApartmentUser, updateApartmentUser, addReviewUser, removeUserApartment, getUser } = require("../data/users");
 const { getReview, incrementLikesReview, incrementDislikesReview } = require("../data/reviews");
 const xss = require("xss");
-const { users, apartments } = require("../config/mongoCollections");
+//const { users, apartments } = require("../config/mongoCollections");
 
 
 router.route("/") //homepage
@@ -33,61 +33,27 @@ router
     //make sure id exists
     try {
       if (req.session.user) {
-        console.log("1")
         let reviewId = req.params.id;
-        const review = await getReview(reviewId); //get the review
-        console.log("2")
-        //const userCollection = await users();
-        // let user = req.session.user.username;
-        // let userCollection = await getUser(user);
-        
+        const review = await getReview(reviewId); //get the review        
         let aptId = "";
 
-        // let uRev = userCollection.userReviews;
-
-        // for(i in userCollection.userReviews) {
-        //     if(uRev[i]._id === reviewId) {
-        //       aptId = uRev[i].aptId
-        //     }
-        // }
         //get all apts
-        console.log("3")
         const apartments = await getAllApartments();
 
-        //console.log("\n\n"+JSON.stringify(apartments)+"\n\n")
         //loop through their reviews
         for (let i = 0; i < apartments.length; i++) {
-          console.log("\ni:" + i)
           for (let j = 0; j < apartments[i].reviews.length; j++) {
-            console.log("\nj:" + j)
-
+            //find the right aptid by matching the review id
             if(apartments[i].reviews[j]._id.toString() === reviewId.toString()) {
               aptId = apartments[i]._id;
-              console.log("\nAPTID" + aptId)
               continue;
             }
           }
         }
-        for(i in apartments){
-          for(j in i.reviews) {
-              console.log("\n\ni: " + i.j)
-              
-          }
-          
-        }
-        //find the right aptid by matching the review id
-
 
         let likeReview = await incrementLikesReview(aptId, reviewId);
-        if(likeReview != 1) {
-          return res.render('error', {title:"Error", message: "could not increment like button"})
-        }
-        //let dislikeReview = await incrementDislikesReview(aptId, reviewId);
-        
+        if(likeReview != 1) return res.render('error', {title:"Error", message: "could not increment like button"})
 
-        // let pathRedirect = '/apartments/apartment/' + aptId;
-        // res.redirect(pathRedirect);
-        //res.redirect('apartments/apartment/'+aptId )
         res.json(newReview.numLikes);
       } else return res.redirect('/users/login');
     } catch (error) {
@@ -100,11 +66,9 @@ router
   .get(async (req, res) => {
     try {
       if (req.session.user) {
-        //if (apts.length == 0) return res.status(404).render("error",{title:"No Apartments Found", message: "Error code: 404, no apartments found"})
         let apts = [];
         if (req.query.sortByInput == null) apts = await getAllApartments();
         else apts = await sortApartmentsBy(req.query.sortByInput);
-
         const data = {apt:apts,user:req.session.user};
         return res.render('apartments/aptList', data);
       }
@@ -115,22 +79,28 @@ router
    
   })
   .post(async (req, res) => {
-    if (req.session.user) {
-      return res.render('apartments/addApt',{user:req.session.user})
-    } else {
-      return res.render('userAccount/login',{user:req.session.user})
+    try {
+      if (req.session.user) {
+        return res.render('apartments/addApt',{user:req.session.user})
+      } else {
+        return res.render('userAccount/login',{user:req.session.user})
+      }
+    } catch (error) {
+      return res.render('error',{title:error,user:req.session.user})
     }
   });
 
 router
   .route("/apartments/sortedBy")
   .get(async (req,res) => {
-    if (req.session.user) {
-      // console.log(req.body)
-      // console.log("===========\n" + req.query.sortByInput)
-      return res.render('apartments/sortedAptList',{user:req.session.user, sortByInput:req.query.sortByInput})
-    } else {
-      return res.render('userAccount/login',{user:req.session.user})
+    try {
+      if (req.session.user) {
+        return res.render('apartments/sortedAptList',{user:req.session.user, sortByInput:req.query.sortByInput})
+      } else {
+        return res.render('userAccount/login',{user:req.session.user})
+      }
+    } catch (error) {
+      return res.render('error',{title:error,user:req.session.user})
     }
   })
 
@@ -148,13 +118,11 @@ router
           const apt = await getApartmentById(req.params.apartmentId); 
           const tempData = {title: title, apt:apt,user:req.session.user};
           return res.render("apartments/apartment", tempData);
-        } catch (e) {
-          return res.status(400).render("error", {title: "Apartment Not Found", message: "400 Error: Apartment not found.",user:req.session.user});  // can alert this instead
+        } catch (error) {
+          return res.status(400).render("error", {title: "Apartment Not Found", message: "400 Error: Apartment not found." + error,user:req.session.user});  // can alert this instead
         }
-        
       } catch (e) {
-        
-        return res.status(404).render("error", {title: "Apartment Not Found", message: "404 Error: Page not found.",user:req.session.user});
+        return res.status(404).render("error", {title: "Apartment Not Found", message: "404 Error: Page not found." + e,user:req.session.user});
       }
     } else {
       return res.render('userAccount/login', {user:req.session.user});
@@ -165,11 +133,16 @@ router
 router
   .route("/apartments/add-new-apartment")
   .get(async (req,res) => {
-    if (req.session.user) {
-      return res.render('apartments/addApt',{user:req.session.user});
-    } else {
-      return res.render('userAccount/login',{user:req.session.user});
+    try {
+      if (req.session.user) {
+        return res.render('apartments/addApt',{user:req.session.user});
+      } else {
+        return res.render('userAccount/login',{user:req.session.user});
+      }
+    } catch (error) {
+      return res.render('error',{title:error,user:req.session.user})
     }
+    
   })
   .post(async (req,res) => {
     if (req.session.user) {
@@ -207,21 +180,14 @@ router
           if (apartmentData.streetAddressInput.toLowerCase().includes(HobokenStreets[i].toLowerCase()) ) checker = false;
         if(checker) throw `${apartmentData.streetAddressInput} is not a valid street name in Hoboken.`;
       
-        let apt = await createApartment(req.session.user.username, apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
-        // if(!apt.overallRating == 0) return res.render('error',{title:"Error in creating apartment"});
-        //console.log(apt)
-        //todo check if adding apt failed.
-        let usersName = await addApartmentUser(apt, req.session.user.username);
+        let aptId = await createApartment(req.session.user.username, apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
+        let usersName = await addApartmentUser(aptId, req.session.user.username);
         
-        //console.log(usersName)
-        let pathRedirect = '/apartments/apartment/' + apt;
-        //console.log(apt);
-        res.redirect(pathRedirect);
+        let pathRedirect = '/apartments/apartment/' + aptId;
+        return res.redirect(pathRedirect);
       } catch (e) {
         return res.render('error',{title:"Error in creating apartment", message:e,user:req.session.user});
       }
-
-
     } else {
       return res.render('userAccount/login',{user:req.session.user});
     }
@@ -230,11 +196,13 @@ router
   router
   .route("/apartments/editApartment/:apartmentId") //singular apt
   .get(async (req, res) => {
-    if (req.session.user) {
-      let apt = await getApartmentById(req.params.apartmentId);
-      return res.render('apartments/editApt',{user:req.session.user, apt:apt});
-    } else {
-      return res.render('userAccount/login',{user:req.session.user});
+    try {
+      if (req.session.user) {
+        let apt = await getApartmentById(req.params.apartmentId);
+        return res.render('apartments/editApt',{user:req.session.user, apt:apt});
+      } else return res.render('userAccount/login',{user:req.session.user});
+    } catch (error) {
+      return res.render('error',{title:error,user:req.session.user})
     }
   })
   .post(async (req,res) => {
@@ -242,7 +210,7 @@ router
       try {
         req.params.apartmentId.toString();
         let apt = await getApartmentById(req.params.apartmentId);
-      
+        if (!apt) throw `Apartment with id of ${req.params.apartmentId} does not exist`
         let apartmentData = req.body;
         let apartmentName = xss(apartmentData.apartmentNameInput); 
         let buildingNumber = xss(apartmentData.buildingNumberInput);
@@ -275,18 +243,16 @@ router
           if (apartmentData.streetAddressInput.toLowerCase().includes(HobokenStreets[i].toLowerCase()) ) checker = false;
         if(checker) throw `${apartmentData.streetAddressInput} is not a valid street name in Hoboken.`;
   
-        req.params.apartmentId.toString();
         let newApt = await updateApartment(req.params.apartmentId, req.session.user.username, apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
-        
+        if (!newApt) throw `Could not update ${apartmentName} apartment with`
         let usersName = await updateApartmentUser(req.params.apartmentId, req.session.user.username);
+        if (!usersName) throw `Could not update user with ${apartmentName} apartment`
 
         let pathRedirect = '/apartments/apartment/' + req.params.apartmentId;
         return res.redirect(pathRedirect); 
+      } catch (e) {
+        return res.render('error',{title:"Error in updating apartment", message:error,user:req.session.user});
       }
-     catch (e) {
-      return res.render('error',{title:"Error in updating apartment", message:e,user:req.session.user});
-    }
-      
     } else {
       return res.render('userAccount/login',{user:req.session.user});
     }
@@ -295,56 +261,39 @@ router
   router
     .route("/apartments/deleteApt/:apartmentId")
     .get(async (req,res) => {
-
-      if (req.session.user) {
-        return res.render('userAccount/userhomepage',{user:req.session.user});
-      } else {
-        return res.render('userAccount/login',{user:req.session.user});
+      try {
+        if (req.session.user) {
+          return res.render('userAccount/userhomepage',{user:req.session.user});
+        } else {
+          return res.render('userAccount/login',{user:req.session.user});
+        }
+      } catch (error) {
+        return res.render('error',{title:"Error in updating apartment", message:error,user:req.session.user});
       }
+      
     })
     .post(async (req,res) => {
-      req.params.apartmentId = req.params.apartmentId.trim();
-
-      if (!ObjectId.isValid(req.params.apartmentId)) {
-        res.render('error', {title: "Id is not valid"})//({ error: 'Invalid ObjectID' });
-        return;
-      }
       try {
-        const apartment = await removeApartment(req.params.apartmentId);
-        const userdata = await removeUserApartment(req.session.user.username, req.params.apartmentId);
-        return res.render('userAccount/userhomepage',{user:req.session.user});
-      } catch (e) {
-        res.render('error', {title: "Error", message: e});
+        if (req.session.user) {
+          let apartmentId = req.params.apartmentId.trim();
+          if (!apartmentId) return res.render('error', {title: "Id is not valid"}); //({ error: 'Invalid ObjectID' });
+          try {
+            const apartment = await removeApartment(apartmentId);
+            if (!apartment) throw `Could not delete apartment with id of ${apartmentId}`
+            const userdata = await removeUserApartment(req.session.user.username, apartmentId);
+            if (!userdata) throw `Could not remove apartment from user ${req.session.user.username}`
+            return res.render('userAccount/userhomepage',{user:req.session.user});
+          } catch (e) {
+            return res.render('error', {title: "Error", message: e});
+          }
+
+          } else return res.render('userAccount/login',{user:req.session.user});
+
+      } catch (error) {
+        return res.render('error',{title:"Error in updating apartment", message:error,user:req.session.user});
       }
+      
     })
-
-  // .delete(async (req, res) => {
-  //   //code here for DELETE
-  //   //!make sure user is logged in
-  //   if (!req.params.ApartmentId) { 
-  //     res.status(400).json({ error: "You must supply id to delete Apartment" });
-  //     return;
-  //   }
-
-  //   req.params.ApartmentId = req.params.ApartmentId.trim();
-
-  //   if (!ObjectId.isValid(req.params.ApartmentId)) {
-  //     res.status(400).json({ error: "Invalid ObjectID" });
-  //     return;
-  //   }
-  //   try {
-  //     const deleted = await apartmentsData.removeApartment(
-  //       req.params.ApartmentId
-  //     );
-  //     let del = { ApartmentId: req.params.ApartmentId, deleted: true };
-  //     res.status(200).json(del);
-  //   } catch (e) {
-  //     res.status(404).json({ error: e });
-  //     return;
-  //   }
-  // })
-
-  
 
 
 module.exports = router;
