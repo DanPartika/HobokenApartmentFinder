@@ -50,7 +50,7 @@
       
       <form id="addReview-form" action="/reviews/add-review/{{apt._id}}" method="GET">
         <label for="usernameInput">Add Review</label>
-        <button type="submit">+</button>
+        <button type="submit" class="plus">+</button>
       </form>
       
       {{#each apt.reviews}}
@@ -74,7 +74,7 @@
       <p>Sorry, No reviews found</p>
       <form id="addReview-form" action="/reviews/add-review/{{apt._id}}" method="GET">
         <label for="usernameInput">Add the first Review</label>
-        <button type="submit">+</button>
+        <button type="submit" class="plus">+</button>
       </form>
     {{/if}}
 
