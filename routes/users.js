@@ -31,7 +31,7 @@ router
     //code here for POST
     //let { usernameInput, passwordInput } = req.body
     try {
-      let userData = xss(req.body);
+      let userData = req.body;
       let firstname = xss(userData.firstnameInput);
       let lastname = xss(userData.lastnameInput);
       let email = xss(userData.emailInput);
