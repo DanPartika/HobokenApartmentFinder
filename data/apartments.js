@@ -115,15 +115,15 @@ const sortApartmentsBy = async (by) => {
       apartmentList.sort((a,b) => (a.rentPerMonth > b.rentPerMonth) ? 1 : -1);
       break;
 
-    case "NumBed":
+    case "Nummber of Bedrooms":
       apartmentList.sort((a,b) => (a.numBedrooms > b.numBedrooms) ? 1 : -1);
       break;
 
-    case "NumBath":
+    case "Number of Bathrooms":
       apartmentList.sort((a,b) => (a.numBathrooms > b.numBathrooms) ? 1 : -1);
       break;
 
-    case "NumRes":
+    case "Number of Residents":
       apartmentList.sort((a,b) => (a.maxResidents > b.maxResidents) ? 1 : -1);
       break;
 
@@ -131,7 +131,11 @@ const sortApartmentsBy = async (by) => {
       apartmentList.sort((a,b) => (a.apartmentName.toLowerCase() > b.apartmentName.toLowerCase()) ? 1 : -1);
       break;
 
-    case "PetsAll":
+    case "Rating":
+      apartmentList.sort((a,b) => (a.overallRating() > b.overallRating()) ? -1 : 1);
+      break;
+
+    case "Pets Allowed":
       let apts = apartmentList.filter( function (apt) {
         if (apt.maxPets =="Yes") return apt;
       });
