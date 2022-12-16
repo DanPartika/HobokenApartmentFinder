@@ -36,12 +36,10 @@ apartmentName,
   <br>
 
     <hr size="5" width="100%" color="red"> 
+    <p class="prev-value">Previous Value: {{apt.streetAddress}} (Building number + StreetName)</p>
     <label for="buildingNumberInput">Building number:</label>
     <input for="buildingNumberInput" name="buildingNumberInput" type="text" value= {{apt.streetAddress}} required/>
     
-    <br>
-    <hr size="5" width="100%" color="red"> 
-    <p class="prev-value">Previous Value: {{apt.streetAddress}}</p>
     <label for="streetAddressInput">Street Name:</label>
     <input for="streetAddressInput" name="streetAddressInput" type="text" required/>
     
