@@ -132,7 +132,7 @@ const sortApartmentsBy = async (by) => {
       break;
 
     case "Rating":
-      apartmentList.sort((a,b) => (a.overallRating() > b.overallRating()) ? -1 : 1);
+      apartmentList.sort((a,b) => (a.overallRating > b.overallRating) ? -1 : 1);
       break;
 
     case "Pets Allowed":
