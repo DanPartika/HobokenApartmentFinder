@@ -10,7 +10,7 @@ const helpers = require("../helpers");
 const { getApartmentById, createApartment, getAllApartments, sortApartmentsBy, updateApartment, removeApartment } = require("../data/apartments");
 const path = require('path');
 const { addApartmentUser, updateApartmentUser, addReviewUser, removeUserApartment, getUser } = require("../data/users");
-const { getReview, incrementLikesReview, incrementDislikesReview } = require("../data/reviews");
+const { getReview, incrementLikesReview } = require("../data/reviews");
 const xss = require("xss");
 //const { users, apartments } = require("../config/mongoCollections");
 
