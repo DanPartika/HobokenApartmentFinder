@@ -49,6 +49,8 @@ function checkID(id) {
 
 //The Apartment complex/building name; can be N/A
 function checkName(apartmentName) {
+  if(/^\d+$/.test(apartmentName)) throw "Apartment Name cannot contain only numbers"
+  
   if (apartmentName.length < 3 ) throw "title must be at least 3 characters";
   return checkStr(apartmentName);
 }
@@ -148,6 +150,8 @@ function checkRoomNum(roomNum) {
 
 //
 function checkAppliances(appliancesIncluded) {
+  for (let i = 0; i < appliancesIncluded.length; i++) 
+    if(/^\d+$/.test(appliancesIncluded[i])) throw "Appliances Included cannot contain only numbers"
   
   return checkArr(appliancesIncluded);
 }
@@ -163,6 +167,8 @@ function checkPets(maxPets) {
 
 //
 function checkUtilities(utilitiesIncluded) {
+  for (let i = 0; i < utilitiesIncluded.length; i++) 
+    if(/^\d+$/.test(utilitiesIncluded[i])) throw "Utilities Included cannot contain only numbers"
   
   return checkArr(utilitiesIncluded);
 }
