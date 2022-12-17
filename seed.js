@@ -31,7 +31,7 @@ const main = async () =>
         let user5 = await users.createUser("Rando","Noname","idk21@gmail.com","Male","39","RandoMan","Password1!");
 
 
-        let apartment1 = await apartments.createApartment("CodyF02","Cody's Place","101 Jeffereson St", "2000", "24", "3", "3", "1", false, "2", "2C", ["Toaster,TV"], true, ["N/A"],"../../uploads/1.jpg");
+        let apartment1 = await apartments.createApartment("CodyF02","Cody's Place","101 Jefferson St", "2000", "24", "3", "3", "1", false, "2", "2C", ["Toaster,TV"], true, ["N/A"],"../../uploads/1.jpg");
         await users.addApartmentUser(apartment1,"codyf02");
 
         let apartment2 = await apartments.createApartment("dan1","Daniel's Place","302 Jackson St", "1000", "12", "1", "1", "1", true, "2", "2A", ["N/A"], false, ["N/A"],"../../uploads/2.jpg");
@@ -47,19 +47,19 @@ const main = async () =>
         await users.addApartmentUser(apartment5,"randoman");
 
 
-        let review1 = await reviews.createReview(apartment5, "codyF02", "Mid","2.5");
+        let review1 = await reviews.createReview(apartment3, "codyF02", "Very small apartment to be listed for 4 people.","2.5");
         await users.addReviewUser(review1._id,"codyf02",apartment5);
 
-        let review2 = await reviews.createReview(apartment1, "dan1", "Awesome","5.0");
+        let review2 = await reviews.createReview(apartment1, "dan1", "Amazing apartment, very much enjoyed my time here.","5.0");
         await users.addReviewUser(review2._id,"dan1",apartment1);
 
-        let review3 = await reviews.createReview(apartment2, "sribl", "I like it","3.0");
+        let review3 = await reviews.createReview(apartment2, "sribl", "Apartment was alright, nothing too special.","3.0");
         await users.addReviewUser(review3._id,"sribl",apartment2);
 
-        let review4 = await reviews.createReview(apartment3, "randoman", "Horrible","1.0");
+        let review4 = await reviews.createReview(apartment3, "randoman", "Horrible living space, don't let the nice picture fool you.","1.0");
         await users.addReviewUser(review4._id,"randoman",apartment3);
 
-        let review5 = await reviews.createReview(apartment4, "eltonvaz623", "Mbappe","4.0");
+        let review5 = await reviews.createReview(apartment4, "eltonvaz623", "Only left because I'm moving to New York, very nice apartment for 1 person.","4.0");
         await users.addReviewUser(review5._id,"eltonvaz623",apartment4);
 
 
