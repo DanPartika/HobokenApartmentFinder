@@ -75,6 +75,12 @@
           <form id="likeReviewForm">
             <button id="{{this._id}}" type="submit">👍 {{numLikes.length}}</button> 
           </form>
+
+          <form id="newApartment-form" action="/reviews/addComment/{{this._id}}" method="POST">
+            <label for="replyInput">Max residents:</label>
+            <input for="replyInput" name="replyInput" type="text" placeholder="Insert reply here" required/>
+            <button type="submit">Post Reply</button>
+          </form>
             
         </li>
       {{/each}}
