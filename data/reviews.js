@@ -194,11 +194,11 @@ const incrementLikesReview = async (aptId, reviewId, userName) => {
   return reviewLikes.length;
 }
 
-const newReply = async (reviewId, reply) => {
+const newReply = async (aptId, reviewId, reply) => {
   let review = await getReview(reviewId);
   let reviewReply = review.replies;
   
-  reviewReply.push(reply);
+  reviewReply.push({reply: reply});
 
   const apartmentCollection = await apartments();
 

@@ -9,6 +9,9 @@ const { addReviewUser, userRemoveReview } = require("../data/users")
 const helpers = require("../helpers");
 const { review } = require("../data");
 const xss = require("xss");
+const mongoCollections = require("../config/mongoCollections");
+const apartments = mongoCollections.apartments;
+
 
 
 
@@ -77,7 +80,27 @@ const xss = require("xss");
             let reply = xss(reviewData.replyInput); 
             let reviewId = req.params.reviewId;
 
-            let newreview = await newReply(reviewId, reply);
+            const apartmentCollection = await apartments();
+            const apartment = await apartmentCollection.find({}).toArray();
+
+            let count = 0;
+            let apart = {};
+            for (j in apartment) {
+              let tmpApt = apartment[j];
+              for (i in tmpApt.reviews) {
+                if (tmpApt.reviews[i]._id.toString() === reviewId.toString()) {
+                  count = 1;
+                  apart = tmpApt;
+                }
+              }
+            }
+            if (count == 0) throw "no reviews with that id";
+            
+            const apartmentID = apart._id.toString();
+
+
+
+            let newreview = await newReply(apartmentID, reviewId, reply);
             
             let pathRedirect = '/apartments/apartment/' + apartmentID;
             res.redirect(pathRedirect);

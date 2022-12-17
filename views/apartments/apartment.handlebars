@@ -75,18 +75,20 @@
           <form id="likeReviewForm">
             <button id="{{this._id}}" type="submit">👍 {{numLikes.length}}</button> 
           </form>
+          <br>
           <form id="newApartment-form" action="/reviews/addComment/{{this._id}}" method="POST">
             <label for="replyInput">Comments:</label>
             <input for="replyInput" name="replyInput" type="text" placeholder="Insert reply here" required/>
             <button type="submit">Post Reply</button>
           </form>
-          {{#if apt.reviews.replies}}
-
-            <p>Posted: {{apt.review.replies}}</p>
-
-          {{else}}
+          {{!-- {{#if apt.reviews.replies}} --}}
+            {{#each replies}}
+            <p>Replies Posted: {{reply}}</p>
+            <br>
+            {{/each}}
+          {{!-- {{else}}
           
-            {{/if}}
+            {{/if}} --}}
         </li>
       {{/each}}
 
