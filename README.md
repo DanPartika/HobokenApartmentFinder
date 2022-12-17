@@ -13,5 +13,5 @@ node seed.js
 3. Finally you can run the program using the following command:
 ```
 npm start
-
+```
 GitHub Repo - https://github.com/DanPartika/CS546-Final-Project
