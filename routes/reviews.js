@@ -4,7 +4,7 @@ const router = express.Router();
 const data = require("../data");
 const reviewsData = data.reviews;
 const { ObjectId } = require("mongodb");
-const { getAllReviews, createReview, removeReview } = require("../data/reviews");
+const { getAllReviews, createReview, removeReview, newReply } = require("../data/reviews");
 const { addReviewUser, userRemoveReview } = require("../data/users")
 const helpers = require("../helpers");
 const { review } = require("../data");
@@ -67,5 +67,27 @@ const xss = require("xss");
         res.render('error', {title: "Error", message: e});
       }
     })
+
+    router
+      .route("/addComment/:reviewId")
+      .post(async (req,res) => {
+        if (req.session.user) {
+          try {
+            let reviewData = req.body;
+            let reply = xss(reviewData.replyInput); 
+            let reviewId = req.params.reviewId;
+
+            let newreview = await newReply(reviewId, reply);
+            
+            let pathRedirect = '/apartments/apartment/' + apartmentID;
+            res.redirect(pathRedirect);
+          } catch (e) {
+            return res.render('error',{title:"Error in creating review", message:e, user:req.session.user});
+          }
+    
+        } else {
+          return res.render('userAccount/login',{user:req.session.user});
+        }
+      })
 
 module.exports = router;
