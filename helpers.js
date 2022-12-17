@@ -63,7 +63,7 @@ function checkAddress(streetAddress) {
   let checker = true;
   for (let i = 0; i < HobokenStreets.length; i++) 
     if (streetAddress.toLowerCase().includes(HobokenStreets[i].toLowerCase()) ) checker = false;
-  if(checker) throw `${streetAddressInput} is not a valid street name in Hoboken.`;
+  if(checker) throw `${streetAddress} is not a valid street name in Hoboken.`;
   //specify a format ## street name
   //!make sure this works with google map.
   //if possible get all the streets in hoboken and make sure it is a street in hoboken --> be solved with google maps
