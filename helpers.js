@@ -55,6 +55,7 @@ function checkName(apartmentName) {
 
 //The street address of the specified apartment
 function checkAddress(streetAddress) {
+  let splitAddress = streetAddress.split(' ');
   let HobokenStreets = ["Adams s", "Bloomfield s", "Castle Point Terrace","Clinton s", "Eighth s","Eleventh s",
         "Fifteenth s","Fifth s", "First s","Fourteenth s","Fourth s","Garden s","Grand s","Grove s","Harrison s","Henderson s",
         "Hudson P","Hudson S","Jackson s","Jefferson s","Madison s","Marshall s","Monroe s","Newark s","Ninth s","Observer h",
@@ -67,6 +68,15 @@ function checkAddress(streetAddress) {
   //specify a format ## street name
   //!make sure this works with google map.
   //if possible get all the streets in hoboken and make sure it is a street in hoboken --> be solved with google maps
+  
+  if(splitAddress[0].includes('.')) {
+    throw `${splitAddress[0]} is not a valid building number in Hoboken.`;
+  }
+
+  if(parseInt(splitAddress[0]) > 1600 ||  parseInt(splitAddress[0]) < 1) {
+    throw `${splitAddress[0]} is not a valid building number in Hoboken.`;
+  }
+
   return checkStr(streetAddress);
 }
 
