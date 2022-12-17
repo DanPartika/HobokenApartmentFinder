@@ -150,6 +150,52 @@ const sortApartmentsBy = async (by) => {
   return apartmentList;
 }
 
+const addFilePathtoApt = async (aptId, filePath) => {
+  //error check this
+  const apartmentCollection = await apartments();
+
+  const apartment = await getApartmentById(aptId);
+
+  if (apartment === null) throw "no Apartment exists with that id";
+  let today = new Date();
+  let mm = String(today.getMonth() + 1).padStart(2, "0");
+  let dd = String(today.getDate()).padStart(2, "0");
+  let yyyy = today.getFullYear();
+  today = mm + "/" + dd + "/" + yyyy;
+
+  let updatedApartment = {
+    userPosted: apartment.userPosted,
+    apartmentName: apartment.apartmentName,
+    streetAddress: apartment.streetAddress,
+    rentPerMonth: apartment.rentPerMonth,
+    rentDuration: apartment.rentDuration,
+    maxResidents: apartment.maxResidents,
+    numBedrooms: apartment.numBedrooms,
+    numBathrooms: apartment.numBathrooms,
+    laundry: apartment.laundry,
+    floorNum: apartment.floorNum,
+    roomNum: apartment.roomNum,
+    appliancesIncluded: apartment.appliancesIncluded,
+    maxPets: apartment.maxPets,
+    utilitiesIncluded: apartment.utilitiesIncluded,
+    file: filePath,
+    datePosted: apartment.datePosted, //*Added a datePosted
+    dateModified: today,
+    reviews: apartment.reviews,
+    overallRating: apartment.overallRating
+  };
+  const updateInfo = await apartmentCollection.replaceOne(
+    { _id: ObjectId(aptId) },
+    updatedApartment
+  );
+  if(!updateInfo.acknowledged || updateInfo.matchedCount !== 1 || updateInfo.modifiedCount !== 1) throw "cannot update apartment"
+
+  const update = await getApartmentById(aptId);
+
+  update._id = update._id.toString();
+  return update;
+}
+
 const updateApartment = async (
   apartmentId,
   userName,
@@ -222,5 +268,5 @@ module.exports = {
   getApartmentById,
   removeApartment,
   updateApartment,
-  sortApartmentsBy
+  sortApartmentsBy, addFilePathtoApt
 };
