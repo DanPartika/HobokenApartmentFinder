@@ -49,12 +49,21 @@ function checkID(id) {
 
 //The Apartment complex/building name; can be N/A
 function checkName(apartmentName) {
-  if (apartmentName.length < 2) throw "title must be at least 2 characters";
+  if (apartmentName.length < 3 ) throw "title must be at least 3 characters";
   return checkStr(apartmentName);
 }
 
 //The street address of the specified apartment
 function checkAddress(streetAddress) {
+  let HobokenStreets = ["Adams s", "Bloomfield s", "Castle Point Terrace","Clinton s", "Eighth s","Eleventh s",
+        "Fifteenth s","Fifth s", "First s","Fourteenth s","Fourth s","Garden s","Grand s","Grove s","Harrison s","Henderson s",
+        "Hudson P","Hudson S","Jackson s","Jefferson s","Madison s","Marshall s","Monroe s","Newark s","Ninth s","Observer h",
+        "Park A","Paterson a","River s","River Terrace","Second s","Seventh s","Sinatra Drive","Sixteenth s",
+        "Sixth s","Tenth s","Third s","Thirteenth s","Twelfth s","Vezzetti Way","Washington s","Willow a"];
+  let checker = true;
+  for (let i = 0; i < HobokenStreets.length; i++) 
+    if (streetAddress.toLowerCase().includes(HobokenStreets[i].toLowerCase()) ) checker = false;
+  if(checker) throw `${streetAddress} is not a valid street name in Hoboken.`;
   //specify a format ## street name
   //!make sure this works with google map.
   //if possible get all the streets in hoboken and make sure it is a street in hoboken --> be solved with google maps

@@ -174,21 +174,14 @@ router
         let utilitiesIncluded = xss(apartmentData.utilitiesIncludedInput);
         utilitiesIncluded = utilitiesIncluded.split(",")
         let file = xss(apartmentData.file);
-        let HobokenStreets = ["Adams s", "Bloomfield s", "Castle Point Terrace","Clinton s", "Eighth s","Eleventh s",
-        "Fifteenth s","Fifth s", "First s","Fourteenth s","Fourth s","Garden s","Grand s","Grove s","Harrison s","Henderson s",
-        "Hudson P","Hudson S","Jackson s","Jefferson s","Madison s","Marshall s","Monroe s","Newark s","Ninth s","Observer h",
-        "Park A","Paterson a","River s","River Terrace","Second s","Seventh s","Sinatra Drive","Sixteenth s",
-        "Sixth s","Tenth s","Third s","Thirteenth s","Twelfth s","Vezzetti Way","Washington s","Willow a"];
-        let checker = true;
-        for (let i = 0; i < HobokenStreets.length; i++) 
-          if (apartmentData.streetAddressInput.toLowerCase().includes(HobokenStreets[i].toLowerCase()) ) checker = false;
-        if(checker) throw `${apartmentData.streetAddressInput} is not a valid street name in Hoboken.`;
-        console.log("FILE: " + JSON.stringify(file))
+        
         let aptId = await createApartment(req.session.user.username, apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded,file);
         let usersName = await addApartmentUser(aptId, req.session.user.username);
-        
-        let pathRedirect = '/apartments/apartment/' + aptId;
-        return res.redirect(pathRedirect);
+        let apt = getApartmentById(aptId);
+        //return res.redirect('/apartments/apartment/uploadimage/:'+aptId);
+        return res.render('apartments/uploadImage', {aptId:aptId});
+        // let pathRedirect = '/apartments/apartment/' + aptId;
+        // return res.redirect(pathRedirect);
       } catch (e) {
         return res.render('error',{title:"Error in creating apartment", message:e,user:req.session.user});
       }
@@ -196,6 +189,12 @@ router
       return res.render('userAccount/login',{user:req.session.user});
     }
   })
+
+  router
+  .route("/apartments/apartment/uploadimage/:id")
+  .post(async (req, res) => {
+
+  });
 
   router
   .route("/apartments/editApartment/:apartmentId") //singular apt
@@ -237,16 +236,7 @@ router
         else if(maxPets == "false") maxPets = false
         let utilitiesIncluded = xss(apartmentData.utilitiesIncludedInput);
         utilitiesIncluded = utilitiesIncluded.split(",")
-        let HobokenStreets = ["Adams s", "Bloomfield s", "Castle Point Terrace","Clinton s", "Eighth s","Eleventh s",
-        "Fifteenth s","Fifth s", "First s","Fourteenth s","Fourth s","Garden s","Grand s","Grove s","Harrison s","Henderson s",
-        "Hudson P","Hudson S","Jackson s","Jefferson s","Madison s","Marshall s","Monroe s","Newark s","Ninth s","Observer h",
-        "Park A","Paterson a","River s","River Terrace","Second s","Seventh s","Sinatra Drive","Sixteenth s",
-        "Sixth s","Tenth s","Third s","Thirteenth s","Twelfth s","Vezzetti Way","Washington s","Willow a"];
-        let checker = true;
-        for (let i = 0; i < HobokenStreets.length; i++) 
-          if (apartmentData.streetAddressInput.toLowerCase().includes(HobokenStreets[i].toLowerCase()) ) checker = false;
-        if(checker) throw `${apartmentData.streetAddressInput} is not a valid street name in Hoboken.`;
-  
+        
         let newApt = await updateApartment(req.params.apartmentId, req.session.user.username, apartmentName, streetAddress, rentPerMonth, rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded);
         if (!newApt) throw `Could not update ${apartmentName} apartment with`
         let usersName = await updateApartmentUser(req.params.apartmentId, req.session.user.username);
@@ -255,7 +245,7 @@ router
         let pathRedirect = '/apartments/apartment/' + req.params.apartmentId;
         return res.redirect(pathRedirect); 
       } catch (e) {
-        return res.render('error',{title:"Error in updating apartment", message:error,user:req.session.user});
+        return res.render('error',{title:"Error in updating apartment", message:e,user:req.session.user});
       }
     } else {
       return res.render('userAccount/login',{user:req.session.user});

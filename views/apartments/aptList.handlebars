@@ -30,23 +30,27 @@ todo1: add a + symbol in the top right to add apartments}}
       <p>Sorted by: {{sortedBy}}</p>
       <br>
       {{/if}}
- <div class = "apt_d">
+ {{!-- <div class = "apt_d"> --}}
 
   <ul>
     
     {{#each apt}}
     <li>
       {{!-- <div id="display-image"></div> --}}
-      <div class="display-image">
-   <img id="image-input">
- </div>
+      
 
       <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}} [${{this.rentPerMonth}}/Month, Rating: {{this.overallRating}}, {{this.numBedrooms}} Bedrooms, {{this.numBathrooms}} Bathrooms, Number of Residents: {{this.maxResidents}}, Pets: {{this.maxPets}}]<a>
-      div class="display-image">
-           {{#if file}}
-   <img src="{{file}}">
-   {{/if}}
- </div>
+      
+           {{#if this.file}}
+           <div class="display-image">
+            <img src="{{this.file}}" class="resize">
+          </div>
+          {{else}}
+            <div class="display-image">
+              <img src="/uploads/NoImage.jpg" class="resize">
+            </div>
+          {{/if}}
+ 
     </li>
     {{/each}}
   </ul>

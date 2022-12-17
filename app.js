@@ -8,6 +8,7 @@ const session = require('express-session');
 const path = require('path');
 const multer = require("multer");
 const fs = require('fs');
+const { addFilePathtoApt } = require('./data/apartments');
 
 
 app.use(express.static('images'));
@@ -28,8 +29,9 @@ var storage = multer.diskStorage({
     fileExtension = file.originalname.split('.')[1]
     console.log("Date: " + __dirname)
     let length = fs.readdirSync(__dirname+'/uploads').length
-    cb(null, file.fieldname + '-' + length +'.'+fileExtension)
+    cb(null, length +'.'+fileExtension)
   }
+
 })
 
 var upload = multer({ storage: storage })
@@ -92,13 +94,24 @@ app.use(async (req, res, next) => {
 // })
 
 
-app.post('/apartments',upload.single('samplefile'),function (req, res, next) {
+app.post("/apartments/apartment/uploadimage/:id",upload.single('samplefile'),async function (req, res, next) {
   // response += `<img src="${req.file.path}" /><br>`
   //response += `<img src ="uploads/${req.file.filename}"/>`                 
    //return res.sendFile(req.file.path)
-  res.render('apartments/aptList', {  
-    file: `uploads/${req.file.filename}`                 
-})
+   try {
+    const aptId = req.params.id
+    fs.readdirSync(__dirname+'/uploads').length
+    var files = fs.readdirSync(__dirname+'/uploads');
+    console.log("\n\nFILES: " + files + "\n\n")
+    //files is array, get next to last element, get the .""
+    let fileExtension = files[files.length-2].split('.')[1]
+    console.log(fileExtension)
+    let newApt = await addFilePathtoApt(aptId,"/uploads/" + (fs.readdirSync(__dirname+'/uploads').length-1).toString()+"."+fileExtension )
+    res.redirect('/apartments/apartment/'+aptId)
+   } catch (error) {
+    res.render('error', {message:error})
+   }
+   
 });
   //  var response = '<a href="/">Home</a><br>'
   //  response += "Files uploaded successfully.<br>"
