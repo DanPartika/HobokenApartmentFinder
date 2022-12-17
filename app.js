@@ -102,10 +102,10 @@ app.post("/apartments/apartment/uploadimage/:id",upload.single('samplefile'),asy
     const aptId = req.params.id
     fs.readdirSync(__dirname+'/uploads').length
     var files = fs.readdirSync(__dirname+'/uploads');
-    console.log("\n\nFILES: " + files + "\n\n")
+    //console.log("\n\nFILES: " + files + "\n\n")
     //files is array, get next to last element, get the .""
     let fileExtension = files[files.length-2].split('.')[1]
-    console.log(fileExtension)
+    //console.log(fileExtension)
     let newApt = await addFilePathtoApt(aptId,"/uploads/" + (fs.readdirSync(__dirname+'/uploads').length-1).toString()+"."+fileExtension )
     res.redirect('/apartments/apartment/'+aptId)
    } catch (error) {

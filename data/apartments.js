@@ -244,6 +244,7 @@ const updateApartment = async (
     appliancesIncluded: params.appliancesIncluded,
     maxPets: params.maxPets,
     utilitiesIncluded: params.utilitiesIncluded,
+    file: apartment.file,
     datePosted: apartment.datePosted, //*Added a datePosted
     dateModified: today,
     reviews: apartment.reviews,
