@@ -31,19 +31,19 @@ const main = async () =>
         let user5 = await users.createUser("Rando","Noname","idk21@gmail.com","Male","39","RandoMan","Password1!");
 
 
-        let apartment1 = await apartments.createApartment("CodyF02","Cody's Place","101 Jeffereson St", "2000", "24", "3", "3", "1", false, "2", "2C", ["Toaster,TV"], true, ["N/A"]);
+        let apartment1 = await apartments.createApartment("CodyF02","Cody's Place","101 Jeffereson St", "2000", "24", "3", "3", "1", false, "2", "2C", ["Toaster,TV"], true, ["N/A"],"../../uploads/1.jpg");
         await users.addApartmentUser(apartment1,"codyf02");
 
-        let apartment2 = await apartments.createApartment("dan1","Daniel's Place","302 Jackson St", "1000", "12", "1", "1", "1", true, "2", "2A", ["N/A"], false, ["N/A"]);
+        let apartment2 = await apartments.createApartment("dan1","Daniel's Place","302 Jackson St", "1000", "12", "1", "1", "1", true, "2", "2A", ["N/A"], false, ["N/A"],"../../uploads/2.jpg");
         await users.addApartmentUser(apartment2,"dan1");
 
-        let apartment3 = await apartments.createApartment("eltonvaz623","Elton's Place","920 Washington St", "3000", "10", "4", "4", "2", true, "1", "1C", ["Fridge,TV,Oven"], true, ["Water,Electric"]);
+        let apartment3 = await apartments.createApartment("eltonvaz623","Elton's Place","920 Washington St", "3000", "10", "4", "4", "2", true, "1", "1C", ["Fridge,TV,Oven"], true, ["Water,Electric"],"../../uploads/3.jpg");
         await users.addApartmentUser(apartment3,"eltonvaz623");
         
-        let apartment4 = await apartments.createApartment("SriBL","Hari's Place","465 Vezzetti Way", "1500", "12", "2", "1", "1", false, "5", "5A", ["Toaster"], false, ["N/A"]);
+        let apartment4 = await apartments.createApartment("SriBL","Hari's Place","465 Vezzetti Way", "1500", "12", "2", "1", "1", false, "5", "5A", ["Toaster"], false, ["N/A"],"../../uploads/4.jpg");
         await users.addApartmentUser(apartment4,"sribl");
         
-        let apartment5 = await apartments.createApartment("RandoMan","Rando's Place","901 Park Ave", "500", "12", "1", "1", "1", false, "2", "2B", ["N/A"], false, ["N/A"]);
+        let apartment5 = await apartments.createApartment("RandoMan","Rando's Place","901 Park Ave", "500", "12", "1", "1", "1", false, "2", "2B", ["N/A"], false, ["N/A"],"../../uploads/5.jpg");
         await users.addApartmentUser(apartment5,"randoman");
 
 
