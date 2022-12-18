@@ -32,31 +32,32 @@ apartmentName,
   <hr size="5" width="100%" color="red"> 
   <p class="prev-value">Previous Value: {{apt.apartmentName}}</p>
   <label for="apartmentNameInput">Apartment Name:</label>
-  <input for="apartmentNameInput" name="apartmentNameInput" type="text" value={{apt.apartmentName}} required/>
+  <input for="apartmentNameInput" name="apartmentNameInput" type="text" value={{apt.apartmentName}} id="apartmentNameInput" required/>
   <br>
+  
 
     <hr size="5" width="100%" color="red"> 
     <p class="prev-value">Previous Value: {{apt.streetAddress}} (Building number + StreetName)</p>
     <label for="buildingNumberInput">Building number:</label>
-    <input for="buildingNumberInput" name="buildingNumberInput" type="text" value= {{apt.streetAddress}} required/>
+    <input for="buildingNumberInput" name="buildingNumberInput" type="text" value= {{apt.streetAddress}} id="buildingNumberInput" required/>
     
     <label for="streetAddressInput">Street Name:</label>
-    <input for="streetAddressInput" name="streetAddressInput" type="text" required/>
+    <input for="streetAddressInput" name="streetAddressInput" type="text" id="streetAddressInput" required/>
     
     <br>
     <hr size="5" width="100%" color="red"> 
     <label for="rentPerMonthInput">Rent per month:</label>
-    <input for="rentPerMonthInput" name="rentPerMonthInput" type="text" value= {{apt.rentPerMonth}} required/>
+    <input for="rentPerMonthInput" name="rentPerMonthInput" type="text" value= {{apt.rentPerMonth}} id="rentPerMonthInput" required/>
     <br>
 
     <hr size="5" width="100%" color="red"> 
     <label for="rentDurationInput">Rent duration (in months):</label>
-    <input for="rentDurationInput" name="rentDurationInput" type="text" value= {{apt.rentDuration}} required/>
+    <input for="rentDurationInput" name="rentDurationInput" type="text" value= {{apt.rentDuration}} id="rentDurationInput" required/>
     <br>
 
     <hr size="5" width="100%" color="red"> 
     <label for="maxResidentsInput">Max residents:</label>
-    <input for="maxResidentsInput" name="maxResidentsInput" type="text" value= {{apt.maxResidents}} required/>
+    <input for="maxResidentsInput" name="maxResidentsInput" type="text" value= {{apt.maxResidents}} id="maxResidentsInput" required/>
     <br>
 
     <hr size="5" width="100%" color="red"> 
@@ -92,17 +93,17 @@ apartmentName,
 
     <hr size="5" width="100%" color="red"> 
     <label for="floorNumInput">Floor number:</label>
-    <input for="floorNumInput" name="floorNumInput" type="text" value= {{apt.floorNum}} required/>
+    <input for="floorNumInput" name="floorNumInput" type="text" value= {{apt.floorNum}} id="floorNumInput" required/>
     <br>
 
     <hr size="5" width="100%" color="red"> 
     <label for="roomNumInput">Room Unit:</label>
-    <input for="roomNumInput" name="roomNumInput" type="text" value= {{apt.roomNum}} required/>
+    <input for="roomNumInput" name="roomNumInput" type="text" value= {{apt.roomNum}} id="roomNumInput" required/>
     <br>
 
     <hr size="5" width="100%" color="red"> 
     <label for="appliancesIncludedInput">Appliances that are included (separate each with comma, or write N/A):</label>
-    <input for="appliancesIncludedInput" name="appliancesIncludedInput" type="text" value= {{apt.appliancesIncluded}} required/>
+    <input for="appliancesIncludedInput" name="appliancesIncludedInput" type="text" value= {{apt.appliancesIncluded}} id="appliancesIncludedInput" required/>
     <br>
 
     <hr size="5" width="100%" color="red"> 
