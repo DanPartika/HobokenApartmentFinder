@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const { getApartmentById, removeApartment } = require("./apartments");
 const { getReview, removeReview } = require("./reviews");
 const { ObjectId } = require("mongodb");
-const saltRounds = 16;
+const saltRounds = 4;
 
 const createUser = async (
   firstName,
@@ -59,7 +59,9 @@ const addApartmentUser = async (aptId, userName) => {
   const usersCollection = await users();
   let newApt = {
     _id: apartment._id,
-    apartmentName: apartment.apartmentName
+    apartmentName: apartment.apartmentName,
+    floorNum: apartment.floorNum,
+    roomNum: apartment.roomNum
   };
   const updateInfo = await usersCollection.updateOne(
     {_id: ObjectId(user._id)},
@@ -85,7 +87,9 @@ const addReviewUser = async (reviewId, userName, aptId) => {
   let newRev = {
     _id: reviewId,
     aptId: aptId,
-    aptName: apartment.apartmentName
+    aptName: apartment.apartmentName,
+    floorNum: apartment.floorNum,
+    roomNum: apartment.roomNum
   };
 
   const updateInfo = await usersCollection.updateOne(
