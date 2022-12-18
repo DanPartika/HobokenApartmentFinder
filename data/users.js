@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const { getApartmentById, removeApartment } = require("./apartments");
 const { getReview, removeReview } = require("./reviews");
 const { ObjectId } = require("mongodb");
-const saltRounds = 4;
+const saltRounds = 16;
 
 const createUser = async (
   firstName,

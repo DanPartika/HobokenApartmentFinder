@@ -1,8 +1,6 @@
-//require express and express router as shown in lecture code
-//! to implement a map https://developers.google.com/maps/documentation/javascript/overview#maps_map_simple-javascript
+
 const express = require("express");
 const router = express.Router();
-const data = require("../data");
 const helpers = require("../helpers");
 const { getApartmentById, createApartment, getAllApartments, sortApartmentsBy, updateApartment, removeApartment } = require("../data/apartments");
 const path = require('path');
