@@ -3,9 +3,6 @@
 const express = require("express");
 const router = express.Router();
 const data = require("../data");
-const apartmentsData = data.Apartments;
-const usersData = data.users
-const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
 const { getApartmentById, createApartment, getAllApartments, sortApartmentsBy, updateApartment, removeApartment } = require("../data/apartments");
 const path = require('path');
