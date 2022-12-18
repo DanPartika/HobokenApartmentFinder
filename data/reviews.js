@@ -210,7 +210,7 @@ const newReply = async (aptId, reviewId, reply, usersName) => {
   reviewReply.push({reply: reply, user: usersName});
 
   const apartmentCollection = await apartments();
-
+ 
   let newRev = {
     _id: ObjectId(review._id),
     reviewDate: review.reviewDate,
