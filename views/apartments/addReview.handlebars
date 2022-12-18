@@ -24,8 +24,12 @@ apartmentName,
   <p class="error">{{error}}</p>
   {{/if}}
   <form id="newReview-form" action="/reviews/add-review/{{apt}}" method="POST">
-    <label for="commentInput">Comment:</label>
-    <input for="commentInput" name="commentInput"  type="text" placeholder="Comment your thoughts on the apartment" required/>
+    {{!-- <label for="commentInput" id="cInput">Comment:</label>
+    <input for="commentInput" name="commentInput"  type="text" placeholder="Comment your thoughts on the apartment" id="cInput" required/> --}}
+
+    <label for="commentInput" id="commentInput">Comment:</label>
+    <input for="commentInput" name="commentInput"  type="text" placeholder="Comment your thoughts on the apartment" id="commentInput" required/>
+
     <br>
 
     <label for="ratingInput">Rating:</label>

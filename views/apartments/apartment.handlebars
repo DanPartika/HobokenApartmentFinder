@@ -12,11 +12,11 @@
     
            {{#if apt.file}}
             <div class="display-image">
-              <img src="{{apt.file}}" class="resize">
+              <img src="{{apt.file}}" class="resize" alt="">
             </div>
             {{else}}
             <div class="display-image">
-              <img src="/uploads/NoImage.jpg" class="resize">
+              <img src="/uploads/NoImage.jpg" class="resize" alt="">
             </div>
             {{/if}}
  
@@ -77,14 +77,16 @@
           </form>
           <br>
           <form id="newApartment-form" action="/reviews/addComment/{{this._id}}" method="POST">
-            <label for="replyInput">Comments:</label>
-            <input for="replyInput" name="replyInput" type="text" placeholder="Insert reply here" required/>
+            <label for="replyInput" id="replyID">Comments:</label>
+            <input for="replyInput" name="replyInput" type="text" placeholder="Insert reply here" id="replyInput" required/>
             <button type="submit">Post Reply</button>
           </form>
           {{!-- {{#if apt.reviews.replies}} --}}
+          <br>
+          <p>Replies Posted:</p>
             {{#each replies}}
-            <p>Replies Posted: {{reply}}</p>
-            <br>
+            <p> {{reply}}</p>
+            
             {{/each}}
           {{!-- {{else}}
            
