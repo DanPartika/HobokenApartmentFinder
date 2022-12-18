@@ -27,7 +27,7 @@ var storage = multer.diskStorage({
   filename: function (req, file, cb) {
     //console.log("file",file);  
     fileExtension = file.originalname.split('.')[1]
-    console.log("Date: " + __dirname)
+    // console.log("Date: " + __dirname)
     let length = fs.readdirSync(__dirname+'/uploads').length
     cb(null, length +'.'+fileExtension)
   }

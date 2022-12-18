@@ -102,7 +102,7 @@ const apartments = mongoCollections.apartments;
 
 
 
-            let newreview = await newReply(apartmentID, reviewId, reply);
+            let newreview = await newReply(apartmentID, reviewId, reply, req.session.user.username);
             
             let pathRedirect = '/apartments/apartment/' + apartmentID;
             res.redirect(pathRedirect);
