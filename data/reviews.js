@@ -12,7 +12,16 @@ const createReview = async (
   rating //!include a comment title??
 ) => {
   let params = helpers.checkReviewsParameters(apartmentId, userName, comments, rating)
-  if(!params) throw "error in checking reviews parameters"
+  if(!params) throw "error in checking reviews parameters";
+
+  let apart = await getApartmentById(apartmentId)
+  let reviews = apart.reviews;
+  for(i in reviews) {
+    if(reviews[i].userName === userName) {
+      return userName;
+    }
+  }
+
   if (params.rating % 1 === 0) {
     params.rating = parseInt(params.rating);
   } else {

@@ -35,11 +35,17 @@ const apartments = mongoCollections.apartments;
         let apartmentID = req.params.apartmentId;
         let username = req.session.user.username;
         let reviewId = await createReview(apartmentID, username, comment, rating);
-        
-        let reviewersName = await addReviewUser(reviewId._id, username, apartmentID);
-        
-        let pathRedirect = '/apartments/apartment/' + apartmentID;
-        res.redirect(pathRedirect);
+
+        if(reviewId === username) {
+          let pathRedirect = '/apartments/apartment/' + apartmentID;
+          res.redirect(pathRedirect);
+        }
+        else{
+          let reviewersName = await addReviewUser(reviewId._id, username, apartmentID);
+          
+          let pathRedirect = '/apartments/apartment/' + apartmentID;
+          res.redirect(pathRedirect);
+        }
       } catch (e) {
         return res.render('error',{title:"Error in creating review", message:e, user:req.session.user});
       }
