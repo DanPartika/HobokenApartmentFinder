@@ -39,15 +39,15 @@ todo1: add a + symbol in the top right to add apartments}}
       {{!-- <div id="display-image"></div> --}}
       
 
-      <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}} Floor: {{this.floorNum}} Room: {{this.roomNum}} [${{this.rentPerMonth}}/Month, Rating: {{this.overallRating}}, {{this.numBedrooms}} Bedrooms, {{this.numBathrooms}} Bathrooms, Number of Residents: {{this.maxResidents}}, Pets: {{this.maxPets}}]<a>
+      <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}} Floor: {{this.floorNum}} Room: {{this.roomNum}} [${{this.rentPerMonth}}/Month, Rating: {{this.overallRating}}, {{this.numBedrooms}} Bedrooms, {{this.numBathrooms}} Bathrooms, Number of Residents: {{this.maxResidents}}, Pets: {{this.maxPets}}]</a>
       
            {{#if this.file}}
            <div class="display-image">
-            <img src="{{this.file}}" class="resize">
+            <img src="{{this.file}}" class="resize" alt="">
           </div>
           {{else}}
             <div class="display-image">
-              <img src="/uploads/NoImage.jpg" class="resize">
+              <img src="/uploads/NoImage.jpg" class="resize" alt="">
             </div>
           {{/if}}
  
