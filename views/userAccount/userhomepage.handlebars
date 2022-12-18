@@ -24,7 +24,7 @@
 
       {{#each user.userApartments}}
         <li>
-          <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}} Floor: {{this.floorNum}} Room: {{this.roomNum}}<a> 
+          <a href="/apartments/apartment/{{this._id}}">{{this.apartmentName}} Floor: {{this.floorNum}} Room: {{this.roomNum}}</a> 
 
           <form id="editApt-form" action="/apartments/editApartment/{{this._id}}" method="GET"> 
             <button type="submit" class="user-button"> Edit Apartment </button>
@@ -47,7 +47,7 @@
 
       {{#each user.userReviews}}
         <li>
-          <a href="/apartments/apartment/{{this.aptId}}">{{this.aptName}} Floor: {{this.floorNum}} Room: {{this.roomNum}}<a>
+          <a href="/apartments/apartment/{{this.aptId}}">{{this.aptName}} Floor: {{this.floorNum}} Room: {{this.roomNum}}</a>
             
           <form id="deleteReview-form" action="/reviews/deleteReview/{{this._id}}" method="POST"> 
             <button type="submit" class="user-button"> Delete Review </button>
