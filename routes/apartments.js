@@ -9,7 +9,7 @@ const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
 const { getApartmentById, createApartment, getAllApartments, sortApartmentsBy, updateApartment, removeApartment } = require("../data/apartments");
 const path = require('path');
-const { addApartmentUser, updateApartmentUser, addReviewUser, removeUserApartment, getUser } = require("../data/users");
+const { addApartmentUser, updateApartmentUser, userRemoveReview, removeUserApartment } = require("../data/users");
 const { getReview, incrementLikesReview } = require("../data/reviews");
 const xss = require("xss");
 //const { users, apartments } = require("../config/mongoCollections");
@@ -272,10 +272,25 @@ router
           let apartmentId = req.params.apartmentId.trim();
           if (!apartmentId) return res.render('error', {title: "Id is not valid"}); //({ error: 'Invalid ObjectID' });
           try {
-            const apartment = await removeApartment(apartmentId);
-            if (!apartment) throw `Could not delete apartment with id of ${apartmentId}`
+            
+            let aptName = await getApartmentById(apartmentId);
+            let apartReview = aptName.reviews;
+
+
+            
+            for(i in apartReview) {
+              let username = apartReview[i].userName;
+              let reviewId = apartReview[i]._id
+              let removeUserApt =  await userRemoveReview(username, reviewId);
+            }
+
+
             const userdata = await removeUserApartment(req.session.user.username, apartmentId);
             if (!userdata) throw `Could not remove apartment from user ${req.session.user.username}`
+            
+            const apartment = await removeApartment(apartmentId);
+            if (!apartment) throw `Could not delete apartment with id of ${apartmentId}`
+            
             //return res.render('userAccount/userhomepage',{user:req.session.user});
             return res.redirect('/users/protected')
           } catch (e) {
