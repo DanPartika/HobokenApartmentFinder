@@ -207,7 +207,7 @@ const newReply = async (aptId, reviewId, reply) => {
   let review = await getReview(reviewId);
   let reviewReply = review.replies;
   
-  reviewReply.push({reply: reply});
+  reviewReply.push({reply: reply, user: review.userName});
 
   const apartmentCollection = await apartments();
 
