@@ -1,13 +1,9 @@
 //require express and express router as shown in lecture code
 const express = require("express");
 const router = express.Router();
-const data = require("../data");
-const reviewsData = data.reviews;
 const { ObjectId } = require("mongodb");
-const { getAllReviews, createReview, removeReview, newReply } = require("../data/reviews");
+const { createReview, removeReview, newReply } = require("../data/reviews");
 const { addReviewUser, userRemoveReview } = require("../data/users")
-const helpers = require("../helpers");
-const { review } = require("../data");
 const xss = require("xss");
 const mongoCollections = require("../config/mongoCollections");
 const apartments = mongoCollections.apartments;

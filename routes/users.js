@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const data = require("../data");
 const usersData = data.users
-const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
 const { getUser } = require("../data/users");
 const xss = require("xss");
