@@ -1,6 +1,6 @@
 const mongoCollections = require("../config/mongoCollections");
 const apartments = mongoCollections.apartments;
-const { ObjectId, ListCollectionsCursor } = require("mongodb");
+const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
 
 const createApartment = async (
