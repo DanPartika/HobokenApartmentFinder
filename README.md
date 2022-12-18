@@ -6,7 +6,7 @@ Welcome to Hoboken Apartment Finder! A website that allows our users to post apa
 ```
 npm install
 ```
-2. Connect to MongoDB and populate the Database using the following command:
+2. Make sure you are in the folder of the project files and populate the Database using the following command:
 ```
 node seed.js
 ```
